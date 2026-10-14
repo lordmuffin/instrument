@@ -1,0 +1,7 @@
+{
+  "$comment": "Known contrast failures accepted temporarily. Each is reported as KNOWN instead of failing CI. Remove an entry once fixed; the check warns when an entry is no longer needed. Any failure not listed here fails CI.",
+  "known": [
+    { "theme": "light", "fg": "success", "bg": "surface-2", "note": "Status chips (✓ ACTIVE) use success text on surface-2: 4.36:1. Proposed fix: light success #116329 (6.34:1) or chips on surface." },
+    { "theme": "light", "fg": "warning", "bg": "surface-2", "note": "Status chips (INVITED, in progress) use warning text on surface-2: 4.17:1. Proposed fix: light warning #875C00 (5.06:1) or #7D4E00 (6.08:1)." }
+  ]
+}

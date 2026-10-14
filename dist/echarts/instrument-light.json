@@ -1,0 +1,133 @@
+{
+  "color": [
+    "#0969DA",
+    "#BC4C00",
+    "#BF3989",
+    "#6E7781"
+  ],
+  "backgroundColor": "transparent",
+  "textStyle": {
+    "color": "#1F2328",
+    "fontFamily": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", sans-serif"
+  },
+  "title": {
+    "textStyle": {
+      "color": "#1F2328"
+    },
+    "subtextStyle": {
+      "color": "#57606A"
+    }
+  },
+  "legend": {
+    "textStyle": {
+      "color": "#57606A",
+      "fontSize": 11
+    },
+    "itemWidth": 10,
+    "itemHeight": 10
+  },
+  "tooltip": {
+    "backgroundColor": "#1F2328",
+    "borderWidth": 0,
+    "textStyle": {
+      "color": "#FFFFFF",
+      "fontSize": 11
+    },
+    "extraCssText": "box-shadow: 0 8px 24px rgba(31,35,40,0.16); border-radius: 0;"
+  },
+  "categoryAxis": {
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#8C959F",
+        "width": 1
+      }
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLabel": {
+      "color": "#57606A",
+      "fontSize": 10,
+      "fontFamily": "ui-monospace, \"SF Mono\", \"Roboto Mono\", Menlo, Consolas, monospace"
+    },
+    "splitLine": {
+      "show": false
+    }
+  },
+  "valueAxis": {
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#8C959F",
+        "width": 1
+      }
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLabel": {
+      "color": "#57606A",
+      "fontSize": 10,
+      "fontFamily": "ui-monospace, \"SF Mono\", \"Roboto Mono\", Menlo, Consolas, monospace"
+    },
+    "splitLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#D8DEE4",
+        "width": 1
+      }
+    }
+  },
+  "timeAxis": {
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#8C959F",
+        "width": 1
+      }
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLabel": {
+      "color": "#57606A",
+      "fontSize": 10,
+      "fontFamily": "ui-monospace, \"SF Mono\", \"Roboto Mono\", Menlo, Consolas, monospace"
+    },
+    "splitLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#D8DEE4",
+        "width": 1
+      }
+    }
+  },
+  "line": {
+    "symbol": "circle",
+    "symbolSize": 4,
+    "lineStyle": {
+      "width": 1.5
+    }
+  },
+  "bar": {
+    "itemStyle": {
+      "borderRadius": 0
+    }
+  },
+  "instrument": {
+    "mean": {
+      "color": "#1F2328",
+      "width": 1.5,
+      "type": [
+        4,
+        3
+      ]
+    },
+    "container": {
+      "borderColor": "series",
+      "borderWidth": 1,
+      "color": "transparent"
+    }
+  }
+}
