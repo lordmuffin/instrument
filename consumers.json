@@ -81,6 +81,24 @@
           "Recipe.dc.html"
         ]
       }
+    },
+    {
+      "repo": "lordmuffin/home",
+      "enabled": true,
+      "targets": [
+        {
+          "dest": "src/home/static/instrument",
+          "platforms": [
+            "web"
+          ]
+        }
+      ],
+      "design": {
+        ".": [
+          "Home.dc.html",
+          "Nav-Family.dc.html"
+        ]
+      }
     }
   ]
 }
