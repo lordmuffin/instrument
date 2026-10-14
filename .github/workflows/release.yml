@@ -72,6 +72,7 @@ jobs:
       V: ${{ needs.release.outputs.version }}
       REPO: ${{ matrix.consumer.repo }}
       TARGETS: ${{ toJSON(matrix.consumer.targets) }}
+      DESIGN: ${{ toJSON(matrix.consumer.design) }}
     steps:
       - id: tok
         name: Token present

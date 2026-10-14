@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Called by .github/workflows/release.yml for one consumer app, from a directory holding
 # ./instrument (this repo) and ./app (the consumer, checked out with INSTRUMENT_BOT_TOKEN).
-# Env: V (version), REPO (owner/name), TARGETS (JSON array of {dest, platforms}), GH_TOKEN.
+# Env: V (version), REPO (owner/name), TARGETS (JSON array of {dest, platforms}),
+#      DESIGN (JSON object: folder -> artboard globs, optional), GH_TOKEN.
 set -euo pipefail
 
 root="$PWD"
@@ -22,12 +23,33 @@ while IFS= read -r t; do
   checks+="          scripts/sync-instrument.sh --check ${dest}"$'\n'
 done < <(jq -c '.[]' <<<"$TARGETS")
 
-# 2. Keep the app's copy of the sync script current.
+# 2. Design artboards this app is built from (managed copies under docs/design/instrument/).
+if [[ -n "${DESIGN:-}" && "$DESIGN" != "null" ]]; then
+  rm -rf docs/design/instrument
+  while IFS= read -r folder; do
+    out="docs/design/instrument/$folder"
+    mkdir -p "$out"
+    while IFS= read -r glob; do
+      # shellcheck disable=SC2086 # the glob is meant to expand
+      for f in "$root"/instrument/docs/design/canvas/$glob; do
+        [[ -e "$f" ]] && cp "$f" "$out/"
+      done
+    done < <(jq -r --arg k "$folder" '.[$k][]' <<<"$DESIGN")
+  done < <(jq -r 'keys[]' <<<"$DESIGN")
+  cat > docs/design/instrument/README.md <<MD
+# Instrument design artboards (managed)
+
+Copied from [lordmuffin/instrument](https://github.com/lordmuffin/instrument/tree/v$V/docs/design/canvas) v$V by the release automation. Do not edit; they are replaced on every Instrument sync.
+These are the Claude Design artboards this app is built from: HTML with inline styles and sample data. They render fully only in Claude Design, but the markup is the spec.
+MD
+fi
+
+# 3. Keep the app's copy of the sync script current.
 mkdir -p scripts
 cp "$root/instrument/scripts/sync-instrument.sh" scripts/sync-instrument.sh
 chmod +x scripts/sync-instrument.sh
 
-# 3. A CI check that fails if anyone edits vendored Instrument files by hand.
+# 4. A CI check that fails if anyone edits vendored Instrument files by hand.
 mkdir -p .github/workflows
 cat > .github/workflows/instrument-check.yml <<YAML
 # Managed by lordmuffin/instrument (scripts/propagate.sh). Do not edit: changes are overwritten.
@@ -75,6 +97,7 @@ ${notes:-See the release notes.}
 
 ### This PR
 $(jq -r '.[] | "- `\(.dest)`: \(.platforms | join(", "))"' <<<"$TARGETS")
+- \`docs/design/instrument/\`: the design artboards for this app (managed)
 - \`scripts/sync-instrument.sh\` and \`.github/workflows/instrument-check.yml\` (managed)
 
 ### Before merging
