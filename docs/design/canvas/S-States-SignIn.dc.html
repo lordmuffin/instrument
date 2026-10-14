@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign-in pages</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div class="inst" data-theme="light" style="width: 2800px; min-height: 1616px; padding: 48px; display: flex; flex-direction: column; gap: 24px;">
+  <div class="i-stack" style="gap: 6px;">
+    <span class="t-label">Sleep Dashboard · 4 · Screens · Sign-in</span>
+    <h1 class="t-title">Sign-in pages</h1>
+    <p class="t-caption t-2" style="max-width: 900px;">Pocket ID only: there is no password form. Four pages: signed out, not signed in (three reasons), not shown (two reasons), and no data yet. Errors are sentences.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, 640px); gap: 48px; align-items: start;">
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Signed out · light</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="signed-out" theme="light" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Not signed in: expired · dark</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="expired" theme="dark" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Not signed in: not allowed · light</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="not-allowed" theme="light" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Not signed in: provider unreachable · dark</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="unreachable" theme="dark" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Not shown: someone else's data · dark</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="denied-own" theme="dark" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Not shown: no such account · light</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="denied-missing" theme="light" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">No data yet, for a family member · dark</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="no-account" theme="dark" hint-size="640px,620px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Signed out on LAB · light</figcaption>
+      <div style="width: 640px; height: 620px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-SignIn" page="signed-out" channel="lab" theme="light" hint-size="640px,620px"></dc-import></div>
+    </figure>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":2800,"height":1616}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What Sleep adds to Instrument</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div class="inst" data-theme="light" style="width: 1440px; min-height: 2700px; display: flex; flex-direction: column;">
+
+  <div style="padding: 48px 48px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
+    <div class="i-stack" style="gap: 6px;">
+      <span class="t-label">Sleep Dashboard · 2 · What Sleep adds</span>
+      <h1 class="t-display">Six additions for Instrument v0.2</h1>
+      <p class="t-body-lg t-2" style="max-width: 820px;">Sleep needs five new parts and one written-down pattern. Each is named for what it does, not for sleep, so the next app can use it. They use existing tokens only, and live in <span class="t-mono">instrument-proposed.css</span> until the system takes them.</p>
+    </div>
+    <div class="i-banner i-banner--warning" style="max-width: 420px;"><b>⚑ Proposed</b><span>Not in instrument.css yet. Each needs its sheet entry and both themes before it merges.</span></div>
+  </div>
+
+  <div style="padding: 0 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+
+    <section aria-labelledby="a1" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-accent);">1 · New variant</span><span class="t-mono t-meta t-2">.i-chip--amended · --off</span></div>
+      <h2 id="a1" style="font-size: 16px; font-weight: 700;">Review chip</h2>
+      <div style="background: var(--inst-bg); padding: 12px; display: flex; flex-wrap: wrap; gap: 6px;">
+        <span class="i-chip"><span class="i-dot i-dot--hollow"></span>To review</span>
+        <span class="i-chip"><span class="i-dot i-dot--hollow"></span>Corrected, not confirmed</span>
+        <span class="i-chip i-chip--progress">⚑ Watch data changed</span>
+        <span class="i-chip i-chip--done">✓ Confirmed</span>
+        <span class="i-chip i-chip--done i-chip--amended">✓ Corrected</span>
+        <span class="i-chip i-chip--off">Review unavailable</span>
+      </div>
+      <p class="t-caption"><b>Need.</b> A record a person checks has six verdicts. Three need action, and the chip has to say which.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> status chip. It says how a job went. It has no way to show "checked, with your changes", and its disabled grey is too faint for text.</p>
+      <p class="t-mono t-meta t-2">surface-2 · text-2 · warning · success · line</p>
+    </section>
+
+    <section aria-labelledby="a2" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-accent);">2 · New component</span><span class="t-mono t-meta t-2">.i-facts · .i-fact · .i-was</span></div>
+      <h2 id="a2" style="font-size: 16px; font-weight: 700;">Fact grid</h2>
+      <dl class="i-facts" style="background: var(--inst-bg); padding: 12px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+        <div class="i-fact"><dt>Into bed</dt><dd><span class="v">23:05 <span class="i-was">watch: 23:40</span></span><span class="s">Sun 11 Oct · CDT</span></dd></div>
+        <div class="i-fact"><dt>Efficiency</dt><dd><span class="v">91.4%</span><span class="s">sleep ÷ in bed</span></dd></div>
+      </dl>
+      <p class="t-caption"><b>Need.</b> A record is a handful of named readings. Some were corrected by hand, and the original must stay visible.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> a block with a stat inside it. It has no label and value markup, and nowhere to keep the value before a correction.</p>
+      <p class="t-mono t-meta t-2">surface · label · stat · meta mono · warning</p>
+    </section>
+
+    <section aria-labelledby="a3" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-accent);">3 · New component</span><span class="t-mono t-meta t-2">.i-choiceform</span></div>
+      <h2 id="a3" style="font-size: 16px; font-weight: 700;">Inline choice form</h2>
+      <form class="i-choiceform" style="background: var(--inst-bg); padding: 8px 12px;">
+        <div class="grp" role="radiogroup" aria-labelledby="a3-d"><span id="a3-d" class="i-label">Day type</span><label class="i-choice"><input type="radio" name="a3d" checked=""><span>Work</span></label><label class="i-choice"><input type="radio" name="a3d"><span>Free</span></label></div>
+        <div class="grp" role="radiogroup" aria-labelledby="a3-a"><span id="a3-a" class="i-label">Alarm</span><label class="i-choice"><input type="radio" name="a3a" checked=""><span>Yes</span></label><label class="i-choice"><input type="radio" name="a3a"><span>No</span></label></div>
+        <span class="out"><button type="button" class="i-btn i-btn--primary i-btn--sm">Save</button><span class="i-msg-ok">✓ Saved</span></span>
+      </form>
+      <p class="t-caption"><b>Need.</b> Answer two small questions about one item and save in place, many times on one page.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> a fieldset with radios. It stacks vertically and has no save button, result slot or swap states.</p>
+      <p class="t-mono t-meta t-2">label · body · accent-tint · error-tint · spinner</p>
+    </section>
+
+    <section aria-labelledby="a4" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-text-2);">4 · Pattern · no new CSS</span><span class="t-mono t-meta t-2">.i-table row + .i-msg-*</span></div>
+      <h2 id="a4" style="font-size: 16px; font-weight: 700;">Row action with result</h2>
+      <div class="i-table-wrap" style="background: var(--inst-bg); padding: 8px;">
+        <table class="i-table" style="background: var(--inst-surface);">
+          <tbody><tr class="is-saved"><td style="font-weight: 600;">Mon 12 Oct</td><td class="num">7h 05m</td><td><span class="i-row" style="gap: 8px;"><span class="i-chip i-chip--done">✓ Confirmed</span><span class="i-msg-ok" role="status">Confirmed.</span></span></td></tr></tbody>
+        </table>
+      </div>
+      <p class="t-caption"><b>Need.</b> Confirm many nights from a list without opening each one.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> dense table row states, which already cover saving, saved and failed. This writes down the wording, and that the chip changes in the same swap.</p>
+      <p class="t-mono t-meta t-2">accent-tint 2 s · error-tint · spinner</p>
+    </section>
+
+    <section aria-labelledby="a5" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-accent);">5 · New chart type</span><span class="t-mono t-meta t-2">.i-radial</span></div>
+      <h2 id="a5" style="font-size: 16px; font-weight: 700;">Radial clock</h2>
+      <div style="background: var(--inst-bg); padding: 8px; display: flex; justify-content: center;">
+        <svg class="i-radial" viewBox="0 0 320 320" width="140" height="140" aria-hidden="true">
+          <circle class="grid" cx="160" cy="160" r="36"></circle><circle class="grid" cx="160" cy="160" r="84"></circle><circle class="grid" cx="160" cy="160" r="132"></circle>
+          <path class="win" d="{{c.wins}}"></path>
+          <path class="mid" d="{{c.mid}}"></path>
+          <path class="on" d="{{c.ons}}"></path>
+          <path class="off" d="{{c.offs}}"></path>
+        </svg>
+      </div>
+      <p class="t-caption"><b>Need.</b> Times that wrap midnight. On a straight axis, 23:50 and 00:10 land a day apart.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> trend line. It breaks at midnight, so a late Friday looks like a gap.</p>
+      <p class="t-mono t-meta t-2">chart-1 · chart-2 · chart-4 · mean line · grid · baseline</p>
+    </section>
+
+    <section aria-labelledby="a6" class="i-block" style="display: flex; flex-direction: column; gap: 10px; padding: 16px;">
+      <div class="i-row" style="justify-content: space-between;"><span class="t-tag" style="color: var(--inst-accent);">6 · New state</span><span class="t-mono t-meta t-2">.i-planned</span></div>
+      <h2 id="a6" style="font-size: 16px; font-weight: 700;">Planned slot</h2>
+      <div class="i-planned" style="padding: 12px;">
+        <span class="t-tag t-2">Planned</span>
+        <span style="font-size: 13px; font-weight: 600;">Regularity, chronotype and social jetlag</span>
+        <div class="ph"><span></span><span></span></div>
+      </div>
+      <p class="t-caption"><b>Need.</b> Keep room for a feature that is coming, so the page does not jump when it ships.</p>
+      <p class="t-caption t-2"><b>Closest today:</b> empty state. It means "no data yet", which would be wrong here.</p>
+      <p class="t-mono t-meta t-2">control dashed · line dashed · tag · text-2</p>
+    </section>
+  </div>
+
+  <section aria-labelledby="gaps" style="padding: 32px 48px 0; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; align-items: start;">
+    <div class="i-stack">
+      <h2 id="gaps" class="t-label" style="color: var(--inst-text); font-weight: 700; padding-bottom: 4px;">Gaps filled with parts the system already has</h2>
+      <div class="i-table-wrap">
+        <table class="i-table" style="font-size: 12px;">
+          <thead><tr><th scope="col">Gap</th><th scope="col">Uses</th><th scope="col">Where in Sleep</th></tr></thead>
+          <tbody>
+            <sc-for list="{{gaps}}" as="g" hint-placeholder-count="8">
+              <tr><td style="font-weight: 600; white-space: normal;">{{g.need}}</td><td class="t-mono" style="font-size: 11px; white-space: normal;">{{g.use}}</td><td style="white-space: normal;">{{g.where}}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="i-stack">
+      <h2 class="t-label" style="color: var(--inst-text); font-weight: 700; padding-bottom: 4px;">What changes from today's Sleep look</h2>
+      <sc-for list="{{changes}}" as="x" hint-placeholder-count="7">
+        <div class="i-block t-caption" style="display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 8px;"><span style="color: var(--inst-accent); font-weight: 700;">▸</span><span>{{x}}</span></div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+  <sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+    <section class="inst" data-theme="{{th.id}}" aria-label="Radial clock and planned slot, {{th.name}}" style="padding: 32px 32px 48px; display: flex; flex-direction: column; gap: 20px;">
+      <span class="t-label">5 · Radial clock and 6 · Planned slot · {{th.name}}</span>
+
+      <section class="i-block" aria-labelledby="rc-{{th.id}}" style="padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;">
+          <h3 id="rc-{{th.id}}" class="t-label">Sleep timing · 30 nights</h3>
+          <div class="i-legend">
+            <span><span class="i-sw i-sw--dot" style="background: var(--inst-chart-1);"></span>Fell asleep</span>
+            <span><span class="i-sw i-sw--diamond" style="background: var(--inst-chart-2);"></span>Woke up</span>
+            <span><span class="i-sw--mean"></span>Midpoint</span>
+            <button type="button" class="i-btn i-btn--quiet i-btn--sm" aria-pressed="false" style="color: var(--inst-accent);">Show Table</button>
+          </div>
+        </div>
+        <div style="position: relative; align-self: center; width: 320px; height: 320px;">
+          <svg class="i-radial" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="{{th.c.alt}}">
+            <circle class="grid" cx="160" cy="160" r="36"></circle>
+            <circle class="grid" cx="160" cy="160" r="84"></circle>
+            <circle class="grid" cx="160" cy="160" r="132"></circle>
+            <path class="grid" d="{{th.c.spokes}}"></path>
+            <path class="tick" d="{{th.c.ticks}}"></path>
+            <text class="lbl" x="160" y="16" text-anchor="middle" dominant-baseline="middle">00</text>
+            <text class="lbl" x="264.7" y="55.3" text-anchor="middle" dominant-baseline="middle">03</text>
+            <text class="lbl" x="306" y="160" text-anchor="middle" dominant-baseline="middle">06</text>
+            <text class="lbl" x="264.7" y="264.7" text-anchor="middle" dominant-baseline="middle">09</text>
+            <text class="lbl" x="160" y="306" text-anchor="middle" dominant-baseline="middle">12</text>
+            <text class="lbl" x="55.3" y="264.7" text-anchor="middle" dominant-baseline="middle">15</text>
+            <text class="lbl" x="14" y="160" text-anchor="middle" dominant-baseline="middle">18</text>
+            <text class="lbl" x="55.3" y="55.3" text-anchor="middle" dominant-baseline="middle">21</text>
+            <path class="win" d="{{th.c.wins}}"></path>
+            <path class="mid" d="{{th.c.mid}}"></path>
+            <path class="on" d="{{th.c.ons}}"></path>
+            <path class="off" d="{{th.c.offs}}"></path>
+            <circle class="hl" cx="160" cy="160" r="{{th.c.hlR}}" style="stroke-dasharray: 2 3; opacity: .5;"></circle>
+            <circle class="hl" cx="{{th.c.hlX}}" cy="{{th.c.hlY}}" r="5"></circle>
+            <text class="lbl" x="160" y="156" text-anchor="middle" style="font-size: 9px;">centre</text>
+            <text class="lbl" x="160" y="168" text-anchor="middle" style="font-size: 9px;">13 Sep</text>
+          </svg>
+          <div class="i-tooltip" role="tooltip" style="position: absolute; left: {{th.c.tipX}}px; top: {{th.c.tipY}}px; white-space: nowrap;"><b class="t-mono">{{th.c.hlNight}}</b><br>Fell asleep <span class="t-mono">{{th.c.hlOn}}</span> · Woke up <span class="t-mono">{{th.c.hlOff}}</span><br>Midpoint <span class="t-mono">{{th.c.hlMid}}</span></div>
+        </div>
+        <p class="i-help">Each ring is a night: oldest at the centre, newest at the rim. ● fell asleep, ◆ woke up, and the dashed line joins each night's midpoint.</p>
+      </section>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;">
+        <section class="i-block" aria-label="Show Table open" style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;"><span class="t-label">Show Table · open</span><button type="button" class="i-btn i-btn--quiet i-btn--sm" aria-pressed="true" style="color: var(--inst-accent);">Hide Table</button></div>
+          <table class="i-table" style="font-size: 12px;">
+            <caption class="i-sr">Sleep timing, newest first</caption>
+            <thead><tr><th scope="col">Night</th><th scope="col" class="num">Asleep</th><th scope="col" class="num">Woke</th><th scope="col" class="num">Mid</th></tr></thead>
+            <tbody>
+              <sc-for list="{{th.c.rows}}" as="r" hint-placeholder-count="6"><tr><td>{{r.night}}</td><td class="num">{{r.on}}</td><td class="num">{{r.off}}</td><td class="num">{{r.mid}}</td></tr></sc-for>
+            </tbody>
+          </table>
+          <span class="t-micro t-2">Rendered by the server, so it also shows without JavaScript.</span>
+        </section>
+        <section class="i-block" aria-label="Empty range" style="display: flex; flex-direction: column; gap: 8px;">
+          <span class="t-label">Empty range</span>
+          <div style="position: relative; align-self: center; width: 200px; height: 200px;">
+            <svg class="i-radial" viewBox="0 0 320 320" width="200" height="200" aria-hidden="true">
+              <circle class="grid" cx="160" cy="160" r="36"></circle><circle class="grid" cx="160" cy="160" r="84"></circle><circle class="grid" cx="160" cy="160" r="132"></circle>
+              <path class="tick" d="{{th.c.ticks}}"></path>
+            </svg>
+            <span class="i-stack" style="position: absolute; inset: 0; align-items: center; justify-content: center; text-align: center; gap: 2px;"><span style="font-size: 13px; font-weight: 600; background: var(--inst-surface); padding: 0 4px;">No nights in this range.</span></span>
+          </div>
+          <span class="t-micro t-2">Keeps its rings and ticks, and says why it is empty.</span>
+        </section>
+      </div>
+
+      <section class="i-planned" aria-labelledby="pl-{{th.id}}">
+        <span class="t-tag t-2">Planned</span>
+        <h3 id="pl-{{th.id}}" style="font-size: 13px; font-weight: 600;">Regularity, chronotype and social jetlag</h3>
+        <p class="t-caption t-2">Regularity (SRI), chronotype (MCTQ) and social jetlag appear once the metrics engine ships.</p>
+        <div class="ph" aria-hidden="true"><span></span><span></span><span></span></div>
+      </section>
+      <span class="t-micro t-2">The planned slot holds the height the finished section will take, so nothing below it moves on release day.</span>
+    </section>
+  </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const cx = 160, cy = 160, R0 = 36, R1 = 132, N = 30;
+    const f = (n) => n.toFixed(1);
+    const pt = (h, r) => { const a = (h / 24) * Math.PI * 2; return [cx + r * Math.sin(a), cy - r * Math.cos(a)]; };
+    const hm = (h) => { const m = Math.round((((h % 24) + 24) % 24) * 60); return String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const mons = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const jit = [0.2, -0.5, 0.7, -0.1, 0.4, -0.8, 0.1, 0.6, -0.3, 0.9, -0.6, 0.3, -0.2, 0.5, -0.9, 0.0, 0.8, -0.4, 0.2, -0.7, 0.6, -0.1, 0.4, -0.5, 0.9, -0.3, 0.1, 0.7, -0.6, 0.3];
+    const nights = [];
+    for (let i = 0; i < N; i++) {
+      const d = new Date(Date.UTC(2026, 8, 13 + i));
+      const wd = d.getUTCDay();
+      const weekendNo = Math.floor(i / 7);
+      const late = (wd === 6 || wd === 0) && weekendNo !== 2;
+      const on = late ? 24.75 + jit[i] * 0.35 : 23.3 + jit[i] * 0.25;
+      const off = (late ? 8.55 + jit[i] * 0.3 : 6.55 + jit[i] * 0.15) + 24;
+      const mid = (on + off) / 2;
+      nights.push({ label: days[wd] + ' ' + d.getUTCDate() + ' ' + mons[d.getUTCMonth()], on, off, mid, r: R0 + i * (R1 - R0) / (N - 1) });
+    }
+    const dot = (x, y, s) => 'M' + f(x - s) + ' ' + f(y) + 'a' + s + ' ' + s + ' 0 1 0 ' + (2 * s) + ' 0a' + s + ' ' + s + ' 0 1 0 ' + (-2 * s) + ' 0';
+    const dia = (x, y, s) => 'M' + f(x) + ' ' + f(y - s) + 'L' + f(x + s) + ' ' + f(y) + 'L' + f(x) + ' ' + f(y + s) + 'L' + f(x - s) + ' ' + f(y) + 'Z';
+    let wins = '', ons = '', offs = '', mid = '';
+    nights.forEach((n, i) => {
+      const [x1, y1] = pt(n.on, n.r); const [x2, y2] = pt(n.off, n.r); const [xm, ym] = pt(n.mid, n.r);
+      wins += 'M' + f(x1) + ' ' + f(y1) + 'A' + f(n.r) + ' ' + f(n.r) + ' 0 0 1 ' + f(x2) + ' ' + f(y2);
+      ons += dot(x1, y1, 2.4);
+      offs += dia(x2, y2, 3);
+      mid += (i ? 'L' : 'M') + f(xm) + ' ' + f(ym);
+    });
+    let spokes = '', ticks = '';
+    for (let h = 0; h < 24; h++) {
+      const [a, b] = pt(h, R1 + 3); const [c2, d2] = pt(h, R1 + (h % 3 === 0 ? 10 : 6));
+      ticks += 'M' + f(a) + ' ' + f(b) + 'L' + f(c2) + ' ' + f(d2);
+      if (h % 3 === 0) { const [e, g] = pt(h, R0); const [k, l] = pt(h, R1); spokes += 'M' + f(e) + ' ' + f(g) + 'L' + f(k) + ' ' + f(l); }
+    }
+    const hl = nights[N - 3];
+    const [hx, hy] = pt(hl.on, hl.r);
+    const c = {
+      wins, ons, offs, mid, spokes, ticks,
+      hlR: f(hl.r), hlX: f(hx), hlY: f(hy),
+      tipX: Math.round(hx + 10), tipY: Math.round(hy - 64),
+      hlNight: hl.label, hlOn: hm(hl.on), hlOff: hm(hl.off), hlMid: hm(hl.mid),
+      alt: '24-hour clock of 30 nights, 13 Sep to 12 Oct. On work nights you fell asleep about 23:20 and woke about 06:35. Three weekends ran later, to about 00:45 and 08:35. The table has every value.',
+      rows: nights.slice(-6).reverse().map((n) => ({ night: n.label, on: hm(n.on), off: hm(n.off), mid: hm(n.mid) }))
+    };
+    return {
+      c,
+      themes: [{ id: 'dark', name: 'Dark', c }, { id: 'light', name: 'Light', c }],
+      gaps: [
+        { need: 'Loading on HTMX swaps', use: '.i-spin + word · tr.is-saving · .htmx-request at 50%', where: 'Every Save, row Confirm, range and filter switch' },
+        { need: 'Theme toggle', use: '.i-seg System / Light / Dark', where: 'Footer of every page; sets data-theme on <html>' },
+        { need: 'Time-zone picker', use: '.i-input + <datalist> of IANA zones', where: 'People add and edit. Help: "Type a city, such as Chicago."' },
+        { need: 'Copy and QR for the webhook URL', use: 'Show-once secret card: ⎘ Copy + QR on a white plate', where: 'People, after Add or Rotate Key' },
+        { need: 'Session-expiry warning', use: '.i-banner--warning + Stay Signed In', where: 'From 10 minutes before the 12-hour limit' },
+        { need: 'Tables behind charts', use: 'Show Table toggle + server-rendered table', where: 'Every Trends chart; also the no-JavaScript view' },
+        { need: 'Readable quality flags', use: '.i-chip + a code-to-label table', where: 'Fact grid on Today and Night review' },
+        { need: 'Viewer name on admin pages', use: '.i-user always shows who is signed in', where: 'People, and every page while viewing someone' }
+      ],
+      changes: [
+        'The wordmark is "Sleep Dashboard", Title Case, set by the wordmark rule.',
+        'The current tab gets an accent underline and 600 weight, with no card background.',
+        'Breakpoints move from 40rem to the system’s 600 and 900. Columns hide at each.',
+        'Blocks are square, and tone separates them with 4px gaps. No borders or 0.5rem radius.',
+        'Chart series move to chart-1 (asleep), chart-2 (woke) and chart-4 (in bed).',
+        'Every banner starts with a glyph and a word: ✓ Fresh, ⚑ Getting stale, ✕ Stale.',
+        'Info flags become neutral ⓘ chips. Only a flag that needs action is amber.'
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Instrument: Sleep Today</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+.fl{--bg:#F6F8FA;--sf:#FFFFFF;--sf2:#EAEEF2;--tx:#1F2328;--tx2:#57606A;--ac:#00796B;--onac:#FFFFFF;--ok:#1A7F37;--okt:#DAFBE1;--warn:#9A6700;--err:#CF222E;--line:#D8DEE4;--ctl:#8C959F;--s1:#0969DA;--s2:#BC4C00;--sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;--mono:ui-monospace,"SF Mono","Roboto Mono",Menlo,Consolas,monospace;font-family:var(--sans);color:var(--tx);background:var(--bg);font-variant-numeric:tabular-nums}
+.fl *{box-sizing:border-box}
+.fl a{color:var(--ac)}
+.fl a:hover{color:var(--tx)}
+.fl button{font:inherit;color:inherit}
+.fl :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.fl th,.fl td{padding:0 12px;height:36px;text-align:left;white-space:nowrap}
+@media (max-width:600px){.fl .hide-sm{display:none}}
+</style>
+</helmet>
+<div class="fl" style="min-height: 1260px; display: flex; flex-direction: column;">
+
+<header style="background: var(--sf); border-bottom: 1px solid var(--line);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 16px; min-height: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 24px;">
+    <div style="display: flex; align-items: center; gap: 8px; min-height: 44px; margin-left: -8px;">
+      <button type="button" aria-label="Switch app" aria-haspopup="true" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: none; border: 0; color: var(--tx2); cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <span style="font-size: 15px; font-weight: 700; letter-spacing: -0.01em;">Sleep Dashboard</span>
+      <span style="display: inline-flex; align-items: center; height: 18px; padding: 0 8px; border-radius: 24px; background: #D29922; color: #0D1117; font-size: 9px; font-weight: 700; letter-spacing: 0.1em;">LAB</span>
+    </div>
+    <nav aria-label="Main" style="display: flex; flex-wrap: wrap; flex: 1 1 auto;">
+      <a href="#" aria-current="page" style="display: flex; align-items: center; height: 44px; padding: 0 10px; font-size: 13px; font-weight: 600; color: var(--tx); text-decoration: none; border-bottom: 2px solid var(--ac);">Today</a>
+      <a href="#" style="display: flex; align-items: center; height: 44px; padding: 0 10px; font-size: 13px; color: var(--tx2); text-decoration: none; border-bottom: 2px solid transparent;">Trends</a>
+      <a href="#" style="display: flex; align-items: center; height: 44px; padding: 0 10px; font-size: 13px; color: var(--tx2); text-decoration: none; border-bottom: 2px solid transparent;">Nights</a>
+      <a href="#" style="display: flex; align-items: center; height: 44px; padding: 0 10px; font-size: 13px; color: var(--tx2); text-decoration: none; border-bottom: 2px solid transparent;">Context</a>
+    </nav>
+    <div style="display: flex; align-items: center; gap: 12px; font-size: 12px; min-height: 44px;">
+      <span style="color: var(--tx2);">Andrew</span>
+      <button type="button" style="height: 32px; padding: 0 4px; background: none; border: 0; color: var(--tx2); font-size: 12px; text-decoration: underline; cursor: pointer;">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main style="flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+
+  <div style="display: flex; flex-direction: column; gap: 4px;">
+    <div role="note" style="background: var(--tx); color: var(--sf); padding: 8px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13px;">
+      <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 2px 6px; border: 1px solid var(--sf);">VIEWING</span>
+      <span>Viewing <strong>Sam</strong>.</span>
+      <a href="#" style="color: #5EEAD4;">Back to your own</a>
+    </div>
+    <div role="status" style="background: var(--okt); padding: 8px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13px;">
+      <span style="font-weight: 700; color: var(--ok);">✓ Fresh</span>
+      <span>Synced 41 min ago. Last night is in.</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px;">
+    <h1 style="margin: 0; font-size: 26px; font-weight: 700;">Today</h1>
+    <span style="font-family: var(--mono); font-size: 12px; color: var(--tx2);">Night of Tue 13 → Wed 14 Oct</span>
+  </div>
+
+  <section aria-label="Last night" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px;">
+    <div style="background: var(--sf); padding: 12px; display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: var(--tx2);">ASLEEP</span>
+      <span style="font-family: var(--mono); font-size: 22px; font-weight: 700;">7h 12m</span>
+      <span style="font-size: 10px; color: var(--tx2);">+8m vs mean</span>
+    </div>
+    <div style="background: var(--sf); padding: 12px; display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: var(--tx2);">IN BED</span>
+      <span style="font-family: var(--mono); font-size: 22px; font-weight: 700;">7h 48m</span>
+      <span style="font-size: 10px; color: var(--tx2);">92% asleep</span>
+    </div>
+    <div style="background: var(--sf); padding: 12px; display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: var(--tx2);">BEDTIME</span>
+      <span style="font-family: var(--mono); font-size: 22px; font-weight: 700;">23:14</span>
+      <span style="font-size: 10px; color: var(--tx2);">17m earlier than mean</span>
+    </div>
+    <div style="background: var(--sf); padding: 12px; display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: var(--tx2);">WAKE</span>
+      <span style="font-family: var(--mono); font-size: 22px; font-weight: 700;">06:58</span>
+      <span style="font-size: 10px; color: var(--tx2);">17m later than mean</span>
+    </div>
+    <div style="background: var(--sf); padding: 12px; display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-size: 11px; letter-spacing: 0.08em; color: var(--tx2);">14-NIGHT MEAN</span>
+      <span style="font-family: var(--mono); font-size: 22px; font-weight: 700;">7h 04m</span>
+      <span style="font-size: 10px; color: var(--tx2);">asleep</span>
+    </div>
+  </section>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: stretch;">
+    <section aria-labelledby="a-l14" style="flex: 999 1 560px; min-width: 0; background: var(--sf); padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;">
+        <h2 id="a-l14" style="margin: 0; font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2);">LAST 14 NIGHTS</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-size: 11px; color: var(--tx2);">
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--s1);"></span>Asleep</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border: 1px solid var(--s1);"></span>In bed</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 14px; border-top: 1.5px dashed var(--tx2);"></span>Mean</span>
+          <button type="button" aria-pressed="false" style="height: 32px; padding: 0 4px; background: none; border: 0; color: var(--ac); font-size: 12px; text-decoration: underline; cursor: pointer;">Show Table</button>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div aria-hidden="true" style="width: 24px; flex: none; position: relative; height: 160px; font-family: var(--mono); font-size: 10px; color: var(--tx2);">
+          <span style="position: absolute; right: 0; bottom: 122px;">8h</span>
+          <span style="position: absolute; right: 0; bottom: 58px;">4h</span>
+          <span style="position: absolute; right: 0; bottom: -6px;">0</span>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;">
+          <div role="img" aria-label="Bar chart. Asleep and in-bed time for the last 14 nights. Mean asleep 7 hours 4 minutes. Last night 7 hours 12 minutes asleep, 7 hours 48 minutes in bed." style="position: relative; height: 160px; display: flex; gap: 4px; border-bottom: 1px solid var(--ctl);">
+            <span style="position: absolute; left: 0; right: 0; bottom: 128px; border-top: 1px solid var(--line);"></span>
+            <span style="position: absolute; left: 0; right: 0; bottom: 64px; border-top: 1px solid var(--line);"></span>
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="14">
+              <div style="flex: 1; position: relative; height: 160px;">
+                <span style="position: absolute; bottom: 0; left: 18%; right: 18%; height: {{b.bed}}px; border: 1px solid var(--s1); border-bottom: 0;"></span>
+                <span style="position: absolute; bottom: 0; left: 18%; right: 18%; height: {{b.sl}}px; background: var(--s1);"></span>
+              </div>
+            </sc-for>
+            <span style="position: absolute; left: 0; right: 0; bottom: {{meanPx}}px; border-top: 1.5px dashed var(--tx);"></span>
+            <span style="position: absolute; right: 0; bottom: {{meanLabelPx}}px; background: var(--sf); padding: 0 4px; font-family: var(--mono); font-size: 10px; color: var(--tx);">mean 7h 04m</span>
+          </div>
+          <div aria-hidden="true" style="display: flex; gap: 4px; font-family: var(--mono); font-size: 10px; color: var(--tx2);">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="14">
+              <span style="flex: 1; text-align: center;">{{b.d}}</span>
+            </sc-for>
+          </div>
+          <span style="font-size: 10px; color: var(--tx2);">October · nights end on the date shown</span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="a-win" style="flex: 1 1 300px; min-width: 0; background: var(--sf); padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="a-win" style="margin: 0; font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2);">SLEEP WINDOW · 24 H</h2>
+      <svg viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="24-hour clock. Last night 23:14 to 06:58. 14-night mean 23:31 to 06:41." style="align-self: center; font-family: ui-monospace, Menlo, monospace;">
+        <circle cx="100" cy="100" r="64" fill="none" stroke="#EAEEF2" stroke-width="12"></circle>
+        <line x1="100" y1="30" x2="100" y2="40" stroke="#8C959F" stroke-width="1"></line>
+        <line x1="170" y1="100" x2="160" y2="100" stroke="#8C959F" stroke-width="1"></line>
+        <line x1="100" y1="170" x2="100" y2="160" stroke="#8C959F" stroke-width="1"></line>
+        <line x1="30" y1="100" x2="40" y2="100" stroke="#8C959F" stroke-width="1"></line>
+        <path d="M89.9 20.6 A80 80 0 0 1 178.7 114.2" fill="none" stroke="#1F2328" stroke-width="1.5" stroke-dasharray="4 3"></path>
+        <path d="M87.2 37.3 A64 64 0 0 1 162.0 116.0" fill="none" stroke="#0969DA" stroke-width="12"></path>
+        <text x="100" y="11" text-anchor="middle" font-size="10" fill="#57606A">00</text>
+        <text x="197" y="104" text-anchor="end" font-size="10" fill="#57606A">06</text>
+        <text x="100" y="198" text-anchor="middle" font-size="10" fill="#57606A">12</text>
+        <text x="3" y="104" text-anchor="start" font-size="10" fill="#57606A">18</text>
+        <text x="100" y="100" text-anchor="middle" font-size="18" font-weight="700" fill="#1F2328">7h 12m</text>
+        <text x="100" y="116" text-anchor="middle" font-size="10" fill="#57606A">asleep</text>
+      </svg>
+      <div style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--tx2);">
+        <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 14px; height: 6px; background: var(--s1);"></span>Last night <span style="font-family: var(--mono); color: var(--tx);">23:14–06:58</span></span>
+        <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 14px; border-top: 1.5px dashed var(--tx);"></span>14-night mean <span style="font-family: var(--mono); color: var(--tx);">23:31–06:41</span></span>
+      </div>
+    </section>
+  </div>
+
+  <section aria-labelledby="a-rn" style="display: flex; flex-direction: column; gap: 4px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding-bottom: 4px;">
+      <h2 id="a-rn" style="margin: 0; font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2);">RECENT NIGHTS</h2>
+      <span id="a-lab" style="font-size: 12px; color: var(--warn); font-weight: 600;">⚑ LAB: writes disabled. Reviews are made in LIVE.</span>
+    </div>
+    <div style="background: var(--sf); overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--line);">
+            <th scope="col" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2);">NIGHT</th>
+            <th scope="col" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2); text-align: right;">ASLEEP</th>
+            <th scope="col" class="hide-sm" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2); text-align: right;">IN BED</th>
+            <th scope="col" class="hide-sm" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2); text-align: right;">BEDTIME</th>
+            <th scope="col" class="hide-sm" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2); text-align: right;">WAKE</th>
+            <th scope="col" style="font-size: 11px; font-weight: 400; letter-spacing: 0.08em; color: var(--tx2);">STATUS</th>
+            <th scope="col" style="width: 1%;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: var(--bg);">
+            <th scope="colgroup" colspan="7" style="height: 28px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--tx2);">OCTOBER 2026</th>
+          </tr>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+            <tr style="border-bottom: 1px solid var(--line);">
+              <td style="font-weight: 600;">{{r.night}}</td>
+              <td style="font-family: var(--mono); text-align: right;">{{r.sl}}</td>
+              <td class="hide-sm" style="font-family: var(--mono); text-align: right;">{{r.bed}}</td>
+              <td class="hide-sm" style="font-family: var(--mono); text-align: right;">{{r.on}}</td>
+              <td class="hide-sm" style="font-family: var(--mono); text-align: right;">{{r.off}}</td>
+              <td>
+                <sc-if value="{{r.todo}}" hint-placeholder-val="{{false}}">
+                  <span style="display: inline-flex; align-items: center; height: 18px; padding: 0 6px; background: var(--sf2); color: var(--warn); font-size: 9px; font-weight: 700; letter-spacing: 0.1em;">TO REVIEW</span>
+                </sc-if>
+                <sc-if value="{{r.done}}" hint-placeholder-val="{{true}}">
+                  <span style="display: inline-flex; align-items: center; height: 18px; padding: 0 6px; background: var(--sf2); color: var(--ok); font-size: 9px; font-weight: 700; letter-spacing: 0.1em;">✓ REVIEWED</span>
+                </sc-if>
+              </td>
+              <td>
+                <button type="button" disabled aria-describedby="a-lab" style="height: 28px; padding: 0 12px; border-radius: 24px; background: var(--sf2); border: 1px dashed var(--ctl); color: var(--tx2); font-size: 12px; cursor: not-allowed;">Review</button>
+              </td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer style="width: 100%; max-width: 1280px; margin: 0 auto; padding: 12px 16px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--tx2);">
+  <span>Data from sleep-ingest. Stage and wake detail is recorded, never shown.</span>
+  <span style="font-family: var(--mono);">sleep-dashboard main · a41c0d2</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1260}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const asleep = [7.2, 6.8, 7.5, 6.1, 7.9, 7.0, 6.5, 7.3, 8.1, 6.9, 7.4, 5.8, 7.1, 7.2];
+    const extra = [0.5, 0.4, 0.6, 0.7, 0.4, 0.5, 0.6, 0.4, 0.5, 0.6, 0.5, 0.8, 0.4, 0.6];
+    const px = 16;
+    const bars = asleep.map((h, i) => ({ d: String(i + 1), sl: Math.round(h * px), bed: Math.round((h + extra[i]) * px) }));
+    const mean = asleep.reduce((a, b) => a + b, 0) / asleep.length;
+    const meanPx = Math.round(mean * px);
+    const R = (night, sl, bed, on, off, todo) => ({ night, sl, bed, on, off, todo, done: !todo });
+    return {
+      bars,
+      meanPx,
+      meanLabelPx: meanPx + 3,
+      rows: [
+        R('Wed 14', '7h 12m', '7h 48m', '23:14', '06:58', true),
+        R('Tue 13', '7h 06m', '7h 30m', '23:40', '07:06', true),
+        R('Mon 12', '5h 48m', '6h 36m', '00:52', '07:28', false),
+        R('Sun 11', '7h 24m', '7h 54m', '23:02', '06:56', false),
+        R('Sat 10', '6h 54m', '7h 30m', '23:51', '07:21', false)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

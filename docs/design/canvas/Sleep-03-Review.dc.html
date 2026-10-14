@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Review chip and nights table row</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+.callout{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--inst-accent);color:var(--inst-on-accent);font:700 10px ui-monospace,monospace;flex:none}
+</style>
+</helmet>
+<div style="width: 1440px; min-height: 3300px; display: flex; flex-direction: column; background: #F6F8FA;">
+<sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+  <div class="inst" data-theme="{{th.id}}" style="padding: 40px 48px 48px; display: flex; flex-direction: column; gap: 28px;">
+    <div class="i-stack" style="gap: 4px;">
+      <span class="t-label">Sleep Dashboard · 3 · Components · {{th.name}}</span>
+      <h1 class="t-title">Review chip and nights table row</h1>
+    </div>
+
+    <section class="i-stack" aria-labelledby="rc-{{th.id}}">
+      <h2 id="rc-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Review chip · six verdicts, three need you</h2>
+      <div class="i-table-wrap">
+        <table class="i-table">
+          <thead><tr><th scope="col">Chip</th><th scope="col">Kind</th><th scope="col">Needs review</th><th scope="col">Means</th><th scope="col">Row action</th></tr></thead>
+          <tbody>
+            <sc-for list="{{th.chips}}" as="c" hint-placeholder-count="6">
+              <tr>
+                <td><span class="i-chip {{c.cls}}"><sc-if value="{{c.dot}}" hint-placeholder-val="{{true}}"><span class="i-dot i-dot--hollow"></span></sc-if>{{c.label}}</span></td>
+                <td class="t-mono" style="font-size: 12px;">{{c.kind}}</td>
+                <td>{{c.needs}}</td>
+                <td style="white-space: normal;">{{c.means}}</td>
+                <td class="t-2">{{c.act}}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px;">
+        <div class="i-block t-caption"><b>Glyph, not colour.</b> Needs review gets a hollow dot. Watch data changed gets ⚑, and both kinds of done get ✓. Corrected differs from Confirmed by its dashed edge, so it reads in greyscale.</div>
+        <div class="i-block t-caption"><b>Unavailable</b> is outlined, with no fill, in text-2. That keeps it readable at AA while showing it is not a verdict.</div>
+        <div class="i-block t-caption"><b>Markup.</b> <span class="t-mono">&lt;span class="i-chip …" data-kind="todo"&gt;</span>. The words are the label. No tooltip carries meaning.</div>
+      </div>
+    </section>
+
+    <section class="i-stack" aria-labelledby="nt-{{th.id}}">
+      <h2 id="nt-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Nights table row · every state, and the inline-confirm swap</h2>
+      <div class="i-block" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;">
+        <div class="i-stack" style="flex: 1; gap: 0;"><h3 style="font-size: 16px; font-weight: 700;">All nights</h3><span class="t-meta t-2">31 nights · 4 to review</span></div>
+        <div class="i-seg" role="radiogroup" aria-label="Show"><button type="button" role="radio" aria-checked="true">All</button><button type="button" role="radio" aria-checked="false">To review</button></div>
+      </div>
+      <div class="i-table-wrap">
+        <table class="i-table">
+          <thead>
+            <tr><th scope="col" style="width: 1%;"><span class="i-sr">State</span></th><th scope="col">Night</th><th scope="col" class="num">Bed</th><th scope="col" class="num">Up</th><th scope="col" class="num">Sleep</th><th scope="col" class="num">In bed ◌◌</th><th scope="col" class="num">Eff. ◌◌</th><th scope="col">Day ◌◌</th><th scope="col">Review</th></tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{th.groups}}" as="g" hint-placeholder-count="3">
+              <tr class="i-group"><th scope="colgroup" colspan="9">{{g.name}}</th></tr>
+              <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+                <sc-if value="{{r.full}}" hint-placeholder-val="{{true}}">
+                  <tr class="{{r.cls}}" aria-busy="{{r.busy}}">
+                    <td><span class="callout">{{r.n}}</span></td>
+                    <td style="font-weight: 600;"><span class="i-row" style="gap: 6px;"><a href="#">{{r.night}}</a><sc-if value="{{r.dst}}" hint-placeholder-val="{{false}}"><span class="i-chip i-chip--progress">DST</span></sc-if></span></td>
+                    <td class="num">{{r.bed}}</td>
+                    <td class="num">{{r.up}}</td>
+                    <td class="num">{{r.sleep}}</td>
+                    <td class="num">{{r.inbed}}</td>
+                    <td class="num">{{r.eff}}</td>
+                    <td>{{r.day}}</td>
+                    <td>
+                      <span class="i-row" style="gap: 8px; flex-wrap: nowrap;">
+                        <span class="i-chip {{r.chipCls}}"><sc-if value="{{r.dot}}" hint-placeholder-val="{{true}}"><span class="i-dot i-dot--hollow"></span></sc-if>{{r.chipLabel}}</span>
+                        <sc-if value="{{r.confirm}}" hint-placeholder-val="{{true}}"><button type="button" class="i-btn i-btn--secondary i-btn--sm {{r.btnCls}}">Confirm</button></sc-if>
+                        <sc-if value="{{r.saving}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--inst-text-2);"><span class="i-spin"></span>Confirming</span></sc-if>
+                        <sc-if value="{{r.ok}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok" role="status">Confirmed.</span></sc-if>
+                        <sc-if value="{{r.err}}" hint-placeholder-val="{{false}}"><span class="i-msg-error" role="status">✕ {{r.err}}</span></sc-if>
+                        <sc-if value="{{r.reload}}" hint-placeholder-val="{{false}}"><a href="#" class="i-btn i-btn--secondary i-btn--sm">↩ Reload</a></sc-if>
+                      </span>
+                    </td>
+                  </tr>
+                </sc-if>
+                <sc-if value="{{r.refused}}" hint-placeholder-val="{{false}}">
+                  <tr class="is-error"><td><span class="callout">{{r.n}}</span></td><td colspan="8"><span class="i-msg-error" role="status">✕ {{r.msg}}</span></td></tr>
+                </sc-if>
+              </sc-for>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px;">
+        <sc-for list="{{th.legend}}" as="l" hint-placeholder-count="12">
+          <div class="i-block" style="display: flex; gap: 8px; padding: 8px 12px;"><span class="callout">{{l.n}}</span><span class="t-caption"><b>{{l.t}}</b> {{l.d}}</span></div>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;">
+        <div class="i-block t-caption"><b>The swap.</b> Confirm posts with <span class="t-mono">hx-target="closest tr" hx-swap="outerHTML"</span>. The server returns the one row, with the new chip and a message in the review cell. The row holds accent-tint for 2 s. The message stays until the page reloads, so it can be read again.</div>
+        <div class="i-block t-caption"><b>Columns.</b> The three marked ◌◌ (In bed, Eff., Day) hide below 600. Night, Bed, Up, Sleep and Review never hide. Day reads "Work · alarm", "Free · no alarm", "Work" when the alarm is unknown, or "—".</div>
+      </div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 360px; gap: 24px; align-items: start;">
+      <section class="i-stack" aria-labelledby="wo-{{th.id}}">
+        <h2 id="wo-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Confirming off · LAB, or no token</h2>
+        <p id="why-{{th.id}}" class="i-reason" style="padding: 4px 0;">⚑ Confirming is off: LAB: writes disabled.</p>
+        <div class="i-table-wrap">
+          <table class="i-table">
+            <tbody>
+              <tr><td style="font-weight: 600;"><a href="#">Mon 12 Oct</a></td><td class="num">7h 05m</td><td><span class="i-row" style="gap: 8px; flex-wrap: nowrap;"><span class="i-chip"><span class="i-dot i-dot--hollow"></span>To review</span><button type="button" class="i-btn i-btn--secondary i-btn--sm" disabled="" aria-describedby="why-{{th.id}}">Confirm</button></span></td></tr>
+              <tr><td style="font-weight: 600;"><a href="#">Sun 11 Oct</a></td><td class="num">7h 12m</td><td><span class="i-chip i-chip--done">✓ Confirmed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="t-micro t-2">One note above the table, not one per row. Other reasons read "Confirming is off: writes disabled." and "Confirming is off: context token not configured."</span>
+      </section>
+
+      <section class="i-stack" aria-labelledby="nr-{{th.id}}">
+        <h2 id="nr-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Reviews not supported</h2>
+        <div class="i-banner"><b>ⓘ Reviews</b><span>This sleep-ingest does not support reviews yet.</span></div>
+        <div class="i-table-wrap">
+          <table class="i-table">
+            <tbody>
+              <tr><td style="font-weight: 600;"><a href="#">Mon 12 Oct</a></td><td class="num">7h 05m</td><td><span class="i-chip i-chip--off">Review unavailable</span></td></tr>
+              <tr><td style="font-weight: 600;"><a href="#">Sun 11 Oct</a></td><td class="num">7h 12m</td><td><span class="i-chip i-chip--off">Review unavailable</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h2 class="t-label" style="padding: 16px 0 4px;">Empty</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;">
+          <div class="i-block" role="status" style="padding: 24px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+            <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: var(--inst-success);">✓</span>
+            <span style="font-size: 14px; font-weight: 700;">Every night is reviewed.</span>
+            <span class="t-caption t-2">New nights show up here after each sync.</span>
+            <a href="#" class="i-btn i-btn--secondary i-btn--sm">Show All Nights</a>
+          </div>
+          <div class="i-block" role="status" style="padding: 24px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+            <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: var(--inst-text-2);">—</span>
+            <span style="font-size: 14px; font-weight: 700;">No nights yet.</span>
+            <span class="t-caption t-2">Nights appear here after the watch's first sync.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="i-stack" aria-labelledby="nw-{{th.id}}">
+        <h2 id="nw-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Narrow · 360</h2>
+        <div style="width: 360px; background: var(--inst-bg); padding: 16px; box-shadow: 0 0 0 1px var(--inst-line); display: flex; flex-direction: column; gap: 4px;">
+          <div class="i-block" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+            <span class="i-stack" style="gap: 0;"><span style="font-size: 14px; font-weight: 700;">All nights</span><span class="t-meta t-2">31 · 4 to review</span></span>
+            <div class="i-seg" role="radiogroup" aria-label="Show"><button type="button" role="radio" aria-checked="false">All</button><button type="button" role="radio" aria-checked="true">To review</button></div>
+          </div>
+          <div class="i-table-wrap">
+            <table class="i-table">
+              <thead><tr><th scope="col">Night</th><th scope="col" class="num">Bed</th><th scope="col" class="num">Up</th><th scope="col" class="num">Sleep</th><th scope="col">Review</th></tr></thead>
+              <tbody>
+                <tr class="i-group"><th scope="colgroup" colspan="5">October 2026</th></tr>
+                <tr><td style="font-weight: 600;"><a href="#">Mon 12</a></td><td class="num">23:05</td><td class="num">06:50</td><td class="num">7h 05m</td><td><span class="i-stack" style="gap: 4px; align-items: flex-start; padding: 6px 0;"><span class="i-chip"><span class="i-dot i-dot--hollow"></span>To review</span><button type="button" class="i-btn i-btn--secondary i-btn--sm">Confirm</button></span></td></tr>
+                <tr class="is-saved"><td style="font-weight: 600;"><a href="#">Fri 9</a></td><td class="num">23:15</td><td class="num">06:40</td><td class="num">6h 55m</td><td><span class="i-stack" style="gap: 4px; align-items: flex-start; padding: 6px 0;"><span class="i-chip i-chip--done">✓ Confirmed</span><span class="i-msg-ok" role="status">Confirmed.</span></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <span class="t-micro t-2">The review cell stacks: chip, then the action or message. If the table is still wider than the screen, it scrolls inside its box and the page never does.</span>
+        </div>
+      </section>
+    </div>
+  </div>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const dur = (m) => Math.floor(m / 60) + 'h ' + String(m % 60).padStart(2, '0') + 'm';
+    const add = (hhmm, m) => { const [h, mi] = hhmm.split(':').map(Number); const t = (h * 60 + mi + m) % 1440; return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); };
+    const CH = {
+      todo: { cls: '', dot: true, label: 'To review' },
+      todoC: { cls: '', dot: true, label: 'Corrected, not confirmed' },
+      changed: { cls: 'i-chip--progress', dot: false, label: '⚑ Watch data changed' },
+      ok: { cls: 'i-chip--done', dot: false, label: '✓ Confirmed' },
+      edited: { cls: 'i-chip--done i-chip--amended', dot: false, label: '✓ Corrected' },
+      none: { cls: 'i-chip--off', dot: false, label: 'Review unavailable' }
+    };
+    const R = (n, night, bed, inbed, sleep, day, chip, o) => {
+      const c = CH[chip];
+      const x = Object.assign({ cls: '', dst: false, confirm: false, saving: false, ok: false, err: '', reload: false, busy: 'false', btnCls: '' }, o || {});
+      return Object.assign({ full: true, refused: false, n: String(n), night, bed, up: add(bed, inbed), sleep: dur(sleep), inbed: dur(inbed), eff: (sleep / inbed * 100).toFixed(1) + '%', day, chipCls: c.cls, dot: c.dot, chipLabel: c.label }, x);
+    };
+    const groups = [
+      { name: 'November 2026', rows: [
+        R(1, 'Sun 2 Nov', '23:30', 580, 490, 'Free · no alarm', 'todo', { dst: true, confirm: true })
+      ] },
+      { name: 'October 2026', rows: [
+        R(2, 'Mon 12 Oct', '23:05', 465, 425, 'Work · alarm', 'todo', { confirm: true }),
+        R(3, 'Sun 11 Oct', '23:40', 450, 432, 'Work · no alarm', 'todo', { confirm: true, cls: 'is-hover', btnCls: 'is-hover' }),
+        R(4, 'Sat 10 Oct', '01:05', 465, 440, 'Free · no alarm', 'todoC', { confirm: true }),
+        R(5, 'Fri 9 Oct', '23:15', 445, 415, 'Work · alarm', 'changed', { confirm: true }),
+        R(6, 'Thu 8 Oct', '23:20', 445, 410, 'Work · alarm', 'todo', { saving: true, cls: 'is-saving', busy: 'true' }),
+        R(7, 'Wed 7 Oct', '23:10', 455, 420, 'Work · alarm', 'ok', { ok: true, cls: 'is-saved' }),
+        R(8, 'Tue 6 Oct', '23:25', 440, 400, 'Work · alarm', 'todo', { err: 'Not saved: query API timed out.', confirm: true, cls: 'is-error' }),
+        R(9, 'Mon 5 Oct', '23:00', 470, 431, 'Work · alarm', 'todo', { err: 'Not saved: the page is out of date. Reload it.', reload: true, cls: 'is-error' }),
+        R(10, 'Sun 4 Oct', '23:50', 455, 418, 'Free · alarm', 'ok'),
+        R(11, 'Sat 3 Oct', '00:55', 490, 455, '—', 'edited'),
+        { full: false, refused: true, n: '12', msg: 'No night found for 2026-10-02.' }
+      ] },
+      { name: 'September 2026', rows: [
+        R(13, 'Wed 30 Sep', '23:15', 460, 422, 'Work', 'ok')
+      ] }
+    ];
+    const legend = [
+      { n: '1', t: 'DST night.', d: 'A DST chip next to the date. Times stay in each end’s own zone.' },
+      { n: '2', t: 'To review.', d: 'Hollow-dot chip with Confirm. The default.' },
+      { n: '3', t: 'Hover.', d: 'The row tints. Confirm takes its hover.' },
+      { n: '4', t: 'Corrected, not confirmed.', d: 'Your times, not confirmed yet. Confirm.' },
+      { n: '5', t: 'Watch data changed.', d: 'The watch resent this night. ⚑ chip, Confirm.' },
+      { n: '6', t: 'Confirming.', d: 'The row dims, aria-busy, spinner and word. No other row locks.' },
+      { n: '7', t: 'Swapped: confirmed.', d: 'New chip, “Confirmed.”, accent-tint for 2 s.' },
+      { n: '8', t: 'Swapped: failed.', d: 'Error tint, “✕ Not saved: {reason}.”, Confirm stays to retry.' },
+      { n: '9', t: 'Swapped: out of date.', d: '“✕ Not saved: the page is out of date. Reload it.” and ↩ Reload.' },
+      { n: '10', t: 'Confirmed.', d: 'Chip only. Open the night to change it.' },
+      { n: '11', t: 'Corrected.', d: 'Dashed ✓ chip. Day not tagged reads “—”.' },
+      { n: '12', t: 'Refused early.', d: 'The night is gone. The row becomes one message.' }
+    ];
+    const chips = [
+      Object.assign({ kind: 'todo', needs: 'Yes', means: 'The watch’s night. Nobody has checked it yet.', act: 'Confirm' }, CH.todo),
+      Object.assign({ kind: 'todo', needs: 'Yes', means: 'You changed some times but have not confirmed them.', act: 'Confirm' }, CH.todoC),
+      Object.assign({ kind: 'changed', needs: 'Yes', means: 'The watch sent this night again after it was reviewed. Check it again.', act: 'Confirm' }, CH.changed),
+      Object.assign({ kind: 'ok', needs: 'No', means: 'Checked: the watch’s times are right.', act: '—' }, CH.ok),
+      Object.assign({ kind: 'edited', needs: 'No', means: 'Checked, with your corrected times.', act: '—' }, CH.edited),
+      Object.assign({ kind: 'none', needs: 'No', means: 'This sleep-ingest has no reviews.', act: '—' }, CH.none)
+    ];
+    const shared = { groups, legend, chips };
+    return { themes: [Object.assign({ id: 'dark', name: 'Dark' }, shared), Object.assign({ id: 'light', name: 'Light' }, shared)] };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Today beside Jarvis Live</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div class="inst" data-theme="light" style="width: 2048px; min-height: 2200px; display: flex; flex-direction: column;">
+
+  <div style="padding: 48px 48px 32px; display: flex; flex-direction: column; gap: 6px;">
+    <span class="t-label">Sleep Dashboard · 1 · Family check</span>
+    <h1 class="t-display">Today, beside Jarvis Live</h1>
+    <p class="t-body-lg t-2" style="max-width: 900px;">The same shell, tokens and components in both apps. Only the wordmark and the content differ. Each pair is at the same width and in the same theme.</p>
+  </div>
+
+<sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+  <section class="inst" data-theme="{{th.id}}" aria-label="{{th.name}} theme" style="padding: 32px 48px 48px; display: flex; flex-direction: column; gap: 12px;">
+    <span class="t-label">{{th.name}}</span>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: stretch;">
+
+      <!-- Jarvis Live: the Live tab, rebuilt from instrument.css classes -->
+      <div class="i-stack" style="gap: 8px;">
+        <span class="t-caption t-2">Jarvis Live · Live</span>
+        <div class="inst" data-theme="{{th.id}}" style="flex: 1; display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--inst-line);">
+          <header class="i-header">
+            <div class="i-header-in">
+              <div class="i-brand">
+                <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+                <a href="#" class="i-wordmark">Jarvis Live</a>
+                <span class="i-badge i-badge--live" title="Live: the latest release">Live</span>
+              </div>
+              <nav class="i-nav" aria-label="Main">
+                <a href="#" aria-current="page">Live</a><a href="#">Sessions</a><a href="#">Notes</a><a href="#">Work</a>
+              </nav>
+              <div class="i-user"><span>Andrew</span><button type="button" class="i-btn i-btn--quiet i-btn--sm">Sign out</button></div>
+            </div>
+          </header>
+
+          <main class="i-page" style="flex: 1; width: 100%;">
+            <section aria-label="Session" class="i-block" style="padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;">
+              <div class="i-stack" style="flex: 1 1 240px; min-width: 0; gap: 2px;">
+                <span class="t-label">Meeting</span>
+                <h2 style="font-size: 16px; font-weight: 700;">Platform sync</h2>
+                <span class="t-mono t-meta t-2">Started 14:02 · 3 speakers · English</span>
+              </div>
+              <span class="i-live" role="status" aria-label="Recording, 23 minutes 41 seconds"><span class="i-dot i-breathe"></span><span class="lbl">REC</span><span class="time">00:23:41</span><span class="i-meter" aria-hidden="true"><span></span><span></span><span></span></span></span>
+              <button type="button" class="i-btn i-btn--secondary">■ Stop</button>
+            </section>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;">
+              <section aria-label="Transcript" class="i-stack" style="flex: 999 1 480px; min-width: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 4px;"><h3 class="t-label">Transcript</h3><span class="t-meta t-2">Auto-scroll on</span></div>
+                <sc-for list="{{th.lines}}" as="l" hint-placeholder-count="4">
+                  <div class="i-block" style="display: flex; gap: 12px;">
+                    <div class="i-stack" style="width: 64px; flex: none; align-items: flex-start;">
+                      <sc-if value="{{l.you}}" hint-placeholder-val="{{true}}"><span class="t-tag" style="padding: 2px 6px; background: var(--inst-accent); color: var(--inst-on-accent);">You</span></sc-if>
+                      <sc-if value="{{l.them}}" hint-placeholder-val="{{false}}"><span class="t-tag" style="padding: 2px 6px; background: var(--inst-them); color: var(--inst-on-them);">Them</span></sc-if>
+                      <span class="t-mono t-meta t-2">{{l.t}}</span>
+                    </div>
+                    <p class="t-chat">{{l.text}}</p>
+                  </div>
+                </sc-for>
+              </section>
+
+              <aside aria-label="Copilot" class="i-stack" style="flex: 1 1 300px; min-width: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 4px;"><h3 class="t-label">Copilot</h3><span class="t-meta t-2">Local model</span></div>
+                <div class="i-block i-stack" style="gap: 8px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;"><span class="t-tag" style="color: var(--inst-accent);">Suggested question</span><span class="t-mono t-meta t-2">14:22</span></div>
+                  <p class="t-body">Which two cron jobs still point at the old cluster, and who owns them?</p>
+                  <div class="i-row"><button type="button" class="i-btn i-btn--secondary i-btn--sm">⎘ Copy</button><button type="button" class="i-btn i-btn--quiet i-btn--sm">✕ Dismiss</button></div>
+                </div>
+                <div class="i-block" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px;">
+                  <div style="flex: 1; min-width: 0;"><div style="font-size: 13px; font-weight: 600;">Draft retirement checklist</div><div class="t-mono t-meta t-2">claude-code · 2 min ago</div></div>
+                  <span class="i-chip i-chip--progress">In progress</span>
+                </div>
+                <div class="i-block" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px;">
+                  <div style="flex: 1; min-width: 0;"><div style="font-size: 13px; font-weight: 600;">Summarise last sync</div><div class="t-mono t-meta t-2">claude-code · 18 min ago</div></div>
+                  <span class="i-chip i-chip--done">✓ Done</span>
+                </div>
+                <form class="i-block i-stack" style="margin-top: 12px; gap: 8px;">
+                  <label for="j-ask-{{th.id}}" class="t-label">Ask Copilot</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input id="j-ask-{{th.id}}" type="text" class="i-input" placeholder="Ask about this meeting" aria-describedby="j-ask-h-{{th.id}}" style="flex: 1; min-width: 0;">
+                    <button type="submit" class="i-btn i-btn--primary">Ask</button>
+                  </div>
+                  <span id="j-ask-h-{{th.id}}" class="i-help">Answers use this meeting only. Nothing leaves your network.</span>
+                </form>
+              </aside>
+            </div>
+          </main>
+
+          <footer class="i-footer" style="width: 100%;"><span>Notes publish as a pull request when you stop.</span><span class="t-mono">server-v2.14.0 · 3f9c2a1</span></footer>
+        </div>
+      </div>
+
+      <!-- Sleep Dashboard: Today -->
+      <div class="i-stack" style="gap: 8px;">
+        <span class="t-caption t-2">Sleep Dashboard · Today</span>
+        <div class="inst" data-theme="{{th.id}}" style="flex: 1; display: flex; flex-direction: column; box-shadow: 0 0 0 1px var(--inst-line);">
+          <header class="i-header">
+            <div class="i-header-in">
+              <div class="i-brand">
+                <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+                <a href="#" class="i-wordmark">Sleep Dashboard</a>
+                <span class="i-badge {{th.chCls}}" title="{{th.chTitle}}">{{th.chName}}</span>
+              </div>
+              <nav class="i-nav" aria-label="Main">
+                <a href="#" aria-current="page">Today</a><a href="#">Trends</a><a href="#">Nights</a><a href="#">Context</a><a href="#">People</a>
+              </nav>
+              <div class="i-user">
+                <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+                  <label for="s-person-{{th.id}}">Person</label>
+                  <span class="i-select" style="width: 132px;">
+                    <select id="s-person-{{th.id}}" name="u" class="i-input" style="height: 32px; font-size: 13px;">
+                      <option value="">{{th.personMe}}</option>
+                      <option value="sam">{{th.personSam}}</option>
+                    </select>
+                  </span>
+                  <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+                </form>
+                <span>Andrew</span>
+                <button type="button" class="i-btn i-btn--quiet i-btn--sm">Sign out</button>
+              </div>
+            </div>
+          </header>
+
+          <main class="i-page" style="flex: 1; width: 100%;">
+            <div class="i-stack">
+              <sc-if value="{{th.viewing}}" hint-placeholder-val="{{false}}">
+                <div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div>
+              </sc-if>
+              <sc-if value="{{th.lab}}" hint-placeholder-val="{{false}}">
+                <div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div>
+              </sc-if>
+              <sc-if value="{{th.apiErr}}" hint-placeholder-val="{{false}}">
+                <div class="i-banner i-banner--error" role="alert"><b>✕ Sleep data unavailable</b><span>{{th.apiReason}}</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">↩ Reload</a></div>
+              </sc-if>
+              <sc-if value="{{th.freshShow}}" hint-placeholder-val="{{true}}">
+                <div class="i-banner {{th.freshCls}}" role="status"><b>{{th.freshWord}}</b><span>{{th.freshText}}</span><span class="i-banner-act t-meta t-2">{{th.freshMeta}}</span></div>
+              </sc-if>
+            </div>
+
+            <h1 class="t-title">Today</h1>
+
+            <sc-if value="{{th.nightShow}}" hint-placeholder-val="{{true}}">
+              <section aria-labelledby="s-ln-{{th.id}}" class="i-stack">
+                <div class="i-block" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 12px 16px;">
+                  <div class="i-stack" style="flex: 1 1 260px; min-width: 0; gap: 2px;">
+                    <span class="t-label">Last night</span>
+                    <div class="i-row">
+                      <h2 id="s-ln-{{th.id}}" style="font-size: 16px; font-weight: 700;">{{th.nightDate}}</h2>
+                      <span class="i-chip"><span class="i-dot i-dot--hollow"></span>To review</span>
+                      <sc-if value="{{th.dst}}" hint-placeholder-val="{{false}}"><span class="i-chip i-chip--progress">⚑ DST transition night</span></sc-if>
+                    </div>
+                    <span class="t-meta t-2">Times in America/Chicago.</span>
+                  </div>
+                  <a href="#" class="i-btn i-btn--secondary i-btn--sm">Confirm or Correct ▶</a>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); gap: 4px;">
+                  <sc-for list="{{th.facts}}" as="f" hint-placeholder-count="5">
+                    <div class="i-block i-stack" style="gap: 2px;">
+                      <span class="t-label">{{f.label}}</span>
+                      <span class="t-stat">{{f.value}}</span>
+                      <span class="t-mono t-meta t-2">{{f.sub}}</span>
+                    </div>
+                  </sc-for>
+                  <div class="i-block i-stack" style="gap: 2px;">
+                    <span class="t-label">Quality flags</span>
+                    <sc-if value="{{th.flagsNone}}" hint-placeholder-val="{{true}}">
+                      <span class="t-stat">—</span>
+                      <span class="t-meta t-2">No quality flags.</span>
+                    </sc-if>
+                    <sc-if value="{{th.flagsAny}}" hint-placeholder-val="{{false}}">
+                      <div class="i-stack" style="gap: 4px; padding-top: 4px; align-items: flex-start;">
+                        <sc-for list="{{th.flags}}" as="q" hint-placeholder-count="2"><span class="i-chip i-chip--progress" title="{{q.code}}">⚑ {{q.label}}</span></sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+
+                <form class="i-block" style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 32px; padding: 12px 16px;">
+                  <fieldset class="i-fieldset" disabled="{{th.writesOff}}">
+                    <legend>Day type</legend>
+                    <div style="display: flex; gap: 16px;">
+                      <label class="i-choice"><input type="radio" name="day-{{th.id}}" value="work" checked=""><span>Work</span></label>
+                      <label class="i-choice"><input type="radio" name="day-{{th.id}}" value="free"><span>Free</span></label>
+                    </div>
+                  </fieldset>
+                  <fieldset class="i-fieldset" disabled="{{th.writesOff}}">
+                    <legend>Alarm</legend>
+                    <div style="display: flex; gap: 16px;">
+                      <label class="i-choice"><input type="radio" name="alarm-{{th.id}}" value="yes" checked=""><span>Yes</span></label>
+                      <label class="i-choice"><input type="radio" name="alarm-{{th.id}}" value="no"><span>No</span></label>
+                    </div>
+                  </fieldset>
+                  <div class="i-row" style="min-height: 32px;">
+                    <button type="submit" class="i-btn i-btn--primary i-btn--sm" disabled="{{th.writesOff}}" aria-describedby="s-why-{{th.id}}">Save</button>
+                    <sc-if value="{{th.writesOff}}" hint-placeholder-val="{{false}}"><span id="s-why-{{th.id}}" class="i-reason">⚑ LAB: writes disabled</span></sc-if>
+                  </div>
+                </form>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{th.emptyShow}}" hint-placeholder-val="{{false}}">
+              <section aria-label="Last night" class="i-block" style="padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center;">
+                <span style="font-size: 13px; font-weight: 600;">{{th.emptyTitle}}</span>
+                <span class="t-caption t-2">{{th.emptyText}}</span>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{th.needsShow}}" hint-placeholder-val="{{true}}">
+              <section aria-label="Needs you" class="i-stack">
+                <h2 class="t-label" style="padding: 8px 0 4px;">Needs you</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px;">
+                  <div class="i-block" style="display: flex; align-items: center; gap: 12px;">
+                    <div class="i-stack" style="flex: 1; gap: 2px;"><span class="t-label">To review</span><span><span class="t-stat">4</span> <span class="t-caption t-2">nights</span></span></div>
+                    <a href="#" class="i-btn i-btn--quiet i-btn--sm">Review Nights ▶</a>
+                  </div>
+                  <div class="i-block" style="display: flex; align-items: center; gap: 12px;">
+                    <div class="i-stack" style="flex: 1; gap: 2px;"><span class="t-label">Not tagged · last 30 days</span><span><span class="t-stat">3</span> <span class="t-caption t-2">nights</span></span></div>
+                    <a href="#" class="i-btn i-btn--quiet i-btn--sm">Tag Nights ▶</a>
+                  </div>
+                </div>
+              </section>
+            </sc-if>
+          </main>
+
+          <footer class="i-footer" style="width: 100%;"><span>From a Pixel Watch through Health Connect, synced twice a day.</span><span class="t-mono">{{th.version}}</span></footer>
+        </div>
+      </div>
+    </div>
+  </section>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"channel":{"editor":"enum","options":["live","lab"],"default":"live","section":"Sleep state"},"freshness":{"editor":"enum","options":["fresh","getting-stale","stale","losing","never"],"default":"fresh","section":"Sleep state"},"night":{"editor":"enum","options":["last","dst","flagged","none-latest"],"default":"last","section":"Sleep state"},"api":{"editor":"enum","options":["ok","timeout","unreachable","503","malformed"],"default":"ok","section":"Sleep state"},"viewing":{"editor":"boolean","default":false,"section":"Sleep state"},"$preview":{"width":2048,"height":2200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ch = this.props.channel ?? 'live';
+    const fr = this.props.freshness ?? 'fresh';
+    const night = this.props.night ?? 'last';
+    const api = this.props.api ?? 'ok';
+    const viewing = this.props.viewing ?? false;
+    const lab = ch === 'lab';
+    const apiReasons = {
+      timeout: 'The query API timed out.',
+      unreachable: 'The query API is unreachable.',
+      '503': 'The query API returned 503.',
+      malformed: 'The query API sent a malformed response.'
+    };
+    const apiErr = api !== 'ok';
+    const meta = '2 payloads in 24h · 0 parse errors in 7 days';
+    const F = {
+      fresh: ['i-banner--success', '✓ Fresh', 'Last data 9h ago; data loss in ~39h.', meta],
+      'getting-stale': ['i-banner--warning', '⚑ Getting stale', 'Last data 30h ago; data loss in ~18h.', '0 payloads in 24h'],
+      stale: ['i-banner--error', '✕ Stale', 'Last data 41h ago; data loss in ~7h.', '0 payloads in 24h'],
+      losing: ['i-banner--error', '✕ Losing data', 'Last data 53h ago, past the 48h buffer: data is being lost.', '0 payloads in 24h'],
+      never: ['i-banner--error', '✕ No data', 'No data has ever been received.', '']
+    }[fr];
+    const N = {
+      last: { date: 'Mon 12 Oct', dst: false, flags: [], facts: [
+        { label: 'Bed', value: '23:05', sub: 'Sun 11 Oct · CDT' },
+        { label: 'Wake', value: '06:35', sub: 'Mon 12 Oct · CDT' },
+        { label: 'Total sleep time', value: '7h 05m', sub: '23:20 – 06:35' },
+        { label: 'Time in bed', value: '7h 45m', sub: '23:05 – 06:50' },
+        { label: 'Efficiency', value: '91.4%', sub: 'sleep ÷ in bed' }
+      ] },
+      dst: { date: 'Sun 2 Nov', dst: true, flags: [], facts: [
+        { label: 'Bed', value: '23:30', sub: 'Sat 1 Nov · CDT' },
+        { label: 'Wake', value: '06:55', sub: 'Sun 2 Nov · CST' },
+        { label: 'Total sleep time', value: '8h 10m', sub: '23:45 CDT – 06:55 CST' },
+        { label: 'Time in bed', value: '8h 40m', sub: '23:30 CDT – 07:10 CST' },
+        { label: 'Efficiency', value: '94.2%', sub: 'sleep ÷ in bed' }
+      ] },
+      flagged: { date: 'Mon 12 Oct', dst: false, flags: [
+        { code: 'tst_is_tib', label: 'Sleep time = time in bed' },
+        { code: 'no_stages', label: 'Watch sent time asleep only' }
+      ], facts: [
+        { label: 'Bed', value: '23:05', sub: 'Sun 11 Oct · CDT' },
+        { label: 'Wake', value: '06:50', sub: 'Mon 12 Oct · CDT' },
+        { label: 'Total sleep time', value: '7h 45m', sub: '23:05 – 06:50' },
+        { label: 'Time in bed', value: '7h 45m', sub: '23:05 – 06:50' },
+        { label: 'Efficiency', value: '100.0%', sub: 'sleep ÷ in bed' }
+      ] }
+    };
+    const never = fr === 'never';
+    const missing = night === 'none-latest';
+    const n = N[night] || N.last;
+    const nightShow = !apiErr && !never && !missing;
+    let emptyTitle = '', emptyText = '';
+    if (apiErr) { emptyTitle = 'Last night is not available.'; emptyText = 'Reload once the query API answers.'; }
+    else if (never) { emptyTitle = 'No nights yet.'; emptyText = 'Your first night appears here after the watch syncs.'; }
+    else if (missing) { emptyTitle = 'No night found for the latest synced date.'; emptyText = 'The watch may not have been worn that night.'; }
+    const shared = {
+      lab,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewing,
+      personMe: 'Me',
+      personSam: 'Sam Jackson',
+      apiErr,
+      apiReason: apiReasons[api] || '',
+      freshShow: !apiErr,
+      freshCls: F[0], freshWord: F[1], freshText: F[2], freshMeta: F[3],
+      nightShow,
+      nightDate: n.date,
+      dst: n.dst,
+      facts: n.facts,
+      flags: n.flags,
+      flagsNone: n.flags.length === 0,
+      flagsAny: n.flags.length > 0,
+      writesOff: lab,
+      emptyShow: !nightShow,
+      emptyTitle, emptyText,
+      needsShow: !apiErr && !never
+    };
+    const L = (who, t, text) => ({ you: who === 'you', them: who === 'them', t, text });
+    const lines = [
+      L('them', '14:21:08', 'We moved the ingest job to the new cluster last week. Error rate is flat since then.'),
+      L('you', '14:21:30', 'Good. What is still blocking retirement of the old one?'),
+      L('them', '14:21:44', 'Two cron jobs still point at it. I can move them by Friday.'),
+      L('you', '14:22:05', 'Put that in the notes with you as owner.')
+    ];
+    return {
+      themes: [
+        Object.assign({ id: 'dark', name: 'Dark', lines }, shared),
+        Object.assign({ id: 'light', name: 'Light', lines }, shared)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

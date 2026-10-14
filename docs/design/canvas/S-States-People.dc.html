@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>People states</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div class="inst" data-theme="light" style="width: 4032px; min-height: 3464px; padding: 48px; display: flex; flex-direction: column; gap: 24px;">
+  <div class="i-stack" style="gap: 6px;">
+    <span class="t-label">Sleep Dashboard · 4 · Screens · People</span>
+    <h1 class="t-title">People states</h1>
+    <p class="t-caption t-2" style="max-width: 900px;">Admins only. Editable on LIVE only. The list is the screen itself. Rotate and Delete enable once the box is ticked or the username typed; in Play they work.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(3, 1280px); gap: 48px; align-items: start;">
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Add a person · light</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="add" theme="light" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Edit · dark</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="edit" theme="dark" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Rotate key, not yet ticked · light</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="rotate" theme="light" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Show key once · dark</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="showkey" theme="dark" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Delete, typing the username · light</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="delete" theme="light" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Read-only: LAB · dark</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="list" channel="lab" theme="dark" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Nobody yet · light</figcaption>
+      <div style="width: 1280px; height: 1000px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-People" view="empty" theme="light" hint-size="1280px,1000px"></dc-import></div>
+    </figure>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":4032,"height":3464}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

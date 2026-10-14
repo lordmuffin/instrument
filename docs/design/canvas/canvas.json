@@ -1,0 +1,915 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "A-Admin.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "page": "directions",
+      "title": "A · Instrument — Admin table, future app (light)",
+      "w": 1280,
+      "x": 2720,
+      "y": 0
+    },
+    "A-Sleep.dc.html": {
+      "expand": "fill",
+      "h": 1260,
+      "page": "directions",
+      "title": "A · Instrument — Sleep Today (light)",
+      "w": 1280,
+      "x": 1360,
+      "y": 0
+    },
+    "B-Admin.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "page": "directions",
+      "title": "B · Capsule — Admin table, future app (light)",
+      "w": 1280,
+      "x": 2720,
+      "y": 1680
+    },
+    "B-Jarvis.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "page": "directions",
+      "title": "B · Capsule — Jarvis Live copilot (dark)",
+      "w": 1280,
+      "x": 0,
+      "y": 1680
+    },
+    "B-Sleep.dc.html": {
+      "expand": "fill",
+      "h": 1260,
+      "page": "directions",
+      "title": "B · Capsule — Sleep Today (light)",
+      "w": 1280,
+      "x": 1360,
+      "y": 1680
+    },
+    "Comp-Controls.dc.html": {
+      "h": 1900,
+      "page": "components",
+      "title": "Buttons and form controls",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Comp-Data.dc.html": {
+      "h": 1900,
+      "page": "components",
+      "title": "Tables and charts",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "Comp-Overlays.dc.html": {
+      "h": 1500,
+      "page": "components",
+      "title": "Dialogs and show-once secret",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Comp-States.dc.html": {
+      "h": 1900,
+      "page": "components",
+      "title": "Empty, error, loading and sign-in pages",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "Comp-Status.dc.html": {
+      "h": 1700,
+      "page": "components",
+      "title": "Badges, chips, banners, toasts, live pill",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Home.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "page": "navigation",
+      "title": "Home: the family dashboard",
+      "w": 1280,
+      "x": 1520,
+      "y": 0
+    },
+    "Jarvis-And-Chat.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Kai chat: voice, type, conversations",
+      "w": 1440,
+      "x": 2280,
+      "y": 1320
+    },
+    "Jarvis-And-Detail.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "History and session detail, folded and unfolded",
+      "w": 2200,
+      "x": 0,
+      "y": 1320
+    },
+    "Jarvis-And-Onboarding.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Onboarding, 3 steps",
+      "w": 1440,
+      "x": 5840,
+      "y": 0
+    },
+    "Jarvis-And-Pill.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Dictation pill states, toasts, notifications",
+      "w": 1440,
+      "x": 5840,
+      "y": 1320
+    },
+    "Jarvis-And-Record-Light.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Record (light)",
+      "w": 1760,
+      "x": 1840,
+      "y": 0
+    },
+    "Jarvis-And-Record-Unfolded.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Record unfolded, two panes",
+      "w": 1000,
+      "x": 3680,
+      "y": 0
+    },
+    "Jarvis-And-Record.dc.html": {
+      "h": 1000,
+      "page": "jv-android",
+      "title": "Record: home, recording, collapsed + reconnecting, local only (dark)",
+      "w": 1760,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-And-Settings.dc.html": {
+      "h": 1920,
+      "page": "jv-android",
+      "title": "Settings, regrouped",
+      "w": 1000,
+      "x": 4760,
+      "y": 0
+    },
+    "Jarvis-Comp-Copilot.dc.html": {
+      "h": 2200,
+      "page": "jv-components",
+      "title": "Suggestion, capsule, items, related note",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Jarvis-Comp-Session.dc.html": {
+      "h": 2200,
+      "page": "jv-components",
+      "title": "Session row, status, connection, publication, upload",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Jarvis-Comp-Timeline.dc.html": {
+      "h": 2000,
+      "page": "jv-components",
+      "title": "Transcript line, marker row, findings, follow",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Comp-Work.dc.html": {
+      "h": 2500,
+      "page": "jv-components",
+      "title": "Work item card and run block",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "Jarvis-DirA-Mac.dc.html": {
+      "h": 900,
+      "page": "jv-directions",
+      "title": "A · Ledger — Mac panel 480, strip 320, collapsed (dark)",
+      "w": 1320,
+      "x": 1360,
+      "y": 0
+    },
+    "Jarvis-DirA-Web.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "page": "jv-directions",
+      "title": "A · Ledger — web live view (dark)",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-DirB-Mac.dc.html": {
+      "h": 900,
+      "page": "jv-directions",
+      "title": "B · Feed — Mac panel 480, strip 320, collapsed (dark)",
+      "w": 1320,
+      "x": 1360,
+      "y": 1320
+    },
+    "Jarvis-DirB-Web.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "page": "jv-directions",
+      "title": "B · Feed — web live view (dark)",
+      "w": 1280,
+      "x": 0,
+      "y": 1320
+    },
+    "Jarvis-Glance.dc.html": {
+      "h": 1040,
+      "page": "jv-glance",
+      "title": "Annotated: what your eye hits first, second, third",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Mac-Copilot-Light.dc.html": {
+      "h": 900,
+      "page": "jv-mac",
+      "title": "Copilot panel (light)",
+      "w": 2000,
+      "x": 4580,
+      "y": 0
+    },
+    "Jarvis-Mac-Copilot-States.dc.html": {
+      "h": 900,
+      "page": "jv-mac",
+      "title": "Copilot panel states",
+      "w": 1440,
+      "x": 6660,
+      "y": 0
+    },
+    "Jarvis-Mac-Copilot.dc.html": {
+      "h": 900,
+      "page": "jv-mac",
+      "title": "Copilot panel at 320, 480, 760 and collapsed (dark)",
+      "w": 2000,
+      "x": 2500,
+      "y": 0
+    },
+    "Jarvis-Mac-HUD.dc.html": {
+      "h": 700,
+      "page": "jv-mac",
+      "title": "Dictation HUD states",
+      "w": 1440,
+      "x": 8180,
+      "y": 0
+    },
+    "Jarvis-Mac-Menu.dc.html": {
+      "h": 1100,
+      "page": "jv-mac",
+      "title": "Menu-bar item and menus",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Mac-Settings.dc.html": {
+      "h": 1000,
+      "page": "jv-mac",
+      "title": "Settings window",
+      "w": 900,
+      "x": 1520,
+      "y": 0
+    },
+    "Jarvis-Sys-Additions.dc.html": {
+      "h": 2560,
+      "page": "jv-additions",
+      "title": "Instrument additions from Jarvis, dark and light",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Wear-Auto.dc.html": {
+      "h": 1240,
+      "page": "jv-wear",
+      "title": "Wear OS capture and Android Auto template",
+      "w": 1840,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Web-Admin.dc.html": {
+      "expand": "fill",
+      "h": 800,
+      "page": "jv-web",
+      "title": "Admin users and roles (dark)",
+      "w": 1280,
+      "x": 9520,
+      "y": 0
+    },
+    "Jarvis-Web-Devices.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "page": "jv-web",
+      "title": "Devices (dark)",
+      "w": 1280,
+      "x": 8160,
+      "y": 0
+    },
+    "Jarvis-Web-Live-Light.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "page": "jv-web",
+      "title": "Live session (light)",
+      "w": 1280,
+      "x": 2720,
+      "y": 0
+    },
+    "Jarvis-Web-Live-States.dc.html": {
+      "h": 1780,
+      "page": "jv-web",
+      "title": "Live session states",
+      "w": 1440,
+      "x": 1520,
+      "y": 1600
+    },
+    "Jarvis-Web-Live.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "page": "jv-web",
+      "title": "Live session (dark)",
+      "w": 1280,
+      "x": 1360,
+      "y": 0
+    },
+    "Jarvis-Web-Note-States.dc.html": {
+      "h": 2000,
+      "page": "jv-web",
+      "title": "Note and publication states",
+      "w": 1440,
+      "x": 3040,
+      "y": 1600
+    },
+    "Jarvis-Web-Past.dc.html": {
+      "expand": "fill",
+      "h": 1300,
+      "page": "jv-web",
+      "title": "Past session with note (dark)",
+      "w": 1280,
+      "x": 4080,
+      "y": 0
+    },
+    "Jarvis-Web-Publishing-States.dc.html": {
+      "h": 1560,
+      "page": "jv-web",
+      "title": "Publishing states, LAB",
+      "w": 1440,
+      "x": 4560,
+      "y": 1600
+    },
+    "Jarvis-Web-Publishing.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "page": "jv-web",
+      "title": "Publishing (dark)",
+      "w": 1280,
+      "x": 5440,
+      "y": 0
+    },
+    "Jarvis-Web-Sessions-States.dc.html": {
+      "h": 1700,
+      "page": "jv-web",
+      "title": "Sessions states and upload",
+      "w": 1440,
+      "x": 0,
+      "y": 1600
+    },
+    "Jarvis-Web-Sessions.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "page": "jv-web",
+      "title": "Sessions, admin viewing all users (dark)",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "Jarvis-Web-SignIn.dc.html": {
+      "h": 1300,
+      "page": "jv-web",
+      "title": "Sign-in, error and loading pages",
+      "w": 1440,
+      "x": 7600,
+      "y": 1600
+    },
+    "Jarvis-Web-WorkItems-States.dc.html": {
+      "h": 2140,
+      "page": "jv-web",
+      "title": "Work item and run states, history",
+      "w": 1440,
+      "x": 6080,
+      "y": 1600
+    },
+    "Jarvis-Web-WorkItems.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "page": "jv-web",
+      "title": "Work items, LAB (dark)",
+      "w": 1280,
+      "x": 6800,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "page": "directions",
+      "title": "A · Instrument — Jarvis Live copilot (dark)",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "Nav-Family.dc.html": {
+      "h": 1640,
+      "page": "navigation",
+      "title": "Family navigation: shell, switcher, narrow, native",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Recipe.dc.html": {
+      "h": 1700,
+      "page": "recipe",
+      "title": "Adding a new app",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "S-Context.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "page": "sleep",
+      "title": "Context: nights to tag (Play: answer and save)",
+      "w": 1280,
+      "x": 5440,
+      "y": 3800
+    },
+    "S-Narrow-Night.dc.html": {
+      "h": 2000,
+      "page": "sleep",
+      "title": "Night review, corrected, at 390",
+      "w": 390,
+      "x": 940,
+      "y": 6000
+    },
+    "S-Narrow-Nights.dc.html": {
+      "h": 1300,
+      "page": "sleep",
+      "title": "Nights to review at 390",
+      "w": 390,
+      "x": 470,
+      "y": 6000
+    },
+    "S-Narrow-Today.dc.html": {
+      "h": 1500,
+      "page": "sleep",
+      "title": "Today at 390 (dark)",
+      "w": 390,
+      "x": 0,
+      "y": 6000
+    },
+    "S-Night.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "page": "sleep",
+      "title": "Night review, clean",
+      "w": 1280,
+      "x": 4080,
+      "y": 3800
+    },
+    "S-Nights.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "page": "sleep",
+      "title": "Nights, all (Play: inline Confirm and filter)",
+      "w": 1280,
+      "x": 2720,
+      "y": 3800
+    },
+    "S-People.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "page": "sleep",
+      "title": "People, admin list",
+      "w": 1280,
+      "x": 6800,
+      "y": 3800
+    },
+    "S-SignIn.dc.html": {
+      "expand": "fill",
+      "h": 720,
+      "page": "sleep",
+      "title": "Sign-in page (seven variants in Tweaks)",
+      "w": 1280,
+      "x": 8160,
+      "y": 3800
+    },
+    "S-States-Night.dc.html": {
+      "h": 6152,
+      "page": "sleep",
+      "title": "Night review states",
+      "w": 2704,
+      "x": 4194,
+      "y": 6000
+    },
+    "S-States-Nights.dc.html": {
+      "h": 4664,
+      "page": "sleep",
+      "title": "Nights states",
+      "w": 2704,
+      "x": 1410,
+      "y": 6000
+    },
+    "S-States-People.dc.html": {
+      "h": 3464,
+      "page": "sleep",
+      "title": "People states",
+      "w": 4032,
+      "x": 6978,
+      "y": 6000
+    },
+    "S-States-SignIn.dc.html": {
+      "h": 1616,
+      "page": "sleep",
+      "title": "Sign-in pages",
+      "w": 2800,
+      "x": 11090,
+      "y": 6000
+    },
+    "S-Today.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "page": "sleep",
+      "title": "Today (light; tweaks: freshness, night, API, channel, viewer)",
+      "w": 1280,
+      "x": 0,
+      "y": 3800
+    },
+    "S-Trends.dc.html": {
+      "expand": "fill",
+      "h": 1700,
+      "is_interactive": true,
+      "page": "sleep",
+      "title": "Trends (range, tables and states in Tweaks; Play to switch)",
+      "w": 1280,
+      "x": 1360,
+      "y": 3800
+    },
+    "Sheet-Color.dc.html": {
+      "h": 1640,
+      "page": "system",
+      "title": "Colour tokens, dark and light",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Sheet-Foundations.dc.html": {
+      "h": 1900,
+      "page": "system",
+      "title": "Type, space, shape, elevation, motion, glyphs, wordmark",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Sleep-01-Family.dc.html": {
+      "h": 2200,
+      "page": "sleep",
+      "title": "Sleep Today beside Jarvis Live, dark and light",
+      "w": 2048,
+      "x": 0,
+      "y": 0
+    },
+    "Sleep-02-Additions.dc.html": {
+      "h": 2700,
+      "page": "sleep",
+      "title": "What Sleep adds to Instrument",
+      "w": 1440,
+      "x": 2128,
+      "y": 0
+    },
+    "Sleep-03-Review.dc.html": {
+      "h": 3300,
+      "page": "sleep",
+      "title": "Review chip and nights table row, every state",
+      "w": 1440,
+      "x": 3648,
+      "y": 0
+    },
+    "Sleep-04-Facts-Context.dc.html": {
+      "h": 3000,
+      "page": "sleep",
+      "title": "Fact grid and day context, every state",
+      "w": 1440,
+      "x": 5168,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-14T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "page": "sleep",
+    "view": "canvas"
+  },
+  "notes": {
+    "comp": {
+      "kind": "title1",
+      "maxW": 7520,
+      "page": "components",
+      "text": "Shared components: every state, dark and light",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "dirA": {
+      "kind": "title1",
+      "maxW": 4000,
+      "page": "directions",
+      "text": "A · Instrument (chosen): square tonal blocks, mono readouts, pill = touch or alive",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "dirB": {
+      "kind": "title1",
+      "maxW": 4000,
+      "page": "directions",
+      "text": "B · Capsule (not chosen): rounded groups, sans throughout",
+      "w": 240,
+      "x": 0,
+      "y": 1380
+    },
+    "jv-android": {
+      "kind": "title1",
+      "maxW": 7280,
+      "page": "jv-android",
+      "text": "Jarvis Voice on Android (Pixel Fold): Record is home",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "jv-comp": {
+      "kind": "title1",
+      "maxW": 6000,
+      "page": "jv-components",
+      "text": "Jarvis components: every state, dark and light",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "jv-dirA": {
+      "kind": "title1",
+      "maxW": 2680,
+      "page": "jv-directions",
+      "text": "A · Ledger (not chosen): grouped by kind, fixed slots beside the transcript",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "jv-dirB": {
+      "kind": "title1",
+      "maxW": 2680,
+      "page": "jv-directions",
+      "text": "B · Feed (chosen): one timeline, insights inline, a Now dock at the bottom edge",
+      "w": 240,
+      "x": 0,
+      "y": 1020
+    },
+    "jv-glanceA": {
+      "fill": "teal",
+      "page": "jv-directions",
+      "text": "Glance order\n① The top suggestion (largest copilot text)\n② “3 new” and the NEW tags\n③ Section counts\nHealth speaks only when not nominal.\n\nNothing moves: fixed section order, capped slots, a section never disappears once shown.",
+      "w": 420,
+      "x": 2760,
+      "y": 0
+    },
+    "jv-glanceB": {
+      "fill": "purple",
+      "page": "jv-directions",
+      "text": "Glance order\n① The Now dock at the bottom edge\n② The “new since you looked” rule\n③ The last two lines of speech\nHealth speaks only when not nominal.\n\nNothing moves: the feed is anchored to the bottom, so new rows push old ones up and out of view, never your target.",
+      "w": 420,
+      "x": 2760,
+      "y": 1320
+    },
+    "jv-mac": {
+      "kind": "title1",
+      "maxW": 8000,
+      "page": "jv-mac",
+      "text": "Jarvis Live on macOS: menu bar, copilot panel, dictation HUD",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "jv-sys": {
+      "kind": "title1",
+      "maxW": 1440,
+      "page": "jv-additions",
+      "text": "Ten parts Jarvis adds to Instrument, none tied to Jarvis",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "jv-web": {
+      "kind": "title1",
+      "maxW": 8000,
+      "page": "jv-web",
+      "text": "Web dashboard: screens (top), states (below)",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "nav": {
+      "kind": "title1",
+      "maxW": 2800,
+      "page": "navigation",
+      "text": "One way to move between apps, with Home tying them together",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "sleepScreens": {
+      "kind": "title1",
+      "maxW": 8000,
+      "page": "sleep",
+      "text": "Screens: each a page, states in its Tweaks",
+      "w": 240,
+      "x": 0,
+      "y": 3500
+    },
+    "sleepStates": {
+      "kind": "title1",
+      "maxW": 8000,
+      "page": "sleep",
+      "text": "States and narrow layouts: the real screens, imported with different settings",
+      "w": 240,
+      "x": 0,
+      "y": 5700
+    },
+    "sleepT": {
+      "kind": "title1",
+      "maxW": 6608,
+      "page": "sleep",
+      "text": "Sleep Dashboard on Instrument: family check, additions, components",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "sys": {
+      "kind": "title1",
+      "maxW": 2960,
+      "page": "system",
+      "text": "Instrument: the family design system",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "A-Sleep.dc.html",
+    "A-Admin.dc.html",
+    "B-Jarvis.dc.html",
+    "B-Sleep.dc.html",
+    "B-Admin.dc.html",
+    "Sheet-Color.dc.html",
+    "Sheet-Foundations.dc.html",
+    "Nav-Family.dc.html",
+    "Home.dc.html",
+    "Comp-Controls.dc.html",
+    "Comp-Status.dc.html",
+    "Comp-Data.dc.html",
+    "Comp-Overlays.dc.html",
+    "Comp-States.dc.html",
+    "Recipe.dc.html",
+    "Sleep-01-Family.dc.html",
+    "Sleep-02-Additions.dc.html",
+    "Sleep-03-Review.dc.html",
+    "Sleep-04-Facts-Context.dc.html",
+    "S-Today.dc.html",
+    "S-Trends.dc.html",
+    "S-Nights.dc.html",
+    "S-Night.dc.html",
+    "S-Context.dc.html",
+    "S-People.dc.html",
+    "S-SignIn.dc.html",
+    "S-Narrow-Today.dc.html",
+    "S-Narrow-Nights.dc.html",
+    "S-Narrow-Night.dc.html",
+    "S-States-Nights.dc.html",
+    "S-States-Night.dc.html",
+    "S-States-People.dc.html",
+    "S-States-SignIn.dc.html",
+    "Jarvis-DirA-Web.dc.html",
+    "Jarvis-DirA-Mac.dc.html",
+    "Jarvis-DirB-Web.dc.html",
+    "Jarvis-DirB-Mac.dc.html",
+    "Jarvis-Sys-Additions.dc.html",
+    "Jarvis-Comp-Timeline.dc.html",
+    "Jarvis-Comp-Copilot.dc.html",
+    "Jarvis-Comp-Work.dc.html",
+    "Jarvis-Comp-Session.dc.html",
+    "Jarvis-Web-Publishing.dc.html",
+    "Jarvis-Web-WorkItems.dc.html",
+    "Jarvis-Web-Devices.dc.html",
+    "Jarvis-Web-Admin.dc.html",
+    "Jarvis-Web-Publishing-States.dc.html",
+    "Jarvis-Web-WorkItems-States.dc.html",
+    "Jarvis-Web-SignIn.dc.html",
+    "Jarvis-Wear-Auto.dc.html",
+    "Jarvis-Glance.dc.html",
+    "Jarvis-Mac-Menu.dc.html",
+    "Jarvis-Mac-Settings.dc.html",
+    "Jarvis-Mac-Copilot.dc.html",
+    "Jarvis-Mac-Copilot-Light.dc.html",
+    "Jarvis-Mac-Copilot-States.dc.html",
+    "Jarvis-Mac-HUD.dc.html",
+    "Jarvis-Web-Sessions.dc.html",
+    "Jarvis-Web-Live.dc.html",
+    "Jarvis-Web-Live-Light.dc.html",
+    "Jarvis-Web-Past.dc.html",
+    "Jarvis-Web-Sessions-States.dc.html",
+    "Jarvis-Web-Live-States.dc.html",
+    "Jarvis-Web-Note-States.dc.html",
+    "Jarvis-And-Record.dc.html",
+    "Jarvis-And-Record-Light.dc.html",
+    "Jarvis-And-Record-Unfolded.dc.html",
+    "Jarvis-And-Settings.dc.html",
+    "Jarvis-And-Detail.dc.html",
+    "Jarvis-And-Chat.dc.html",
+    "Jarvis-And-Onboarding.dc.html",
+    "Jarvis-And-Pill.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "directions",
+      "name": "1 · Directions"
+    },
+    {
+      "id": "system",
+      "name": "2 · System sheet"
+    },
+    {
+      "id": "navigation",
+      "name": "Family navigation"
+    },
+    {
+      "id": "components",
+      "name": "3 · Components"
+    },
+    {
+      "id": "recipe",
+      "name": "4 · Adding a new app"
+    },
+    {
+      "id": "sleep",
+      "name": "5 · Sleep Dashboard"
+    },
+    {
+      "id": "jv-directions",
+      "name": "6 · Jarvis Live: copilot directions"
+    },
+    {
+      "id": "jv-additions",
+      "name": "6.1 · Jarvis Live: additions"
+    },
+    {
+      "id": "jv-components",
+      "name": "6.2 · Jarvis Live: components"
+    },
+    {
+      "id": "jv-web",
+      "name": "6.3 · Jarvis Live: web"
+    },
+    {
+      "id": "jv-mac",
+      "name": "6.4 · Jarvis Live: Mac"
+    },
+    {
+      "id": "jv-android",
+      "name": "6.5 · Jarvis Live: Android"
+    },
+    {
+      "id": "jv-wear",
+      "name": "6.6 · Jarvis Live: Wear and Auto"
+    },
+    {
+      "id": "jv-glance",
+      "name": "6.7 · Jarvis Live: glance hierarchy"
+    }
+  ],
+  "title": "Homelab Family Design System"
+}

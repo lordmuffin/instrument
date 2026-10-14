@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: People</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="display: flex; flex-direction: column; min-height: 1000px;">
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Sleep Dashboard</a>
+      <span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span>
+    </div>
+    <nav class="i-nav i-nav--wide" aria-label="Main">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}">{{t.label}}</a></sc-for>
+    </nav>
+    <div class="i-user" style="margin-left: auto;">
+      <div class="i-wide-only">
+        <sc-if value="{{admin}}" hint-placeholder-val="{{true}}">
+          <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+            <label for="person">Person</label>
+            <span class="i-select" style="width: 136px;"><select id="person" name="u" class="i-input" style="height: 32px; font-size: 13px;"><option value="" selected="{{selMe}}">Me</option><option value="sam" selected="{{selSam}}">Sam Jackson</option></select></span>
+            <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+          </form>
+        </sc-if>
+        <span>{{viewerName}}</span>
+        <a href="#" class="i-btn i-btn--quiet i-btn--sm">Sign out</a>
+      </div>
+      <button type="button" class="i-narrow-only i-btn i-btn--quiet i-btn--sm" aria-haspopup="true" aria-label="{{viewerName}}, account menu">{{viewerInitial}} ▾</button>
+    </div>
+  </div>
+</header>
+<main class="i-page" style="flex: 1; width: 100%;">
+  <div class="i-stack">
+    <sc-if value="{{viewing}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div></sc-if>
+    <sc-if value="{{lab}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div></sc-if>
+    <sc-if value="{{expiring}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="status"><b>⚑ Signing out at 22:14</b><span>Your 12-hour session ends in 9 minutes.</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">Stay Signed In</a></div></sc-if>
+
+  </div>
+  <sc-if value="{{isList}}" hint-placeholder-val="{{true}}">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px;">
+      <div class="i-stack" style="gap: 2px;"><h1 class="t-title">People</h1><span class="t-meta t-2">Signed in as Andrew (andrew@home.example), admin.</span></div>
+      <sc-if value="{{canManage}}" hint-placeholder-val="{{true}}"><a href="#" class="i-btn i-btn--primary">Add Person</a></sc-if>
+    </div>
+    <sc-if value="{{offReason}}" hint-placeholder-val="{{false}}"><p id="why" class="i-reason">⚑ {{offReason}}</p></sc-if>
+    <sc-if value="{{hasPeople}}" hint-placeholder-val="{{true}}">
+      <div class="i-table-wrap">
+        <table class="i-table">
+          <thead><tr><th scope="col">Person</th><th scope="col" class="i-hide-md">Email (Pocket ID)</th><th scope="col" class="i-hide-sm">Time zone</th><th scope="col">Ingest key</th><th scope="col" class="num i-hide-md">Added</th><sc-if value="{{canManage}}" hint-placeholder-val="{{true}}"><th scope="col" class="act"><span class="i-sr">Actions</span></th></sc-if></tr></thead>
+          <tbody>
+            <sc-for list="{{people}}" as="u" hint-placeholder-count="3">
+              <tr>
+                <td><span class="i-stack" style="gap: 0; padding: 4px 0;"><span style="font-weight: 600;">{{u.name}}</span><span class="t-mono t-meta t-2">{{u.username}}{{u.def}}</span></span></td>
+                <td class="i-hide-md">{{u.email}}</td>
+                <td class="i-hide-sm t-mono" style="font-size: 12px;">{{u.tz}}</td>
+                <td><span class="i-chip {{u.keyCls}}">{{u.key}}</span></td>
+                <td class="num i-hide-md">{{u.added}}</td>
+                <sc-if value="{{u.canManage}}" hint-placeholder-val="{{true}}">
+                  <td class="act"><span class="i-row" style="gap: 0; flex-wrap: nowrap; justify-content: flex-end;">
+                    <a href="#" class="i-btn i-btn--quiet i-btn--sm">Edit</a>
+                    <a href="#" class="i-btn i-btn--quiet i-btn--sm">{{u.keyAct}}</a>
+                    <button type="button" class="i-btn i-btn--danger-quiet i-btn--sm" disabled="{{u.isDefault}}" title="{{u.delWhy}}" aria-label="Delete {{u.username}}">✕ Delete</button>
+                  </span></td>
+                </sc-if>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <sc-if value="{{canManage}}" hint-placeholder-val="{{true}}"><p class="i-help">The default account cannot be deleted. Each person's watch sends to their own webhook address.</p></sc-if>
+    </sc-if>
+    <sc-if value="{{noPeople}}" hint-placeholder-val="{{false}}">
+      <div class="i-block" role="status" style="padding: 32px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+        <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: var(--inst-text-2);">—</span>
+        <span style="font-size: 14px; font-weight: 700;">Nobody has a sleep account yet.</span>
+        <span class="t-caption t-2">Add a person to give their phone a webhook address.</span>
+        <a href="#" class="i-btn i-btn--secondary i-btn--sm">Add Person</a>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{isForm}}" hint-placeholder-val="{{false}}">
+    <a href="#" style="font-size: 13px; align-self: flex-start;">↩ People</a>
+    <h1 class="t-title">{{formTitle}}</h1>
+    <form class="i-block" style="padding: 16px; display: flex; flex-direction: column; gap: 16px; max-width: 560px;">
+      <div class="i-field">
+        <label class="i-label" for="un">Username</label>
+        <sc-if value="{{isAdd}}" hint-placeholder-val="{{true}}"><input id="un" class="i-input i-input--mono" value="riley" aria-describedby="un-h" autocomplete="off"></sc-if>
+        <sc-if value="{{isEdit}}" hint-placeholder-val="{{false}}"><input id="un" class="i-input i-input--mono" value="sam" readonly="" aria-describedby="un-h"></sc-if>
+        <span id="un-h" class="i-help">{{unHelp}}</span>
+      </div>
+      <div class="i-field"><label class="i-label" for="dn">Display name</label><input id="dn" class="i-input" value="{{dn}}"></div>
+      <div class="i-field">
+        <label class="i-label" for="em">Email</label>
+        <input id="em" type="email" class="i-input" value="{{em}}" aria-describedby="em-h">
+        <span id="em-h" class="i-help">The address they sign in to Pocket ID with. Only that address sees their sleep data.</span>
+      </div>
+      <div class="i-field">
+        <label class="i-label" for="tz">Time zone</label>
+        <input id="tz" class="i-input i-input--mono" list="zones" value="{{tz}}" aria-describedby="tz-h">
+        <datalist id="zones"><option value="America/Chicago"></option><option value="America/New_York"></option><option value="America/Denver"></option><option value="America/Los_Angeles"></option><option value="Europe/London"></option><option value="UTC"></option></datalist>
+        <span id="tz-h" class="i-help">Type a city, such as Chicago. Their nights are dated in this zone. It is {{tzNow}} there now.</span>
+      </div>
+      <div class="i-row" style="gap: 8px;"><button type="submit" class="i-btn i-btn--primary">{{formBtn}}</button><a href="#" class="i-btn i-btn--quiet">Cancel</a></div>
+    </form>
+  </sc-if>
+
+  <sc-if value="{{isRotate}}" hint-placeholder-val="{{false}}">
+    <a href="#" style="font-size: 13px; align-self: flex-start;">↩ People</a>
+    <form class="i-dialog" aria-labelledby="rt" style="max-width: 520px; box-shadow: none;">
+      <div class="i-dialog-hd"><span class="t-tag" style="color: var(--inst-warning);">⚑ Replaces the key</span><h2 id="rt">Rotate Sam's key?</h2></div>
+      <div class="i-dialog-bd">
+        <div class="i-banner i-banner--warning"><b>⚑ The old address stops at once.</b><span>The old webhook address stops working at once. Sam's phone sends nothing until you put the new one in.</span></div>
+        <label class="i-choice"><input type="checkbox" required="" checked="{{rotOk}}" onChange="{{flipRot}}"><span>Yes, replace sam's key</span></label>
+      </div>
+      <div class="i-dialog-ft"><a href="#" class="i-btn i-btn--secondary">Cancel</a><button type="submit" class="i-btn i-btn--danger" disabled="{{rotOff}}" aria-describedby="rt-r">Rotate Key</button><sc-if value="{{rotOff}}" hint-placeholder-val="{{true}}"><span id="rt-r" class="i-reason" style="flex-basis: 100%; justify-content: flex-end;">⚑ Tick the box to enable.</span></sc-if></div>
+    </form>
+  </sc-if>
+
+  <sc-if value="{{isKey}}" hint-placeholder-val="{{false}}">
+    <h1 class="t-title">Sam's new webhook address</h1>
+    <div class="i-block" style="padding: 16px; display: flex; flex-wrap: wrap; gap: 16px; max-width: 760px;">
+      <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+        <div class="i-banner i-banner--warning"><b>⚑ Shown once.</b><span>Put this webhook address in their phone now. It cannot be shown again, but you can rotate the key later.</span></div>
+        <div class="i-field">
+          <label class="i-label" for="wh">Webhook URL</label>
+          <div style="display: flex; gap: 8px;">
+            <input id="wh" class="i-input i-input--mono" readonly="" value="https://sleep-ingest.home.example/v1/hook/sam/[key, shown in full once]">
+            <button type="button" class="i-btn i-btn--secondary" aria-live="polite" onClick="{{copy}}" style="{{copyStyle}}">{{copyLabel}}</button>
+          </div>
+          <span class="i-help">Paste it into the sync app on their phone, or scan the code with it.</span>
+        </div>
+        <div class="i-row"><a href="#" class="i-btn i-btn--primary">I Have Copied It</a><span class="t-caption t-2">The key is never logged.</span></div>
+      </div>
+      <div style="width: 160px; display: flex; flex-direction: column; gap: 6px; align-items: center;">
+        <div role="img" aria-label="QR code of Sam's webhook URL" style="width: 152px; height: 152px; background: #FFFFFF; padding: 10px; display: grid; grid-template-columns: repeat(21, minmax(0, 1fr));">
+          <sc-for list="{{qr}}" as="q" hint-placeholder-count="441"><span style="background: {{q}};"></span></sc-for>
+        </div>
+        <span class="t-micro t-2" style="text-align: center;">Scan with the phone's camera.</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isDelete}}" hint-placeholder-val="{{false}}">
+    <a href="#" style="font-size: 13px; align-self: flex-start;">↩ People</a>
+    <form class="i-dialog" aria-labelledby="dl" style="max-width: 520px; box-shadow: none;">
+      <div class="i-dialog-hd"><span class="t-tag" style="color: var(--inst-error);">✕ Cannot be undone</span><h2 id="dl">Delete sam?</h2></div>
+      <div class="i-dialog-bd">
+        <p class="t-2" style="font-size: 13px;">This deletes sam and every night, vital and context row of theirs. It cannot be undone here: getting it back needs a backup restore.</p>
+        <div class="i-field"><label class="i-label" for="dli">Type <b class="t-mono">sam</b> to confirm</label><input id="dli" class="i-input t-mono" value="{{delTyped}}" onInput="{{typeDel}}" autocomplete="off"><sc-if value="{{delOk}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok">✓ Matches.</span></sc-if></div>
+      </div>
+      <div class="i-dialog-ft"><a href="#" class="i-btn i-btn--secondary">Cancel</a><button type="submit" class="i-btn i-btn--danger" disabled="{{delOff}}" aria-describedby="dl-r">Delete sam</button><sc-if value="{{delOff}}" hint-placeholder-val="{{true}}"><span id="dl-r" class="i-reason" style="flex-basis: 100%; justify-content: flex-end;">⚑ Type the username to enable.</span></sc-if></div>
+    </form>
+  </sc-if>
+</main>
+<footer class="i-footer" style="width: 100%; align-items: center;">
+  <span>Accounts live in sleep-ingest. Sign-in stays with Pocket ID.</span>
+  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <span class="i-seg" role="radiogroup" aria-label="Theme"><sc-for list="{{themeSeg}}" as="t" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></span>
+    <span class="t-mono">{{version}}</span>
+  </span>
+</footer>
+<nav class="i-bottombar i-bottombar--auto" aria-label="Main">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}"><span class="i-ico" aria-hidden="true">{{t.ico}}</span>{{t.label}}</a></sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme": {"editor": "enum", "options": ["light", "dark", "system"], "default": "light", "section": "Shell"}, "channel": {"editor": "enum", "options": ["live", "lab"], "default": "live", "section": "Shell"}, "who": {"editor": "enum", "options": ["andrew", "sam"], "default": "andrew", "section": "Shell"}, "viewing": {"editor": "boolean", "default": false, "section": "Shell"}, "expiring": {"editor": "boolean", "default": false, "section": "Shell"}, "view": {"editor": "enum", "options": ["list", "add", "edit", "rotate", "showkey", "delete", "readonly", "empty"], "default": "list", "section": "People"}, "$preview": {"width": 1280, "height": 1000}}'>
+class Component extends DCLogic {
+  shell(cur) {
+    const p = this.props, st = this.state || {};
+    const theme = st.theme ?? p.theme ?? 'light';
+    const lab = (p.channel ?? 'live') === 'lab';
+    const admin = (p.who ?? 'andrew') === 'andrew';
+    const viewing = admin && (p.viewing ?? false);
+    const all = [['today', 'Today', '🌙'], ['trends', 'Trends', '📈'], ['nights', 'Nights', '📋'], ['context', 'Context', '📝'], ['people', 'People', '👥']];
+    const tabs = all.filter((t) => admin || t[0] !== 'people').map((t) => ({ label: t[1], ico: t[2], cur: t[0] === cur ? 'page' : 'false' }));
+    const themeSeg = [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map((t) => ({ label: t[1], on: theme === t[0] ? 'true' : 'false', pick: () => this.setState({ theme: t[0] }) }));
+    return {
+      theme, lab, admin, viewing, tabs, themeSeg,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewerName: admin ? 'Andrew' : 'Sam',
+      viewerInitial: admin ? 'A' : 'S',
+      selMe: !viewing, selSam: viewing,
+      expiring: p.expiring ?? false,
+      writesOff: lab
+    };
+  }
+  renderVals() {
+    const s = this.shell('people');
+    const p = this.props, st = this.state || {};
+    const view = p.view ?? 'list';
+    const readonly = view === 'readonly' || (s.lab && (view === 'list' || view === 'empty'));
+    const isList = view === 'list' || view === 'readonly' || view === 'empty';
+    const canManage = !readonly;
+    const U = (name, username, isDefault, email, tz, keySet, added) => ({
+      name, username, def: isDefault ? ' · default' : '', isDefault, email, tz, added, canManage,
+      key: keySet ? '✓ Set' : 'None', keyCls: keySet ? 'i-chip--done' : 'i-chip--off', keyAct: keySet ? 'Rotate Key' : 'Make Key',
+      delWhy: isDefault ? 'The default account cannot be deleted.' : ''
+    });
+    const people = view === 'empty' ? [] : [
+      U('Andrew Jackson', 'andrew', true, 'andrew@home.example', 'America/Chicago', true, '2026-03-02'),
+      U('Sam Jackson', 'sam', false, 'sam@home.example', 'America/Chicago', true, '2026-09-14'),
+      U('Riley Jackson', 'riley', false, 'riley@home.example', 'America/New_York', false, '2026-10-10')
+    ];
+    const rotOk = st.rotOk ?? false;
+    const typed = st.typed ?? 'sa';
+    const copied = st.copied ?? false;
+    const qr = [];
+    const fin = (r, c) => { const z = (a, b) => { const y = r - a, x = c - b; if (y < 0 || x < 0 || y > 6 || x > 6) return null; return y === 0 || y === 6 || x === 0 || x === 6 || (y >= 2 && y <= 4 && x >= 2 && x <= 4); }; for (const [a, b] of [[0, 0], [0, 14], [14, 0]]) { const v = z(a, b); if (v !== null) return v; } return null; };
+    for (let r = 0; r < 21; r++) for (let c = 0; c < 21; c++) { const f = fin(r, c); const on = f !== null ? f : ((r * 7 + c * 13 + r * c) % 5 < 2); qr.push(on ? '#0D1117' : '#FFFFFF'); }
+    return Object.assign(s, {
+      isList, canManage, hasPeople: isList && people.length > 0, noPeople: isList && people.length === 0, people,
+      offReason: readonly ? (s.lab || view === 'readonly' ? 'LAB: account management disabled' : '') : '',
+      isForm: view === 'add' || view === 'edit', isAdd: view === 'add', isEdit: view === 'edit',
+      formTitle: view === 'add' ? 'Add Person' : 'Edit Sam Jackson', formBtn: view === 'add' ? 'Add Person' : 'Save Changes',
+      unHelp: view === 'add' ? 'Lower case letters, digits, - and _; starts with a letter. Cannot be changed later.' : 'Cannot be changed.',
+      dn: view === 'add' ? 'Riley Jackson' : 'Sam Jackson', em: view === 'add' ? 'riley@home.example' : 'sam@home.example',
+      tz: 'America/Chicago', tzNow: '22:05',
+      isRotate: view === 'rotate', rotOk, rotOff: !rotOk, flipRot: () => this.setState({ rotOk: !rotOk }),
+      isKey: view === 'showkey', qr, copy: () => this.setState({ copied: true }),
+      copyLabel: copied ? '✓ Copied' : '⎘ Copy', copyStyle: copied ? 'color: var(--inst-success);' : '',
+      isDelete: view === 'delete', delTyped: typed, delOk: typed === 'sam', delOff: typed !== 'sam', typeDel: (e) => this.setState({ typed: e.target.value })
+    });
+  }
+}
+</script>
+</body>
+</html>

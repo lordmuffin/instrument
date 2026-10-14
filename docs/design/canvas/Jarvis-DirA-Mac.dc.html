@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Ledger: Mac copilot panel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#0D1117}
+.pn{background:var(--inst-bg);border:1px solid var(--inst-line);box-shadow:var(--inst-shadow-2);display:flex;flex-direction:column;overflow:hidden}
+.pn-tb{height:32px;flex:none;display:flex;align-items:center;gap:8px;padding:0 8px 0 12px;background:var(--inst-surface);border-bottom:1px solid var(--inst-line)}
+.pn-hd{flex:none;background:var(--inst-surface);padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.pn-bd{flex:1;min-height:0;overflow:hidden;padding:0 8px 8px;display:flex;flex-direction:column;gap:4px}
+.pn-tail{flex:none;border-top:1px solid var(--inst-line);background:var(--inst-bg);padding:4px 8px 8px;display:flex;flex-direction:column;gap:4px}
+.tl{display:grid;grid-template-columns:36px 40px minmax(0,1fr);gap:6px;align-items:baseline;padding:6px 10px 6px 13px;background:var(--inst-surface);box-shadow:inset 3px 0 0 var(--inst-accent)}
+.tl--them{box-shadow:inset 3px 0 0 var(--inst-them)}
+.tl .t{font-family:var(--inst-mono);font-size:11px;color:var(--inst-text-2)}
+.tl .x{font-size:15px;line-height:1.45}
+.tl--draft .x{font-style:italic;color:var(--inst-text-2)}
+.spk{display:inline-flex;align-items:center;height:16px;padding:0 5px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;justify-self:start;border:1px solid transparent}
+.spk--me{background:var(--inst-accent);color:var(--inst-on-accent)}
+.spk--them{background:var(--inst-them);color:var(--inst-on-them)}
+.tl--draft .spk{background:none;border-color:currentColor}
+.tl--draft .spk--me{color:var(--inst-accent)}
+.tl--draft .spk--them{color:var(--inst-them-text)}
+.sec{display:flex;align-items:baseline;gap:8px;padding:10px 4px 2px}
+.newtag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--inst-accent)}
+.sg{background:var(--inst-surface);padding:6px 6px 10px 12px;display:flex;flex-direction:column;gap:2px}
+.sg--new,.ci--new{background:var(--inst-accent-tint)}
+.sg--age p{color:var(--inst-text-2)}
+.sg-x{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;color:var(--inst-text-2);cursor:pointer;font-size:12px}
+.ci{background:var(--inst-surface);padding:7px 12px;display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;align-items:baseline}
+.ci .g{color:var(--inst-text-2);font-size:13px}
+.acc{width:100%;height:36px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--inst-surface);border:0;cursor:pointer;text-align:left}
+.ib{width:32px;height:32px;padding:0}
+.cap{display:flex;align-items:center;gap:12px;height:52px;padding:0 8px 0 18px;border-radius:24px;border:1.5px solid var(--inst-accent);background:var(--inst-surface-2);box-shadow:var(--inst-shadow-2)}
+</style>
+</helmet>
+<div class="inst" data-theme="dark" style="width: 1320px; height: 900px; padding: 32px; display: flex; gap: 32px; align-items: flex-start;">
+
+  <div class="i-stack" style="gap: 8px;">
+    <span class="t-micro t-2">Standard · 480</span>
+    <section aria-label="Jarvis Live copilot panel, 480 wide" class="pn" style="width: 480px; height: 800px;">
+      <div class="pn-tb">
+        <span style="font-size: 13px; font-weight: 700;">Jarvis Live</span>
+        <span class="i-badge i-badge--live">Live</span>
+        <button type="button" class="i-switch" role="switch" aria-checked="true" style="margin-left: auto; font-size: 12px; min-height: 28px;"><span class="track"><span class="knob"></span></span>On top</button>
+      </div>
+      <div class="pn-hd">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="i-live" role="status" aria-label="Recording, 18 minutes 42 seconds"><span class="i-dot i-breathe"></span><span class="lbl">REC</span><span class="time">18:42</span><span class="i-meter"><span></span><span></span><span></span></span></span>
+          <button type="button" class="i-btn i-btn--secondary i-btn--sm" style="margin-left: auto;">⚑ Marker</button>
+          <button type="button" class="i-btn i-btn--secondary i-btn--sm">■ Stop</button>
+        </div>
+        <span class="t-meta t-2"><span style="color: var(--inst-accent);">●</span> Connected · <span class="t-mono">server pve · lag 840 ms</span></span>
+      </div>
+      <div style="flex: none; padding: 8px; display: flex; align-items: center; gap: 8px;">
+        <div class="i-seg" role="radiogroup" aria-label="View">
+          <button type="button" role="radio" aria-checked="true">Copilot</button>
+          <button type="button" role="radio" aria-checked="false">Transcript</button>
+        </div>
+        <span class="t-meta" style="margin-left: auto;"><span class="newtag">3 new</span> <span class="t-2">since 17:15</span></span>
+      </div>
+      <div class="pn-bd">
+        <div class="sg sg--new">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="t-tag" style="color: var(--inst-accent);">Question</span><span class="newtag">· New</span>
+            <span class="t-mono t-meta t-2" style="margin-left: auto;">0:22</span>
+            <button type="button" class="sg-x" aria-label="Dismiss suggestion">✕</button>
+          </div>
+          <p class="t-body-lg" style="padding-right: 6px;">Ask whether ARM images are on the public roadmap.</p>
+        </div>
+        <div class="sg sg--age">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="t-tag t-2">Gap</span>
+            <span class="t-mono t-meta t-2" style="margin-left: auto;">1:32</span>
+            <button type="button" class="sg-x" aria-label="Dismiss suggestion">✕</button>
+          </div>
+          <p class="t-body" style="padding-right: 6px;">You haven't discussed egress costs.</p>
+        </div>
+
+        <div class="sec"><h3 class="t-label">Actions</h3><span class="t-mono t-meta t-2">2</span><span class="newtag" style="margin-left: auto;">1 new</span></div>
+        <div class="ci ci--new"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Send the node inventory.</span><span class="t-mono t-meta t-2">Me · Fri 16 Oct</span></div></div>
+        <div class="ci"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Confirm GPU runner pricing.</span><span class="t-mono t-meta t-2">Vendor · —</span></div></div>
+
+        <div class="sec"><h3 class="t-label">Decisions</h3><span class="t-mono t-meta t-2">1</span><span class="newtag" style="margin-left: auto;">1 new</span></div>
+        <div class="ci ci--new"><span class="g">✓</span><span class="t-body">Pilot on the k3s2 cluster first.</span></div>
+
+        <div class="sec"><h3 class="t-label">Notes</h3><span class="t-mono t-meta t-2">3</span></div>
+        <div class="ci"><span class="g">•</span><span class="t-body">The vendor supports ARC scale sets on Kubernetes.</span></div>
+        <div class="ci"><span class="g">•</span><span class="t-body">GPU runners are a separate SKU.</span></div>
+
+        <div class="sec"><h3 class="t-label">Related</h3><span class="t-mono t-meta t-2">2</span></div>
+        <div class="ci" style="grid-template-columns: minmax(0, 1fr) auto;"><span class="t-body t-strong">DGX Spark K3s Node — Architecture Capture</span><a href="#" class="t-meta" aria-label="Open in Obsidian">▶ Obsidian</a></div>
+      </div>
+      <div class="pn-tail" aria-label="Latest transcript">
+        <span class="t-label" style="padding: 2px 4px 0;">Transcript · latest</span>
+        <div class="tl tl--draft"><span class="t">18:31</span><span class="spk spk--me">Me</span><span class="x">Metrics are fine, but nothing with write access to the</span></div>
+        <div class="tl tl--them tl--draft"><span class="t">18:38</span><span class="spk spk--them">Them</span><span class="x">Understood, read-only is</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="i-stack" style="gap: 8px;">
+    <span class="t-micro t-2">Strip · 320</span>
+    <section aria-label="Jarvis Live copilot panel, 320 wide" class="pn" style="width: 320px; height: 800px;">
+      <div class="pn-tb">
+        <span style="font-size: 13px; font-weight: 700;">Jarvis Live</span>
+        <span class="i-badge i-badge--live">Live</span>
+        <button type="button" class="i-switch" role="switch" aria-checked="true" style="margin-left: auto; font-size: 12px; min-height: 28px;"><span class="track"><span class="knob"></span></span>On top</button>
+      </div>
+      <div class="pn-hd" style="padding: 8px 10px; gap: 4px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span class="i-chip i-chip--live" style="border-radius: 24px; padding: 0 8px;"><span class="i-dot i-breathe"></span>Rec 18:42</span>
+          <span class="t-meta t-2"><span style="color: var(--inst-accent);">●</span> Connected</span>
+          <button type="button" class="i-btn i-btn--secondary ib" aria-label="Add marker" style="margin-left: auto;">⚑</button>
+          <button type="button" class="i-btn i-btn--secondary ib" aria-label="Stop session">■</button>
+        </div>
+      </div>
+      <div class="pn-bd" style="padding-top: 8px;">
+        <div class="sg sg--new">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="t-tag" style="color: var(--inst-accent);">Question</span><span class="newtag">· New</span>
+            <span class="t-mono t-meta t-2" style="margin-left: auto;">0:22</span>
+            <button type="button" class="sg-x" aria-label="Dismiss suggestion">✕</button>
+          </div>
+          <p class="t-body-lg" style="padding-right: 6px;">Ask whether ARM images are on the public roadmap.</p>
+        </div>
+        <button type="button" class="i-btn i-btn--quiet i-btn--sm" style="align-self: flex-start;">1 more suggestion ▼</button>
+
+        <button type="button" class="acc" aria-expanded="true"><span class="t-label" style="color: var(--inst-text);">Actions</span><span class="t-mono t-meta t-2">2</span><span class="newtag">1 new</span><span class="t-2" style="margin-left: auto; font-size: 11px;">▲</span></button>
+        <div class="ci ci--new"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Send the node inventory.</span><span class="t-mono t-meta t-2">Me · Fri 16 Oct</span></div></div>
+        <div class="ci"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Confirm GPU runner pricing.</span><span class="t-mono t-meta t-2">Vendor · —</span></div></div>
+        <button type="button" class="acc" aria-expanded="false"><span class="t-label" style="color: var(--inst-text);">Decisions</span><span class="t-mono t-meta t-2">1</span><span class="newtag">1 new</span><span class="t-2" style="margin-left: auto; font-size: 11px;">▼</span></button>
+        <button type="button" class="acc" aria-expanded="false"><span class="t-label" style="color: var(--inst-text);">Notes</span><span class="t-mono t-meta t-2">3</span><span class="t-2" style="margin-left: auto; font-size: 11px;">▼</span></button>
+        <button type="button" class="acc" aria-expanded="false"><span class="t-label" style="color: var(--inst-text);">Related</span><span class="t-mono t-meta t-2">2</span><span class="t-2" style="margin-left: auto; font-size: 11px;">▼</span></button>
+      </div>
+      <div class="pn-tail" aria-label="Latest transcript">
+        <span class="t-label" style="padding: 2px 4px 0;">Transcript · latest</span>
+        <div class="tl tl--draft" style="grid-template-columns: 32px minmax(0, 1fr); padding-left: 11px;"><span class="spk spk--me">Me</span><span class="x" style="font-size: 14px;">Metrics are fine, but nothing with write access to the</span></div>
+        <div class="tl tl--them tl--draft" style="grid-template-columns: 32px minmax(0, 1fr); padding-left: 11px;"><span class="spk spk--them">Them</span><span class="x" style="font-size: 14px;">Understood, read-only is</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="i-stack" style="gap: 8px; flex: 1; min-width: 0;">
+    <span class="t-micro t-2">Collapsed</span>
+    <div class="cap" role="group" aria-label="Jarvis Live, collapsed">
+      <span class="i-dot i-breathe" style="width: 10px; height: 10px; background: var(--inst-accent);"></span>
+      <span class="t-mono" style="font-size: 14px;">18:42</span>
+      <span class="i-meter" style="color: var(--inst-accent);"><span></span><span></span><span></span></span>
+      <span style="width: 1px; align-self: stretch; margin: 12px 0; background: var(--inst-control);"></span>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+        <span><span class="t-tag" style="color: var(--inst-accent);">Question</span> <span class="newtag">· 3 new</span></span>
+        <span class="t-caption" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ask whether ARM images are on the public roadmap.</span>
+      </span>
+      <button type="button" class="i-btn i-btn--secondary ib" aria-label="Expand copilot">▼</button>
+    </div>
+    <span class="t-caption t-2" style="padding-top: 8px; max-width: 360px;">Recording indicator, newest suggestion and the new count. The rest of the ledger waits behind ▼.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1320,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

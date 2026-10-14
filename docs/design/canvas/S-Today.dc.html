@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: Today</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="display: flex; flex-direction: column; min-height: 1000px;">
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Sleep Dashboard</a>
+      <span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span>
+    </div>
+    <nav class="i-nav i-nav--wide" aria-label="Main">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}">{{t.label}}</a></sc-for>
+    </nav>
+    <div class="i-user" style="margin-left: auto;">
+      <div class="i-wide-only">
+        <sc-if value="{{admin}}" hint-placeholder-val="{{true}}">
+          <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+            <label for="person">Person</label>
+            <span class="i-select" style="width: 136px;"><select id="person" name="u" class="i-input" style="height: 32px; font-size: 13px;"><option value="" selected="{{selMe}}">Me</option><option value="sam" selected="{{selSam}}">Sam Jackson</option></select></span>
+            <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+          </form>
+        </sc-if>
+        <span>{{viewerName}}</span>
+        <a href="#" class="i-btn i-btn--quiet i-btn--sm">Sign out</a>
+      </div>
+      <button type="button" class="i-narrow-only i-btn i-btn--quiet i-btn--sm" aria-haspopup="true" aria-label="{{viewerName}}, account menu">{{viewerInitial}} ▾</button>
+    </div>
+  </div>
+</header>
+<main class="i-page" style="flex: 1; width: 100%;">
+  <div class="i-stack">
+    <sc-if value="{{viewing}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div></sc-if>
+    <sc-if value="{{lab}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div></sc-if>
+    <sc-if value="{{expiring}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="status"><b>⚑ Signing out at 22:14</b><span>Your 12-hour session ends in 9 minutes.</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">Stay Signed In</a></div></sc-if>
+    <sc-if value="{{apiErr}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--error" role="alert"><b>✕ Sleep data unavailable</b><span>{{apiReason}}</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">↩ Reload</a></div></sc-if>
+    <sc-if value="{{freshShow}}" hint-placeholder-val="{{true}}"><div class="i-banner {{freshCls}}" role="status"><b>{{freshWord}}</b><span>{{freshText}}</span><span class="i-banner-act t-meta t-2">{{freshMeta}}</span></div></sc-if>
+  </div>
+  <h1 class="t-title">Today</h1>
+
+  <sc-if value="{{nightShow}}" hint-placeholder-val="{{true}}">
+    <section aria-labelledby="ln" class="i-stack">
+      <div class="i-block" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 12px 16px;">
+        <div class="i-stack" style="flex: 1 1 260px; min-width: 0; gap: 2px;">
+          <span class="t-label">Last night</span>
+          <div class="i-row">
+            <h2 id="ln" style="font-size: 16px; font-weight: 700;">{{nightDate}}</h2>
+            <span class="i-chip" data-kind="todo"><span class="i-dot i-dot--hollow"></span>To review</span>
+            <sc-if value="{{dst}}" hint-placeholder-val="{{false}}"><span class="i-chip i-chip--progress">⚑ DST transition night</span></sc-if>
+          </div>
+          <span class="t-meta t-2">Times in America/Chicago.</span>
+        </div>
+        <a href="#" class="i-btn i-btn--secondary i-btn--sm">Confirm or Correct ▶</a>
+      </div>
+
+      <dl class="i-facts">
+        <sc-for list="{{facts}}" as="f" hint-placeholder-count="5">
+          <div class="i-fact"><dt>{{f.label}}</dt><dd><span class="v">{{f.value}}</span><span class="s">{{f.sub}}</span></dd></div>
+        </sc-for>
+        <sc-if value="{{flagsNone}}" hint-placeholder-val="{{true}}">
+          <div class="i-fact"><dt>Quality flags</dt><dd><span class="v">—</span><span class="s">None</span></dd></div>
+        </sc-if>
+        <sc-if value="{{flagsAny}}" hint-placeholder-val="{{false}}">
+          <div class="i-fact i-fact--wide"><dt>Quality flags</dt><dd><ul class="notes"><sc-for list="{{flags}}" as="q" hint-placeholder-count="2"><li class="{{q.cls}}" title="{{q.code}}">{{q.label}}</li></sc-for></ul></dd></div>
+        </sc-if>
+      </dl>
+
+      <form class="i-block i-choiceform" aria-label="Day context for {{nightDate}}" style="padding: 8px 16px;">
+        <div class="grp" role="radiogroup" aria-labelledby="dt"><span id="dt" class="i-label">Day type</span>
+          <label class="i-choice"><input type="radio" name="day" value="work" checked="" disabled="{{writesOff}}"><span>Work</span></label>
+          <label class="i-choice"><input type="radio" name="day" value="free" disabled="{{writesOff}}"><span>Free</span></label>
+        </div>
+        <div class="grp" role="radiogroup" aria-labelledby="al"><span id="al" class="i-label">Alarm</span>
+          <label class="i-choice"><input type="radio" name="alarm" value="yes" checked="" disabled="{{writesOff}}"><span>Yes</span></label>
+          <label class="i-choice"><input type="radio" name="alarm" value="no" disabled="{{writesOff}}"><span>No</span></label>
+        </div>
+        <span class="out">
+          <button type="submit" class="i-btn i-btn--primary i-btn--sm" disabled="{{writesOff}}" aria-describedby="ctx-why">Save</button>
+          <span id="ctx-why" role="status"><sc-if value="{{writesOff}}" hint-placeholder-val="{{false}}"><span class="i-reason">⚑ LAB: writes disabled</span></sc-if></span>
+        </span>
+      </form>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{emptyShow}}" hint-placeholder-val="{{false}}">
+    <section aria-label="Last night" class="i-block" role="status" style="padding: 32px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+      <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: {{emptyColor}};">{{emptyGlyph}}</span>
+      <span style="font-size: 14px; font-weight: 700;">{{emptyTitle}}</span>
+      <span class="t-caption t-2" style="max-width: 320px;">{{emptyText}}</span>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{needsShow}}" hint-placeholder-val="{{true}}">
+    <section aria-labelledby="nu" class="i-stack">
+      <h2 id="nu" class="t-label" style="padding: 8px 0 4px;">Needs you</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px;">
+        <div class="i-block" style="display: flex; align-items: center; gap: 12px;">
+          <div class="i-stack" style="flex: 1; gap: 2px;"><span class="t-label">To review</span><span><span class="t-stat">4</span> <span class="t-caption t-2">nights</span></span></div>
+          <a href="#" class="i-btn i-btn--quiet i-btn--sm">Review Nights ▶</a>
+        </div>
+        <div class="i-block" style="display: flex; align-items: center; gap: 12px;">
+          <div class="i-stack" style="flex: 1; gap: 2px;"><span class="t-label">Not tagged · last 30 days</span><span><span class="t-stat">3</span> <span class="t-caption t-2">nights</span></span></div>
+          <a href="#" class="i-btn i-btn--quiet i-btn--sm">Tag Nights ▶</a>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+</main>
+<footer class="i-footer" style="width: 100%; align-items: center;">
+  <span>From a Pixel Watch through Health Connect, synced twice a day.</span>
+  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <span class="i-seg" role="radiogroup" aria-label="Theme"><sc-for list="{{themeSeg}}" as="t" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></span>
+    <span class="t-mono">{{version}}</span>
+  </span>
+</footer>
+<nav class="i-bottombar i-bottombar--auto" aria-label="Main">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}"><span class="i-ico" aria-hidden="true">{{t.ico}}</span>{{t.label}}</a></sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme": {"editor": "enum", "options": ["light", "dark", "system"], "default": "light", "section": "Shell"}, "channel": {"editor": "enum", "options": ["live", "lab"], "default": "live", "section": "Shell"}, "who": {"editor": "enum", "options": ["andrew", "sam"], "default": "andrew", "section": "Shell"}, "viewing": {"editor": "boolean", "default": false, "section": "Shell"}, "expiring": {"editor": "boolean", "default": false, "section": "Shell"}, "freshness": {"editor": "enum", "options": ["fresh", "getting-stale", "stale", "losing", "never"], "default": "fresh", "section": "Today"}, "night": {"editor": "enum", "options": ["last", "dst", "flagged", "none-latest"], "default": "last", "section": "Today"}, "api": {"editor": "enum", "options": ["ok", "timeout", "unreachable", "503", "malformed"], "default": "ok", "section": "Today"}, "$preview": {"width": 1280, "height": 1000}}'>
+class Component extends DCLogic {
+  shell(cur) {
+    const p = this.props, st = this.state || {};
+    const theme = st.theme ?? p.theme ?? 'light';
+    const lab = (p.channel ?? 'live') === 'lab';
+    const admin = (p.who ?? 'andrew') === 'andrew';
+    const viewing = admin && (p.viewing ?? false);
+    const all = [['today', 'Today', '🌙'], ['trends', 'Trends', '📈'], ['nights', 'Nights', '📋'], ['context', 'Context', '📝'], ['people', 'People', '👥']];
+    const tabs = all.filter((t) => admin || t[0] !== 'people').map((t) => ({ label: t[1], ico: t[2], cur: t[0] === cur ? 'page' : 'false' }));
+    const themeSeg = [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map((t) => ({ label: t[1], on: theme === t[0] ? 'true' : 'false', pick: () => this.setState({ theme: t[0] }) }));
+    return {
+      theme, lab, admin, viewing, tabs, themeSeg,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewerName: admin ? 'Andrew' : 'Sam',
+      viewerInitial: admin ? 'A' : 'S',
+      selMe: !viewing, selSam: viewing,
+      expiring: p.expiring ?? false,
+      writesOff: lab
+    };
+  }
+  renderVals() {
+    const s = this.shell('today');
+    const p = this.props;
+    const fr = p.freshness ?? 'fresh';
+    const night = p.night ?? 'last';
+    const api = p.api ?? 'ok';
+    const apiReasons = { timeout: 'The query API timed out.', unreachable: 'The query API is unreachable.', '503': 'The query API returned 503.', malformed: 'The query API sent a malformed response.' };
+    const apiErr = api !== 'ok';
+    const F = {
+      fresh: ['i-banner--success', '✓ Fresh', 'Last data 9h ago; data loss in ~39h.', '2 payloads in 24h · 0 parse errors in 7 days'],
+      'getting-stale': ['i-banner--warning', '⚑ Getting stale', 'Last data 30h ago; data loss in ~18h.', '0 payloads in 24h'],
+      stale: ['i-banner--error', '✕ Stale', 'Last data 41h ago; data loss in ~7h.', '0 payloads in 24h'],
+      losing: ['i-banner--error', '✕ Losing data', 'Last data 53h ago, past the 48h buffer: data is being lost.', '0 payloads in 24h'],
+      never: ['i-banner--error', '✕ No data', 'No data has ever been received.', '']
+    }[fr];
+    const R = (label, value, sub) => ({ label, value, sub });
+    const N = {
+      last: { date: 'Mon 12 Oct', dst: false, flags: [], facts: [R('Bed', '23:05', 'Sun 11 Oct · CDT'), R('Wake', '06:35', 'Mon 12 Oct · CDT'), R('Total sleep time', '7h 05m', '23:20 – 06:35'), R('Time in bed', '7h 45m', '23:05 – 06:50'), R('Efficiency', '91.4%', 'sleep ÷ in bed')] },
+      dst: { date: 'Sun 2 Nov', dst: true, flags: [], facts: [R('Bed', '23:30', 'Sat 1 Nov · CDT'), R('Wake', '06:55', 'Sun 2 Nov · CST'), R('Total sleep time', '8h 10m', 'clock shows 7h 10m'), R('Time in bed', '8h 40m', 'clock shows 7h 40m'), R('Efficiency', '94.2%', 'sleep ÷ in bed')] },
+      flagged: { date: 'Mon 12 Oct', dst: false, flags: [{ code: 'no_stages', label: 'ⓘ No sleep detail from the watch', cls: '' }, { code: 'tst_is_tib', label: 'ⓘ All time in bed counted as sleep', cls: '' }], facts: [R('Bed', '23:05', 'Sun 11 Oct · CDT'), R('Wake', '06:50', 'Mon 12 Oct · CDT'), R('Total sleep time', '7h 45m', '23:05 – 06:50'), R('Time in bed', '7h 45m', '23:05 – 06:50'), R('Efficiency', '100.0%', 'sleep ÷ in bed')] }
+    };
+    const never = fr === 'never';
+    const missing = night === 'none-latest';
+    const n = N[night] || N.last;
+    const nightShow = !apiErr && !never && !missing;
+    let e = ['', '', '', 'var(--inst-text-2)'];
+    if (apiErr) e = ['✕', 'Last night is not available.', 'Reload once the query API answers. Nothing was lost.', 'var(--inst-error)'];
+    else if (never) e = ['—', 'No nights yet.', 'Your first night appears here after the watch syncs.', 'var(--inst-text-2)'];
+    else if (missing) e = ['—', 'No night found for the latest synced date.', 'The watch may not have been worn that night.', 'var(--inst-text-2)'];
+    return Object.assign(s, {
+      apiErr, apiReason: apiReasons[api] || '',
+      freshShow: !apiErr, freshCls: F[0], freshWord: F[1], freshText: F[2], freshMeta: F[3],
+      nightShow, nightDate: n.date, dst: n.dst, facts: n.facts, flags: n.flags,
+      flagsNone: n.flags.length === 0, flagsAny: n.flags.length > 0,
+      emptyShow: !nightShow, emptyGlyph: e[0], emptyTitle: e[1], emptyText: e[2], emptyColor: e[3],
+      needsShow: !apiErr && !never
+    });
+  }
+}
+</script>
+</body>
+</html>

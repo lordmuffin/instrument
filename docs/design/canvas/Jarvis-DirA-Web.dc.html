@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Ledger: live session on the web</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#0D1117}
+.tl{display:grid;grid-template-columns:40px 44px minmax(0,1fr);gap:8px;align-items:baseline;padding:8px 12px 8px 15px;background:var(--inst-surface);box-shadow:inset 3px 0 0 var(--inst-accent)}
+.tl--them{box-shadow:inset 3px 0 0 var(--inst-them)}
+.tl .t{font-family:var(--inst-mono);font-size:11px;color:var(--inst-text-2)}
+.tl .x{font-size:15px;line-height:1.45}
+.tl--draft .x{font-style:italic;color:var(--inst-text-2)}
+.spk{display:inline-flex;align-items:center;height:16px;padding:0 5px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;justify-self:start;border:1px solid transparent}
+.spk--me{background:var(--inst-accent);color:var(--inst-on-accent)}
+.spk--them{background:var(--inst-them);color:var(--inst-on-them)}
+.tl--draft .spk{background:none;border-color:currentColor}
+.tl--draft .spk--me{color:var(--inst-accent)}
+.tl--draft .spk--them{color:var(--inst-them-text)}
+.mk{display:flex;align-items:center;gap:8px;padding:6px 15px;font-size:11px;font-weight:600;color:var(--inst-warning)}
+.sec{display:flex;align-items:baseline;gap:8px;padding:12px 0 4px}
+.newtag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--inst-accent)}
+.sg{background:var(--inst-surface);padding:8px 8px 12px 12px;display:flex;flex-direction:column;gap:2px}
+.sg--new,.ci--new{background:var(--inst-accent-tint)}
+.sg--age p{color:var(--inst-text-2)}
+.sg-x{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;color:var(--inst-text-2);cursor:pointer;font-size:13px}
+.sg-x:hover{color:var(--inst-text);background:var(--inst-surface-2)}
+.ci{background:var(--inst-surface);padding:8px 12px;display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px;align-items:baseline}
+.ci .g{color:var(--inst-text-2);font-size:13px}
+.rd{background:var(--inst-surface);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.rd p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ro{display:flex;flex-direction:column;gap:2px;min-width:0}
+</style>
+</helmet>
+<div class="inst" data-theme="dark" style="min-height: 900px; display: flex; flex-direction: column;">
+
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Jarvis Live</a>
+      <span class="i-badge i-badge--live">Live</span>
+    </div>
+    <nav class="i-nav" aria-label="Main">
+      <a href="#" aria-current="page">Sessions</a>
+      <a href="#">Devices</a>
+      <a href="#">Work Items</a>
+      <a href="#">Publishing</a>
+      <a href="#">Admin</a>
+    </nav>
+    <div class="i-user"><span>Andrew</span><button type="button" class="i-btn i-btn--quiet i-btn--sm">Sign out</button></div>
+  </div>
+</header>
+
+<main class="i-page" style="width: 100%; flex: 1;">
+  <a href="#" class="t-caption" style="align-self: flex-start;">↩ Sessions</a>
+
+  <section aria-label="Session" class="i-block" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; padding: 12px 16px;">
+    <div class="i-stack" style="flex: 1 1 420px; min-width: 0;">
+      <span class="t-label">Meeting · Oct 14, 3:05 PM</span>
+      <div class="i-row" style="gap: 4px 8px;">
+        <h1 class="t-body-lg t-strong t-2">Untitled session</h1>
+        <button type="button" class="i-btn i-btn--quiet i-btn--sm">Rename</button>
+      </div>
+      <div class="i-row t-caption" style="gap: 4px 8px;">
+        <span class="t-2">Suggested title:</span>
+        <span>ARC runner migration vendor call</span>
+        <button type="button" class="i-btn i-btn--secondary i-btn--sm" style="height: 28px;">Use Title</button>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-start;">
+      <div class="ro"><span class="t-label">Status</span><span class="i-chip i-chip--live" style="align-self: flex-start; margin-top: 4px;"><span class="i-dot i-breathe"></span>Live</span></div>
+      <div class="ro"><span class="t-label">Elapsed</span><span class="t-stat">18:42</span></div>
+      <div class="ro"><span class="t-label">Link</span><span class="t-caption" style="margin-top: 3px;"><span style="color: var(--inst-accent);">●</span> Connected</span><span class="t-mono t-meta t-2">pve · lag 840 ms</span></div>
+    </div>
+  </section>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;">
+
+    <section aria-labelledby="a-tr" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+      <div class="sec" style="padding-top: 0;">
+        <h2 id="a-tr" class="t-label">Transcript</h2>
+        <span class="t-meta t-2" style="margin-left: auto;">↓ Following live</span>
+      </div>
+      <div role="log" aria-label="Transcript" style="height: 620px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px;">
+        <sc-for list="{{lines}}" as="l" hint-placeholder-count="12">
+          <sc-if value="{{l.marker}}" hint-placeholder-val="{{false}}">
+            <div class="mk"><span>⚑ {{l.text}}</span><span class="t-mono" style="font-weight: 400;">· {{l.t}}</span></div>
+          </sc-if>
+          <sc-if value="{{l.speech}}" hint-placeholder-val="{{true}}">
+            <div class="{{l.cls}}">
+              <span class="t">{{l.t}}</span>
+              <span class="{{l.spk}}">{{l.who}}</span>
+              <span class="x">{{l.text}}</span>
+            </div>
+          </sc-if>
+        </sc-for>
+      </div>
+    </section>
+
+    <aside aria-labelledby="a-cp" style="flex: 1 1 400px; max-width: 460px; min-width: 0; display: flex; flex-direction: column;">
+      <div class="sec" style="padding-top: 0;">
+        <h2 id="a-cp" class="t-label">Copilot</h2>
+        <span class="t-meta" style="margin-left: auto;"><span class="newtag">3 new</span> <span class="t-2">since you looked at 17:15</span></span>
+      </div>
+      <div style="height: 620px; overflow: hidden; display: flex; flex-direction: column; gap: 4px;">
+
+        <div class="sec" style="padding-top: 0;"><h3 class="t-label">Suggestions</h3><span class="t-mono t-meta t-2">2</span></div>
+        <div class="sg sg--new">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="t-tag" style="color: var(--inst-accent);">Question</span>
+            <span class="newtag">· New</span>
+            <span class="t-mono t-meta t-2" style="margin-left: auto;">0:22</span>
+            <button type="button" class="sg-x" aria-label="Dismiss suggestion">✕</button>
+          </div>
+          <p class="t-body-lg" style="padding-right: 8px;">Ask whether ARM images are on the public roadmap.</p>
+        </div>
+        <div class="sg sg--age">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="t-tag t-2">Gap</span>
+            <span class="t-mono t-meta t-2" style="margin-left: auto;">1:32</span>
+            <button type="button" class="sg-x" aria-label="Dismiss suggestion">✕</button>
+          </div>
+          <p class="t-body" style="padding-right: 8px;">You haven't discussed egress costs.</p>
+        </div>
+
+        <div class="sec"><h3 class="t-label">Actions</h3><span class="t-mono t-meta t-2">2</span><span class="newtag" style="margin-left: auto;">1 new</span></div>
+        <div class="ci ci--new"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Send the node inventory.</span><span class="t-mono t-meta t-2">Me · Fri 16 Oct</span></div></div>
+        <div class="ci"><span class="g">☐</span><div class="i-stack" style="gap: 0;"><span class="t-body">Confirm GPU runner pricing.</span><span class="t-mono t-meta t-2">Vendor · —</span></div></div>
+
+        <div class="sec"><h3 class="t-label">Decisions</h3><span class="t-mono t-meta t-2">1</span><span class="newtag" style="margin-left: auto;">1 new</span></div>
+        <div class="ci ci--new"><span class="g">✓</span><span class="t-body">Pilot on the k3s2 cluster first.</span></div>
+
+        <div class="sec"><h3 class="t-label">Notes</h3><span class="t-mono t-meta t-2">3</span></div>
+        <div class="ci"><span class="g">•</span><span class="t-body">The vendor supports ARC scale sets on Kubernetes.</span></div>
+        <div class="ci"><span class="g">•</span><span class="t-body">GPU runners are a separate SKU.</span></div>
+        <div class="ci"><span class="g">•</span><span class="t-body">No date yet for the ARM images.</span></div>
+
+        <div class="sec"><h3 class="t-label">Related</h3><span class="t-mono t-meta t-2">2</span></div>
+        <div class="rd">
+          <div class="i-row" style="justify-content: space-between; gap: 8px;"><span class="t-body t-strong">DGX Spark K3s Node — Architecture Capture</span><a href="#" class="t-meta" aria-label="Open DGX Spark K3s Node in Obsidian">▶ Obsidian</a></div>
+          <span class="t-mono t-meta t-2">10 Projects/Jarvis/Infrastructure</span>
+          <p class="t-caption t-2">The Spark joins k3s2 as an agent. GPU roles swap by profile, so a runner pool would share the card with whisper.</p>
+        </div>
+        <div class="rd">
+          <div class="i-row" style="justify-content: space-between; gap: 8px;"><span class="t-body t-strong">GitHub ARC on k3s — Build Spec</span><a href="#" class="t-meta" aria-label="Open GitHub ARC on k3s in Obsidian">▶ Obsidian</a></div>
+          <span class="t-mono t-meta t-2">10 Projects/Homelab</span>
+          <p class="t-caption t-2">One scale set per org, the controller in its own namespace, ephemeral runner pods.</p>
+        </div>
+      </div>
+
+      <div class="sec"><h3 class="t-label">Work items</h3><span class="t-mono t-meta t-2">1</span></div>
+      <div class="i-block" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px;">
+        <div class="i-stack" style="flex: 1; min-width: 0; gap: 2px;">
+          <a href="#" class="t-body t-strong" style="color: var(--inst-text); text-decoration: none;">Add ARM runner scale set to k3s2</a>
+          <span class="t-meta"><span class="t-mono t-2">lordmuffin/np-home-homelab</span> · <a href="#" class="t-mono" title="“What's the timeline for the ARM images?”">▶ 14:32</a></span>
+        </div>
+        <span class="i-chip">Draft</span>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="i-footer">
+  <span>Audio is kept for 90 days. The transcript and note are kept.</span>
+  <span class="t-mono">server-v0.18.0 · 39e69a0</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const S = (who, t, text, draft) => ({
+      speech: true, marker: false, t, text, who: who === 'me' ? 'Me' : 'Them',
+      cls: 'tl' + (who === 'them' ? ' tl--them' : '') + (draft ? ' tl--draft' : ''),
+      spk: 'spk spk--' + who
+    });
+    const M = (t, text) => ({ speech: false, marker: true, t, text });
+    return {
+      lines: [
+        S('them', '13:58', 'We run the controller in its own namespace. Scale sets register per repository or per org.'),
+        S('me', '14:20', 'Org level works for us. Four repos need runners.'),
+        S('me', '14:32', "What's the timeline for the ARM images?"),
+        S('them', '14:51', "ARM is in preview. I can't commit to a date on this call."),
+        S('them', '15:40', 'We can support ARC scale sets, but GPU runners are a separate SKU.'),
+        M('16:05', 'Pricing'),
+        S('me', '16:12', "Send me the GPU runner pricing and we'll size it against the DGX node."),
+        S('them', '16:40', 'Sure. Can you send the node inventory so we can quote?'),
+        S('me', '17:02', "I'll send it by Friday."),
+        S('me', '17:30', "Let's pilot on the k3s2 cluster first and keep the VM runners as a fallback."),
+        S('them', '18:05', "That works. We'd want read access to the cluster metrics during the pilot."),
+        S('me', '18:31', 'Metrics are fine, but nothing with write access to the', true),
+        S('them', '18:38', 'Understood, read-only is', true)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: Trends</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="display: flex; flex-direction: column; min-height: 1700px;">
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Sleep Dashboard</a>
+      <span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span>
+    </div>
+    <nav class="i-nav i-nav--wide" aria-label="Main">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}">{{t.label}}</a></sc-for>
+    </nav>
+    <div class="i-user" style="margin-left: auto;">
+      <div class="i-wide-only">
+        <sc-if value="{{admin}}" hint-placeholder-val="{{true}}">
+          <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+            <label for="person">Person</label>
+            <span class="i-select" style="width: 136px;"><select id="person" name="u" class="i-input" style="height: 32px; font-size: 13px;"><option value="" selected="{{selMe}}">Me</option><option value="sam" selected="{{selSam}}">Sam Jackson</option></select></span>
+            <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+          </form>
+        </sc-if>
+        <span>{{viewerName}}</span>
+        <a href="#" class="i-btn i-btn--quiet i-btn--sm">Sign out</a>
+      </div>
+      <button type="button" class="i-narrow-only i-btn i-btn--quiet i-btn--sm" aria-haspopup="true" aria-label="{{viewerName}}, account menu">{{viewerInitial}} ▾</button>
+    </div>
+  </div>
+</header>
+<main class="i-page" style="flex: 1; width: 100%;">
+  <div class="i-stack">
+    <sc-if value="{{viewing}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div></sc-if>
+    <sc-if value="{{lab}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div></sc-if>
+    <sc-if value="{{expiring}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="status"><b>⚑ Signing out at 22:14</b><span>Your 12-hour session ends in 9 minutes.</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">Stay Signed In</a></div></sc-if>
+
+  </div>
+  <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;">
+    <h1 class="t-title">Trends</h1>
+    <div class="i-row" style="gap: 12px;">
+      <sc-if value="{{updating}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--inst-text-2);" role="status"><span class="i-spin"></span>Updating</span></sc-if>
+      <span class="t-mono t-meta t-2">{{rangeText}}</span>
+      <div class="i-seg" role="radiogroup" aria-label="Range"><sc-for list="{{ranges}}" as="r" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{r.on}}" onClick="{{r.pick}}">{{r.label}}</button></sc-for></div>
+    </div>
+  </div>
+
+  <section class="i-block" aria-labelledby="dur" style="padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;">
+      <h2 id="dur" class="t-label">Sleep duration</h2>
+      <div class="i-legend">
+        <span><span class="i-sw" style="background: var(--inst-chart-1);"></span>Total sleep time</span>
+        <span><span class="i-sw i-sw--outline" style="border-color: var(--inst-chart-1);"></span>Time in bed</span>
+        <span><span class="i-sw--mean"></span>7-day mean</span>
+        <button type="button" class="i-btn i-btn--quiet i-btn--sm" aria-pressed="{{tDur.on}}" onClick="{{tDur.flip}}" style="color: var(--inst-accent);">{{tDur.label}}</button>
+      </div>
+    </div>
+    <sc-if value="{{charts}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex; gap: 8px; opacity: {{dim}};">
+        <div aria-hidden="true" class="t-mono t-micro t-2" style="width: 24px; flex: none; position: relative; height: 160px;">
+          <span style="position: absolute; right: 0; bottom: 122px;">8h</span><span style="position: absolute; right: 0; bottom: 58px;">4h</span><span style="position: absolute; right: 0; bottom: -6px;">0</span>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;">
+          <div role="img" aria-label="{{durAlt}}" style="position: relative; height: 160px; display: flex; gap: {{barGap}}px; border-bottom: 1px solid var(--inst-control);">
+            <span style="position: absolute; left: 0; right: 0; bottom: 128px; border-top: 1px solid var(--inst-line);"></span>
+            <span style="position: absolute; left: 0; right: 0; bottom: 64px; border-top: 1px solid var(--inst-line);"></span>
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="30">
+              <div style="flex: 1; position: relative; height: 160px;">
+                <span style="position: absolute; bottom: 0; left: 12%; right: 12%; height: {{b.tib}}px; border: 1px solid var(--inst-chart-1); border-bottom: 0;"></span>
+                <span style="position: absolute; bottom: 0; left: 12%; right: 12%; height: {{b.tst}}px; background: var(--inst-chart-1);"></span>
+              </div>
+            </sc-for>
+            <svg viewBox="0 0 {{n}} 160" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 160px; overflow: visible;"><polyline points="{{meanPts}}" fill="none" style="stroke: var(--inst-text);" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"></polyline></svg>
+            <span style="position: absolute; left: {{tipLeft}}%; bottom: 0; height: 160px; border-left: 1px solid var(--inst-text-2);"></span>
+            <div class="i-tooltip" role="tooltip" style="position: absolute; left: {{tipLeft}}%; bottom: 168px; transform: translateX(-50%); white-space: nowrap;"><b class="t-mono">{{tip.night}}</b><br>Total sleep time <span class="t-mono">{{tip.tst}}</span> · In bed <span class="t-mono">{{tip.tib}}</span></div>
+          </div>
+          <div aria-hidden="true" class="t-mono t-micro t-2" style="display: flex; gap: {{barGap}}px;"><sc-for list="{{bars}}" as="b" hint-placeholder-count="30"><span style="flex: 1; text-align: center; white-space: nowrap; overflow: visible;">{{b.x}}</span></sc-for></div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+      <div style="height: 160px; border-left: 1px solid var(--inst-control); border-bottom: 1px solid var(--inst-control); display: flex; align-items: center; justify-content: center;"><span style="font-size: 13px; font-weight: 600;">No nights in this range.</span></div>
+    </sc-if>
+    <sc-if value="{{nojs}}" hint-placeholder-val="{{false}}"><div class="i-banner"><b>ⓘ Charts need JavaScript.</b><span>The table below has the same numbers.</span></div></sc-if>
+    <p class="i-help">Bars are total sleep time. The outline is time in bed. The line is the 7-day mean of sleep time.</p>
+    <sc-if value="{{tDur.show}}" hint-placeholder-val="{{false}}">
+      <div class="i-table-wrap" style="max-height: 240px; overflow-y: auto; border-top: 1px solid var(--inst-line);">
+        <table class="i-table" style="font-size: 12px;"><caption class="i-sr">Sleep duration, newest first</caption>
+          <thead><tr><th scope="col">Night</th><th scope="col" class="num">Total sleep time</th><th scope="col" class="num">Time in bed</th><th scope="col" class="num">7-day mean</th></tr></thead>
+          <tbody><sc-for list="{{rows}}" as="r" hint-placeholder-count="7"><tr><td>{{r.night}}</td><td class="num">{{r.tst}}</td><td class="num">{{r.tib}}</td><td class="num">{{r.mean}}</td></tr></sc-for></tbody>
+        </table>
+      </div>
+    </sc-if>
+  </section>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;">
+    <section class="i-block" aria-labelledby="tim" style="flex: 1 1 380px; min-width: 0; padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;">
+        <h2 id="tim" class="t-label">Sleep timing</h2>
+        <button type="button" class="i-btn i-btn--quiet i-btn--sm" aria-pressed="{{tTim.on}}" onClick="{{tTim.flip}}" style="color: var(--inst-accent);">{{tTim.label}}</button>
+      </div>
+      <div class="i-legend">
+        <span><span class="i-sw i-sw--dot" style="background: var(--inst-chart-1);"></span>Fell asleep</span>
+        <span><span class="i-sw i-sw--diamond" style="background: var(--inst-chart-2);"></span>Woke up</span>
+        <span><span class="i-sw--mean"></span>Midpoint</span>
+      </div>
+      <sc-if value="{{chartsOrEmpty}}" hint-placeholder-val="{{true}}">
+        <div style="position: relative; align-self: center; width: 100%; max-width: 320px; opacity: {{dim}};">
+          <svg class="i-radial" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="{{c.alt}}" style="width: 100%;">
+            <circle class="grid" cx="160" cy="160" r="36"></circle><circle class="grid" cx="160" cy="160" r="84"></circle><circle class="grid" cx="160" cy="160" r="132"></circle>
+            <path class="grid" d="{{c.spokes}}"></path><path class="tick" d="{{c.ticks}}"></path>
+            <text class="lbl" x="160" y="16" text-anchor="middle" dominant-baseline="middle">00</text><text class="lbl" x="264.7" y="55.3" text-anchor="middle" dominant-baseline="middle">03</text><text class="lbl" x="306" y="160" text-anchor="middle" dominant-baseline="middle">06</text><text class="lbl" x="264.7" y="264.7" text-anchor="middle" dominant-baseline="middle">09</text><text class="lbl" x="160" y="306" text-anchor="middle" dominant-baseline="middle">12</text><text class="lbl" x="55.3" y="264.7" text-anchor="middle" dominant-baseline="middle">15</text><text class="lbl" x="14" y="160" text-anchor="middle" dominant-baseline="middle">18</text><text class="lbl" x="55.3" y="55.3" text-anchor="middle" dominant-baseline="middle">21</text>
+            <path class="win" d="{{c.wins}}"></path><path class="mid" d="{{c.mid}}"></path><path class="on" d="{{c.ons}}"></path><path class="off" d="{{c.offs}}"></path>
+            <text class="lbl" x="160" y="156" text-anchor="middle" style="font-size: 9px;">centre</text><text class="lbl" x="160" y="168" text-anchor="middle" style="font-size: 9px;">{{c.first}}</text>
+          </svg>
+          <sc-if value="{{empty}}" hint-placeholder-val="{{false}}"><span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;"><span style="font-size: 13px; font-weight: 600; background: var(--inst-surface); padding: 0 4px;">No nights in this range.</span></span></sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{nojs}}" hint-placeholder-val="{{false}}"><div class="i-banner"><b>ⓘ Charts need JavaScript.</b><span>The table below has the same times.</span></div></sc-if>
+      <p class="i-help">Midnight is at the top. Each ring is a night: oldest at the centre, newest at the rim. ● fell asleep, ◆ woke up, and the dashed line joins each night's midpoint.</p>
+      <sc-if value="{{tTim.show}}" hint-placeholder-val="{{false}}">
+        <div class="i-table-wrap" style="max-height: 240px; overflow-y: auto; border-top: 1px solid var(--inst-line);">
+          <table class="i-table" style="font-size: 12px;"><caption class="i-sr">Sleep timing, newest first</caption>
+            <thead><tr><th scope="col">Night</th><th scope="col" class="num">Fell asleep</th><th scope="col" class="num">Woke up</th><th scope="col" class="num">Midpoint</th></tr></thead>
+            <tbody><sc-for list="{{rows}}" as="r" hint-placeholder-count="7"><tr><td>{{r.night}}</td><td class="num">{{r.on}}</td><td class="num">{{r.off}}</td><td class="num">{{r.mid}}</td></tr></sc-for></tbody>
+          </table>
+        </div>
+      </sc-if>
+    </section>
+
+    <sc-if value="{{vitals}}" hint-placeholder-val="{{true}}">
+      <section class="i-block" aria-labelledby="vit" style="flex: 999 1 480px; min-width: 0; padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;">
+          <div class="i-stack" style="gap: 0;"><h2 id="vit" class="t-label">Resting heart rate and HRV</h2><span class="t-meta t-2">device output, context only</span></div>
+          <button type="button" class="i-btn i-btn--quiet i-btn--sm" aria-pressed="{{tVit.on}}" onClick="{{tVit.flip}}" style="color: var(--inst-accent);">{{tVit.label}}</button>
+        </div>
+        <sc-for list="{{vit}}" as="v" hint-placeholder-count="2">
+          <div class="i-stack" style="gap: 6px; opacity: {{v.dim}};">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px;">
+              <span class="t-caption" style="font-weight: 600;">{{v.name}} <span class="t-mono t-2" style="font-weight: 400;">{{v.unit}}</span></span>
+              <span class="t-meta t-2">Last night <span class="t-mono" style="color: var(--inst-text);">{{v.last}}</span> · {{v.n}}-night mean <span class="t-mono" style="color: var(--inst-text);">{{v.mean}}</span></span>
+            </div>
+            <sc-if value="{{v.charts}}" hint-placeholder-val="{{true}}">
+              <div style="display: flex; gap: 8px;">
+                <div aria-hidden="true" class="t-mono t-micro t-2" style="width: 24px; flex: none; position: relative; height: 96px;"><span style="position: absolute; right: 0; top: -2px;">{{v.hi}}</span><span style="position: absolute; right: 0; bottom: -4px;">{{v.lo}}</span></div>
+                <svg viewBox="0 0 300 96" preserveAspectRatio="none" role="img" aria-label="{{v.alt}}" style="flex: 1; min-width: 0; height: 96px;">
+                  <line x1="0" y1="48" x2="300" y2="48" style="stroke: var(--inst-line);" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                  <line x1="0" y1="95.5" x2="300" y2="95.5" style="stroke: var(--inst-control);" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+                  <path d="{{v.pts}}" style="fill: var(--inst-chart-1);"></path>
+                  <polyline points="{{v.meanPts}}" fill="none" style="stroke: var(--inst-text);" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"></polyline>
+                </svg>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{nojs}}" hint-placeholder-val="{{false}}"><div class="i-banner"><b>ⓘ Charts need JavaScript.</b><span>The table below has the same numbers.</span></div></sc-if>
+        <div class="i-legend"><span><span class="i-sw i-sw--dot" style="background: var(--inst-chart-1);"></span>Each night</span><span><span class="i-sw--mean"></span>7-day mean</span></div>
+        <p class="i-help">Not a score and not a recommendation.</p>
+        <sc-if value="{{tVit.show}}" hint-placeholder-val="{{false}}">
+          <div class="i-table-wrap" style="max-height: 240px; overflow-y: auto; border-top: 1px solid var(--inst-line);">
+            <table class="i-table" style="font-size: 12px;"><caption class="i-sr">Resting heart rate and HRV, newest first</caption>
+              <thead><tr><th scope="col">Night</th><th scope="col" class="num">Resting HR (bpm)</th><th scope="col" class="num">HRV (ms)</th></tr></thead>
+              <tbody><sc-for list="{{rows}}" as="r" hint-placeholder-count="7"><tr><td>{{r.night}}</td><td class="num">{{r.hr}}</td><td class="num">{{r.hrv}}</td></tr></sc-for></tbody>
+            </table>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+  </div>
+
+  <section class="i-planned" aria-labelledby="pl">
+    <span class="t-tag t-2">Planned</span>
+    <h2 id="pl" style="font-size: 13px; font-weight: 600;">Regularity, chronotype and social jetlag</h2>
+    <p class="t-caption t-2">Regularity (SRI), chronotype (MCTQ) and social jetlag appear once the metrics engine ships.</p>
+    <div class="ph" aria-hidden="true"><span></span><span></span><span></span></div>
+  </section>
+</main>
+<footer class="i-footer" style="width: 100%; align-items: center;">
+  <span>From a Pixel Watch through Health Connect, synced twice a day.</span>
+  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <span class="i-seg" role="radiogroup" aria-label="Theme"><sc-for list="{{themeSeg}}" as="t" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></span>
+    <span class="t-mono">{{version}}</span>
+  </span>
+</footer>
+<nav class="i-bottombar i-bottombar--auto" aria-label="Main">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}"><span class="i-ico" aria-hidden="true">{{t.ico}}</span>{{t.label}}</a></sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme": {"editor": "enum", "options": ["light", "dark", "system"], "default": "light", "section": "Shell"}, "channel": {"editor": "enum", "options": ["live", "lab"], "default": "live", "section": "Shell"}, "who": {"editor": "enum", "options": ["andrew", "sam"], "default": "andrew", "section": "Shell"}, "viewing": {"editor": "boolean", "default": false, "section": "Shell"}, "expiring": {"editor": "boolean", "default": false, "section": "Shell"}, "range": {"editor": "enum", "options": ["14", "30", "90"], "default": "30", "section": "Trends"}, "state": {"editor": "enum", "options": ["ok", "updating", "empty", "nojs", "novitals"], "default": "ok", "section": "Trends"}, "tables": {"editor": "boolean", "default": false, "section": "Trends"}, "$preview": {"width": 1280, "height": 1700}}'>
+class Component extends DCLogic {
+  shell(cur) {
+    const p = this.props, st = this.state || {};
+    const theme = st.theme ?? p.theme ?? 'light';
+    const lab = (p.channel ?? 'live') === 'lab';
+    const admin = (p.who ?? 'andrew') === 'andrew';
+    const viewing = admin && (p.viewing ?? false);
+    const all = [['today', 'Today', '🌙'], ['trends', 'Trends', '📈'], ['nights', 'Nights', '📋'], ['context', 'Context', '📝'], ['people', 'People', '👥']];
+    const tabs = all.filter((t) => admin || t[0] !== 'people').map((t) => ({ label: t[1], ico: t[2], cur: t[0] === cur ? 'page' : 'false' }));
+    const themeSeg = [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map((t) => ({ label: t[1], on: theme === t[0] ? 'true' : 'false', pick: () => this.setState({ theme: t[0] }) }));
+    return {
+      theme, lab, admin, viewing, tabs, themeSeg,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewerName: admin ? 'Andrew' : 'Sam',
+      viewerInitial: admin ? 'A' : 'S',
+      selMe: !viewing, selSam: viewing,
+      expiring: p.expiring ?? false,
+      writesOff: lab
+    };
+  }
+  renderVals() {
+    const s = this.shell('trends');
+    const p = this.props, st = this.state || {};
+    const N = Number(st.range ?? p.range ?? '30');
+    const mode = p.state ?? 'ok';
+    const nojs = mode === 'nojs', empty = mode === 'empty';
+    const tbl = (k) => (st[k] ?? (p.tables ?? false)) || nojs;
+    const tog = (k, key) => { const on = tbl(key); return { on: on ? 'true' : 'false', show: on && !empty, label: on ? 'Hide Table' : 'Show Table', flip: () => this.setState({ [key]: !on }) }; };
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const mons = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const J = (i) => Math.sin(i * 12.9898) * 0.9;
+    const hm = (h) => { const m = Math.round((((h % 24) + 24) % 24) * 60); return String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+    const dur = (h) => { const m = Math.round(h * 60); return Math.floor(m / 60) + 'h ' + String(m % 60).padStart(2, '0') + 'm'; };
+    const nights = [];
+    for (let i = 0; i < N; i++) {
+      const d = new Date(Date.UTC(2026, 9, 12 - (N - 1) + i));
+      const wd = d.getUTCDay();
+      const wk = Math.floor((d.getUTCDate() + d.getUTCMonth() * 31) / 7);
+      const late = (wd === 6 || wd === 0) && wk % 4 !== 1;
+      const j = J(i + N);
+      const on = late ? 24.75 + j * 0.35 : 23.3 + j * 0.25;
+      const off = (late ? 8.55 + j * 0.3 : 6.55 + j * 0.15) + 24;
+      const tib = (off - on) + 0.25 + Math.abs(j) * 0.15 + 0.25;
+      const tst = (off - on) - 0.2 - Math.abs(j) * 0.25;
+      const hr = Math.round(58 + j * 1.5 + (late ? 3 : 0));
+      const hrv = Math.round(46 - j * 3 - (late ? 6 : 0));
+      nights.push({ label: days[wd] + ' ' + d.getUTCDate() + ' ' + mons[d.getUTCMonth()], short: d.getUTCDate() + ' ' + mons[d.getUTCMonth()], on, off, mid: (on + off) / 2, tib, tst, hr, hrv });
+    }
+    const mean7 = nights.map((n, i) => { const w = nights.slice(Math.max(0, i - 6), i + 1); return w.reduce((a, b) => a + b.tst, 0) / w.length; });
+    const step = N <= 14 ? 2 : N <= 30 ? 7 : 14;
+    const bars = nights.map((n, i) => ({ tib: Math.round(n.tib * 16), tst: Math.round(n.tst * 16), x: (N - 1 - i) % step === 0 ? n.short : '' }));
+    const meanPts = mean7.map((m, i) => (i + 0.5) + ',' + (160 - m * 16).toFixed(1)).join(' ');
+    const ti = N - 3;
+    // radial clock
+    const cx = 160, cy = 160, R0 = 36, R1 = 132;
+    const f = (x) => x.toFixed(1);
+    const pt = (h, r) => { const a = (h / 24) * Math.PI * 2; return [cx + r * Math.sin(a), cy - r * Math.cos(a)]; };
+    const sz = N > 60 ? 1.3 : N > 20 ? 2.4 : 3.2;
+    const dot = (x, y, r) => 'M' + f(x - r) + ' ' + f(y) + 'a' + r + ' ' + r + ' 0 1 0 ' + (2 * r) + ' 0a' + r + ' ' + r + ' 0 1 0 ' + (-2 * r) + ' 0';
+    const dia = (x, y, r) => 'M' + f(x) + ' ' + f(y - r) + 'L' + f(x + r) + ' ' + f(y) + 'L' + f(x) + ' ' + f(y + r) + 'L' + f(x - r) + ' ' + f(y) + 'Z';
+    let wins = '', ons = '', offs = '', mid = '', spokes = '', ticks = '';
+    nights.forEach((n, i) => {
+      const r = R0 + i * (R1 - R0) / Math.max(1, N - 1);
+      const [x1, y1] = pt(n.on, r), [x2, y2] = pt(n.off, r), [xm, ym] = pt(n.mid, r);
+      wins += 'M' + f(x1) + ' ' + f(y1) + 'A' + f(r) + ' ' + f(r) + ' 0 0 1 ' + f(x2) + ' ' + f(y2);
+      ons += dot(x1, y1, sz); offs += dia(x2, y2, sz + 0.6); mid += (i ? 'L' : 'M') + f(xm) + ' ' + f(ym);
+    });
+    for (let h = 0; h < 24; h++) {
+      const [a, b] = pt(h, R1 + 3), [c2, d2] = pt(h, R1 + (h % 3 === 0 ? 10 : 6));
+      ticks += 'M' + f(a) + ' ' + f(b) + 'L' + f(c2) + ' ' + f(d2);
+      if (h % 3 === 0) { const [e, g] = pt(h, R0), [k, l] = pt(h, R1); spokes += 'M' + f(e) + ' ' + f(g) + 'L' + f(k) + ' ' + f(l); }
+    }
+    const c = empty ? { spokes, ticks, wins: '', ons: '', offs: '', mid: '', first: '', alt: '24-hour clock with no nights in this range.' }
+      : { spokes, ticks, wins, ons, offs, mid, first: nights[0].short, alt: '24-hour clock of ' + N + ' nights. On work nights you fell asleep about 23:20 and woke about 06:35. Late weekends ran to about 00:45 and 08:35. The table has every time.' };
+    // vitals
+    const mk = (key, name, unit, lo, hi) => {
+      const vals = nights.map((n) => n[key]);
+      const y = (v) => 96 - ((v - lo) / (hi - lo)) * 88 - 4;
+      const r7 = vals.map((v, i) => { const w = vals.slice(Math.max(0, i - 6), i + 1); return w.reduce((a, b) => a + b, 0) / w.length; });
+      const rr = N > 60 ? 1.2 : 2.2;
+      const pts = vals.map((v, i) => { const x = (i + 0.5) / N * 300; return 'M' + f(x - rr) + ' ' + f(y(v)) + 'a' + rr + ' ' + rr + ' 0 1 0 ' + (2 * rr) + ' 0a' + rr + ' ' + rr + ' 0 1 0 ' + (-2 * rr) + ' 0'; }).join('');
+      const meanAll = Math.round(vals.reduce((a, b) => a + b, 0) / N);
+      return { name, unit, lo: String(lo), hi: String(hi), pts, meanPts: r7.map((m, i) => f((i + 0.5) / N * 300) + ',' + f(y(m))).join(' '), last: vals[N - 1] + ' ' + unit, mean: meanAll + ' ' + unit, alt: name + ' for ' + N + ' nights, mean ' + meanAll + ' ' + unit + '. Device output, not a score.' };
+    };
+    const rows = nights.map((n, i) => ({ night: n.label, tst: dur(n.tst), tib: dur(n.tib), mean: dur(mean7[i]), on: hm(n.on), off: hm(n.off), mid: hm(n.mid), hr: String(n.hr), hrv: String(n.hrv) })).reverse();
+    const first = nights[0], last = nights[N - 1];
+    return Object.assign(s, {
+      n: N, bars, meanPts, barGap: N > 60 ? 1 : N > 20 ? 3 : 6,
+      tipLeft: ((ti + 0.5) / N * 100).toFixed(2), tip: { night: nights[ti].label, tst: dur(nights[ti].tst), tib: dur(nights[ti].tib) },
+      durAlt: 'Bar chart of total sleep time inside time in bed for ' + N + ' nights, with the 7-day mean. Mean about ' + dur(mean7[N - 1]) + '. The table has every value.',
+      c, vit: [mk('hr', 'Resting heart rate', 'bpm', 50, 66), mk('hrv', 'HRV', 'ms', 30, 56)].map((v) => Object.assign(v, { n: N, dim: mode === 'updating' ? '0.5' : '1', charts: !empty && !nojs })),
+      rows: empty ? [] : rows,
+      rangeText: empty ? '—' : first.short + ' – ' + last.short + ' · ' + N + ' nights',
+      ranges: ['14', '30', '90'].map((r) => ({ label: r + ' days', on: String(N) === r ? 'true' : 'false', pick: () => this.setState({ range: r }) })),
+      updating: mode === 'updating', dim: mode === 'updating' ? '0.5' : '1',
+      charts: !empty && !nojs, empty, nojs, chartsOrEmpty: !nojs,
+      vitals: mode !== 'novitals' && !empty,
+      tDur: tog('d', 'tblDur'), tTim: tog('t', 'tblTim'), tVit: tog('v', 'tblVit')
+    });
+  }
+}
+</script>
+</body>
+</html>

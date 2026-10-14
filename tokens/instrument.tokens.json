@@ -1,0 +1,136 @@
+{
+  "$description": "Instrument: the family design system for private, self-hosted home apps. Values are platform-neutral: sizes are px on web, pt in SwiftUI, dp/sp on Android.",
+  "name": "Instrument",
+  "version": "0.1.0",
+  "mapping": {
+    "css": "--inst-{group-name}, e.g. color.surface-2 -> --inst-surface-2, space.12 -> --inst-space-12. Light under :root and [data-theme=light]; dark under @media (prefers-color-scheme: dark) :root:not([data-theme=light]) and [data-theme=dark]. Reference: instrument.css.",
+    "swiftui": "One Color Set per color token in an asset catalog, named inst/{name}, with Any (light) and Dark appearances, exposed as Color.inst.{camelName}. Type: Font.system(size:weight:) with .monospacedDigit(); mono styles use .monospaced(). Fixed tokens (channel.*) are one appearance.",
+    "android": "Compose: InstColors data class with lightInstColors / darkInstColors, provided by InstTheme via CompositionLocal and chosen by isSystemInDarkTheme(). Views: res/values/colors.xml and res/values-night/colors.xml as inst_{snake_name}. Type: sp; tabular figures via fontFeatureSettings = \"tnum\".",
+    "theme": "Follow the system appearance on every platform. Web offers an optional manual toggle (System / Light / Dark) that sets data-theme on <html>."
+  },
+  "color": {
+    "bg":                { "dark": "#0D1117", "light": "#F6F8FA", "use": "Window ground and the 4px gaps between blocks." },
+    "surface":           { "dark": "#161B22", "light": "#FFFFFF", "use": "Rows, panels, header, tables, dialogs." },
+    "surface-2":         { "dark": "#1C2230", "light": "#EAEEF2", "use": "Controls on surface, chips, segmented track, AI bubble, skeletons." },
+    "inverse":           { "dark": "#E6EDF3", "light": "#1F2328", "use": "Toasts, tooltips, the Viewing banner." },
+    "on-inverse":        { "dark": "#0D1117", "light": "#FFFFFF", "use": "Text on inverse." },
+    "accent-on-inverse": { "dark": "#00695C", "light": "#5EEAD4", "use": "Links and ✓ on inverse." },
+    "line":              { "dark": "#21262D", "light": "#D8DEE4", "use": "Dividers, table rules, gridlines. Decorative only." },
+    "control":           { "dark": "#6E7681", "light": "#8C959F", "use": "Field and secondary-button outlines, chart baseline. ≥3:1." },
+    "text":              { "dark": "#E6EDF3", "light": "#1F2328", "use": "Primary text." },
+    "text-2":            { "dark": "#8B949E", "light": "#57606A", "use": "Labels, meta, help text." },
+    "text-disabled":     { "dark": "#6E7681", "light": "#8C959F", "use": "Disabled controls, always with a reason nearby." },
+    "accent":            { "dark": "#00F5D4", "light": "#00796B", "use": "The one primary action, live state, links, focus ring, your own voice." },
+    "on-accent":         { "dark": "#04130F", "light": "#FFFFFF", "use": "Text on accent." },
+    "accent-tint":       { "dark": "#0F2E2B", "light": "#E0F2EF", "use": "Selected row, row just saved (2s)." },
+    "success":           { "dark": "#3FB950", "light": "#1A7F37", "use": "✓ done, saved, fresh. Always with a word or glyph." },
+    "success-tint":      { "dark": "#12261A", "light": "#DAFBE1", "use": "Success banner fill." },
+    "warning":           { "dark": "#D29922", "light": "#9A6700", "use": "In progress, getting stale, disabled reasons." },
+    "warning-tint":      { "dark": "#2B2312", "light": "#FFF8DB", "use": "Warning banner fill." },
+    "error":             { "dark": "#F85149", "light": "#CF222E", "use": "✕ failed, stale, destructive." },
+    "on-error":          { "dark": "#0D1117", "light": "#FFFFFF", "use": "Text on a destructive button." },
+    "error-tint":        { "dark": "#33191B", "light": "#FFEBE9", "use": "Error banner fill, failed row." },
+    "them":              { "dark": "#7B2FD4", "light": "#7B2FD4", "use": "Second speaker fill only." },
+    "them-text":         { "dark": "#B392F0", "light": "#7B2FD4", "use": "Second speaker as text." },
+    "on-them":           { "dark": "#FFFFFF", "light": "#FFFFFF", "use": "Text on them." },
+    "chart-1":           { "dark": "#58A6FF", "light": "#0969DA", "use": "Series 1; the value bar." },
+    "chart-2":           { "dark": "#F0883E", "light": "#BC4C00", "use": "Series 2." },
+    "chart-3":           { "dark": "#DB61A2", "light": "#BF3989", "use": "Series 3." },
+    "chart-4":           { "dark": "#8B949E", "light": "#6E7781", "use": "Other, comparison, previous period." },
+    "scrim":             { "dark": "rgba(1,4,9,0.70)", "light": "rgba(31,35,40,0.50)", "use": "Behind dialogs." }
+  },
+  "channel": {
+    "live":     { "value": "#F85149", "use": "LIVE: latest release. Same in both themes." },
+    "lab":      { "value": "#D29922", "use": "LAB: latest commit on main." },
+    "other":    { "value": "#8B949E", "use": "Any other channel, shown by name." },
+    "on":       { "value": "#0D1117", "use": "Badge text." },
+    "monochrome": { "lab": "filled", "live": "outlined", "use": "macOS menu bar, Wear complications." }
+  },
+  "chart": {
+    "series-order": ["chart-1", "chart-2", "chart-3", "chart-4"],
+    "max-series": 4,
+    "value": { "fill": "series", "use": "Solid bar." },
+    "container": { "stroke": "series", "strokeWidth": 1, "fill": "none", "use": "Outlined bar behind the value: in bed, budget, capacity." },
+    "mean": { "stroke": "text", "strokeWidth": 1.5, "dash": [4, 3], "use": "Mean and trend lines." },
+    "grid": { "stroke": "line", "strokeWidth": 1 },
+    "baseline": { "stroke": "control", "strokeWidth": 1 },
+    "axis-label": { "color": "text-2", "type": "micro", "family": "mono" },
+    "tooltip": { "background": "inverse", "color": "on-inverse", "type": "meta", "elevation": 1 },
+    "legend": { "type": "meta", "color": "text-2", "swatch": 10 },
+    "empty": { "keepAxes": true, "message": "title + one sentence, centred" },
+    "a11y": "role=img with a one-sentence summary, plus a Show Table toggle with the same numbers."
+  },
+  "type": {
+    "family": {
+      "sans": { "web": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", sans-serif", "swiftui": ".system (SF Pro)", "android": "FontFamily.Default (Roboto)" },
+      "mono": { "web": "ui-monospace, \"SF Mono\", \"Roboto Mono\", Menlo, Consolas, monospace", "swiftui": ".system(design: .monospaced)", "android": "FontFamily.Monospace (Roboto Mono where present)" }
+    },
+    "numerals": "tabular",
+    "scale": {
+      "display":  { "size": 32, "weight": 700, "lineHeight": 1.2,  "tracking": -0.01, "family": "sans", "use": "Sign-in wordmark, Home tiles." },
+      "title":    { "size": 26, "weight": 700, "lineHeight": 1.25, "tracking": 0,     "family": "sans", "use": "Page title." },
+      "stat":     { "size": 22, "weight": 700, "lineHeight": 1.2,  "tracking": 0,     "family": "mono", "use": "Numbers and readouts." },
+      "body-lg":  { "size": 16, "weight": 400, "lineHeight": 1.45, "tracking": 0,     "family": "sans", "use": "Intro lines, dialog titles (700)." },
+      "chat":     { "size": 15, "weight": 400, "lineHeight": 1.45, "tracking": 0,     "family": "sans", "use": "Transcripts and chat." },
+      "body":     { "size": 14, "weight": 400, "lineHeight": 1.45, "tracking": 0,     "family": "sans", "use": "Default text, inputs." },
+      "caption":  { "size": 12, "weight": 400, "lineHeight": 1.4,  "tracking": 0,     "family": "sans", "use": "Descriptions, field labels (600)." },
+      "meta":     { "size": 11, "weight": 400, "lineHeight": 1.4,  "tracking": 0,     "family": "sans", "use": "Help text, timestamps (mono)." },
+      "label":    { "size": 11, "weight": 400, "lineHeight": 1.4,  "tracking": 0.08,  "family": "sans", "case": "upper", "color": "text-2", "use": "Section labels, table headers." },
+      "micro":    { "size": 10, "weight": 400, "lineHeight": 1.3,  "tracking": 0,     "family": "sans", "use": "Axis labels, bottom-bar labels." },
+      "tag":      { "size": 9,  "weight": 700, "lineHeight": 1,    "tracking": 0.1,   "family": "sans", "case": "upper", "use": "Chips, badges, speaker tags." },
+      "wordmark": { "size": 15, "weight": 700, "lineHeight": 1,    "tracking": -0.01, "family": "sans", "use": "App name in the header (16 on mobile app bars)." }
+    },
+    "weights": { "regular": 400, "semibold": 600, "bold": 700 },
+    "rules": "Mono for stats, times, durations, versions, hashes, tokens, URLs. Never for sentences. Uppercase always tracked."
+  },
+  "space": { "4": 4, "8": 8, "12": 12, "16": 16, "24": 24, "32": 32, "48": 48 },
+  "size": {
+    "control-sm": 32, "control-md": 36, "control-lg": 52,
+    "row": 40, "row-header": 32, "row-group": 28,
+    "header": 44, "bottombar": 56,
+    "chip": 18, "badge": 18, "dot": 6, "dot-live": 8,
+    "switch": { "width": 36, "height": 20, "knob": 14 },
+    "touch-target": { "apple": 44, "android": 48 },
+    "content-max": 1280,
+    "live-pill": { "menubar": 14, "inline": 18, "page": 36, "hud": 52 }
+  },
+  "radius": { "0": 0, "tail": 4, "field": 12, "bubble": 18, "pill": 24, "full": 9999, "rule": "Square holds content. Round means touch me or alive." },
+  "border": { "hairline": 1, "active": 1.5, "focus": 2, "focusOffset": 2 },
+  "elevation": {
+    "0": { "use": "Flat; separation by tone (bg → surface → surface-2)." },
+    "1": { "dark": "0 8px 24px rgba(1,4,9,0.5)",  "light": "0 8px 24px rgba(31,35,40,0.16)", "use": "Switcher, menus, select lists, tooltips, toasts." },
+    "2": { "dark": "0 16px 48px rgba(1,4,9,0.6)", "light": "0 16px 48px rgba(31,35,40,0.24)", "use": "Dialogs, macOS panels and HUD, the floating pill." }
+  },
+  "motion": {
+    "breathe":   { "scale": [1, 1.4], "opacity": [0.85, 1], "durationMs": 1400, "easing": "ease-in-out", "direction": "alternate", "use": "Ready and live only." },
+    "level":     { "bars": 3, "scaleY": [0.2, 1, 0.2], "durationMs": "600 + 120*i", "delayMs": "80*i", "easing": "linear", "use": "Audio capture." },
+    "spinner":   { "size": 12, "stroke": 2, "durationMs": 800, "easing": "linear", "use": "Processing, always beside a word." },
+    "rowSavedHoldMs": 2000,
+    "toastMs": 4000,
+    "everythingElse": "No transitions.",
+    "reducedMotion": { "breathe": "static at scale 1.2", "level": "static at 0.6", "spinner": "static ring in text-2; the word remains" }
+  },
+  "breakpoint": { "narrow": 600, "medium": 900 },
+  "glyph": {
+    "▼": "expand", "▾": "menu / select", "✓": "done / success", "✕": "failed / remove / close",
+    "↩": "back / reply / retry", "⎘": "copy", "▶": "run / open", "■": "stop", "⚑": "attention / reason", "ⓘ": "information",
+    "emoji": "Only as phone, Wear and Auto nav and mode icons."
+  },
+  "icon": { "grid": 24, "stroke": 1.5, "caps": "square", "color": "currentColor", "sizes": [16, 20, 24], "switcher": "2×2 squares" },
+  "wordmark": {
+    "type": "wordmark",
+    "color": "text",
+    "case": "Title Case proper name, 1–2 words, ≤18 characters",
+    "order": ["switcher", "name", "gap 8", "channel badge"],
+    "never": ["accent colour", "italic", "logo or icon", "gradient", "version in the name"]
+  },
+  "navigation": {
+    "levels": {
+      "family": "▦ switcher before the wordmark. Lists Home, then apps A–Z, from one shared apps list. Links stay on your channel.",
+      "app": "Header tabs, max 5, current = text + 600 + 2px accent underline. Below 600: bottom bar, 56 high.",
+      "page": "Segmented control, or ↩ back link with the list name above a detail title."
+    },
+    "hub": "Home: the family dashboard. Same shell, wordmark \"Home\". Tiles show one glance per app, a Needs-you list, and LIVE/LAB versions."
+  },
+  "a11y": { "contrast": "WCAG AA in both themes", "focus": "2px accent outline, 2px offset", "state": "colour always paired with a word or glyph" }
+}

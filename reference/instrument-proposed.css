@@ -1,0 +1,71 @@
+/* Instrument v0.2 proposal: parts first needed by Sleep Dashboard.
+   Named for what they do, not for sleep, so any app can use them.
+   Load after instrument.css. Uses only existing tokens: no new colours,
+   type sizes, spacing, radii or motion. Merge into instrument.css when accepted. */
+
+/* 1 · Review chip: the verdict on a record a person checks.
+   Needs review: .i-chip + .i-dot--hollow. Changed upstream: .i-chip--progress + ⚑.
+   Confirmed: .i-chip--done + ✓. Amended: .i-chip--done.i-chip--amended + ✓.
+   Unavailable: .i-chip--off. */
+.i-chip--amended { border: 1px dashed currentColor; }
+.i-chip--off { background: none; color: var(--inst-text-2); border: 1px solid var(--inst-line); }
+
+/* 2 · Fact grid: named readings of one record. <dl class="i-facts"> of <div class="i-fact">. */
+.i-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(144px, 1fr)); gap: 4px; margin: 0; }
+.i-fact { background: var(--inst-surface); padding: 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.i-fact > dt { font-size: 11px; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; color: var(--inst-text-2); }
+.i-fact > dd { margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.i-fact .v { font-family: var(--inst-mono); font-size: 22px; font-weight: 700; line-height: 1.2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.i-fact .s { font-family: var(--inst-mono); font-size: 11px; line-height: 1.4; color: var(--inst-text-2); }
+/* Notes on a record (e.g. quality flags): sentence-case lines, ⓘ info, ⚑ needs action. */
+.i-fact .notes { list-style: none; margin: 0; padding: 4px 0 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; line-height: 1.4; }
+.i-fact .notes .warn { color: var(--inst-warning); font-weight: 600; }
+.i-fact--wide { grid-column: span 2; }
+/* The value before a person's correction, right after the corrected value. */
+.i-was { font-family: var(--inst-mono); font-size: 11px; font-weight: 600; line-height: 1.4; color: var(--inst-warning); white-space: nowrap; }
+.i-fact.is-loading .v, .i-fact.is-loading .s { color: transparent; }
+
+/* 3 · Inline choice form: two or three small questions about one item, saved in place.
+   The <form> is the HTMX swap target (hx-target="this" hx-swap="outerHTML"). */
+.i-choiceform { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.i-choiceform .grp { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; }
+.i-choiceform .grp > .i-label { margin-right: 4px; }
+.i-choiceform .grp[aria-invalid="true"] > .i-label { color: var(--inst-error); }
+.i-choiceform .grp[aria-invalid="true"] .i-choice input { outline: 1.5px solid var(--inst-error); outline-offset: 1px; }
+.i-choiceform .out { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; }
+.i-choiceform.is-saving .grp { opacity: .6; }
+.i-choiceform.is-saved { background: var(--inst-accent-tint); }
+.i-choiceform.is-error { background: var(--inst-error-tint); }
+/* Any block an HTMX swap just returned holds accent-tint for 2 s, like a saved row. */
+.i-block.is-saved { background: var(--inst-accent-tint); }
+
+/* 4 · Radial clock: a 24-hour polar chart for times that wrap midnight.
+   Midnight at top, clockwise. One ring per record, oldest at the centre. */
+.i-radial { display: block; max-width: 100%; height: auto; font-family: var(--inst-mono); }
+.i-radial .grid { fill: none; stroke: var(--inst-line); stroke-width: 1; }
+.i-radial .tick { stroke: var(--inst-control); stroke-width: 1; }
+.i-radial .lbl { fill: var(--inst-text-2); font-size: 10px; }
+.i-radial .win { fill: none; stroke: var(--inst-chart-4); stroke-width: 1; opacity: .7; }
+.i-radial .on { fill: var(--inst-chart-1); }
+.i-radial .off { fill: var(--inst-chart-2); }
+.i-radial .mid { fill: none; stroke: var(--inst-text); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.i-radial .hl { fill: none; stroke: var(--inst-text); stroke-width: 1.5; }
+.i-sw--dot { border-radius: 50%; }
+.i-sw--diamond { transform: rotate(45deg) scale(.8); }
+
+/* 5 · Planned slot: room kept for a feature that is coming. Never used for "no data". */
+.i-planned { border: 1px dashed var(--inst-control); padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.i-planned .ph { display: grid; grid-template-columns: repeat(auto-fill, minmax(144px, 1fr)); gap: 4px; padding-top: 8px; }
+.i-planned .ph > span { height: 56px; border: 1px dashed var(--inst-line); }
+
+/* 7 · Narrow shell switch (system gap). The system draws the narrow shell (bottom bar,
+   compact user menu) but ships no CSS that switches to it below 600. */
+.i-wide-only { display: flex; align-items: center; gap: 12px; }
+.i-narrow-only { display: none; }
+.i-bottombar--auto { display: none; }
+@media (max-width: 600px) {
+  .i-wide-only { display: none; }
+  .i-narrow-only { display: flex; align-items: center; }
+  .i-bottombar--auto { display: flex; position: sticky; bottom: 0; }
+  .i-header .i-wordmark { font-size: 16px; }
+}

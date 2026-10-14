@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: Night review</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="display: flex; flex-direction: column; min-height: 1400px;">
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Sleep Dashboard</a>
+      <span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span>
+    </div>
+    <nav class="i-nav i-nav--wide" aria-label="Main">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}">{{t.label}}</a></sc-for>
+    </nav>
+    <div class="i-user" style="margin-left: auto;">
+      <div class="i-wide-only">
+        <sc-if value="{{admin}}" hint-placeholder-val="{{true}}">
+          <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+            <label for="person">Person</label>
+            <span class="i-select" style="width: 136px;"><select id="person" name="u" class="i-input" style="height: 32px; font-size: 13px;"><option value="" selected="{{selMe}}">Me</option><option value="sam" selected="{{selSam}}">Sam Jackson</option></select></span>
+            <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+          </form>
+        </sc-if>
+        <span>{{viewerName}}</span>
+        <a href="#" class="i-btn i-btn--quiet i-btn--sm">Sign out</a>
+      </div>
+      <button type="button" class="i-narrow-only i-btn i-btn--quiet i-btn--sm" aria-haspopup="true" aria-label="{{viewerName}}, account menu">{{viewerInitial}} ▾</button>
+    </div>
+  </div>
+</header>
+<main class="i-page" style="flex: 1; width: 100%;">
+  <div class="i-stack">
+    <sc-if value="{{viewing}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div></sc-if>
+    <sc-if value="{{lab}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div></sc-if>
+    <sc-if value="{{expiring}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="status"><b>⚑ Signing out at 22:14</b><span>Your 12-hour session ends in 9 minutes.</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">Stay Signed In</a></div></sc-if>
+
+  </div>
+  <a href="#" style="font-size: 13px; align-self: flex-start;">↩ All nights</a>
+
+  <sc-if value="{{found}}" hint-placeholder-val="{{true}}">
+    <div class="i-stack" style="gap: 4px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;">
+        <h1 class="t-title">{{date}}</h1>
+        <span class="i-chip {{chip.cls}}" data-kind="{{chip.kind}}"><sc-if value="{{chip.dot}}" hint-placeholder-val="{{true}}"><span class="i-dot i-dot--hollow"></span></sc-if>{{chip.label}}</span>
+      </div>
+      <span class="t-meta t-2">Times in America/Chicago, the night's own zone.</span>
+    </div>
+
+    <dl class="i-facts">
+      <sc-for list="{{facts}}" as="f" hint-placeholder-count="7">
+        <div class="i-fact"><dt>{{f.label}}</dt><dd><span class="v">{{f.value}}<sc-if value="{{f.was}}" hint-placeholder-val="{{false}}"><span class="i-was">watch: {{f.was}}</span></sc-if></span><span class="s">{{f.sub}}</span></dd></div>
+      </sc-for>
+      <div class="i-fact"><dt>Quality flags</dt><dd><span class="v">—</span><span class="s">None</span></dd></div>
+    </dl>
+
+    <form class="i-block {{formCls}}" aria-labelledby="tm" novalidate="" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+      <div class="i-stack" style="gap: 2px;">
+        <h2 id="tm" class="t-label">Times</h2>
+        <p class="i-help">Change any time the watch got wrong and save, or confirm the night as shown. Times are in the night's own zone.</p>
+      </div>
+      <sc-if value="{{formErr}}" hint-placeholder-val="{{false}}"><p class="i-msg-error" role="alert" style="font-size: 13px;">✕ {{formErr}}</p></sc-if>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 16px;">
+        <sc-for list="{{fields}}" as="x" hint-placeholder-count="4">
+          <div class="i-field">
+            <label class="i-label" for="{{x.id}}">{{x.label}}</label>
+            <input id="{{x.id}}" name="{{x.id}}" type="datetime-local" class="i-input i-input--mono" value="{{x.value}}" aria-invalid="{{x.bad}}" aria-describedby="{{x.id}}-h" disabled="{{off}}">
+            <span id="{{x.id}}-h">
+              <sc-if value="{{x.err}}" hint-placeholder-val="{{false}}"><span class="i-msg-error">✕ {{x.err}}</span></sc-if>
+              <sc-if value="{{x.was}}" hint-placeholder-val="{{false}}"><span class="i-was">watch: {{x.was}}</span></sc-if>
+              <sc-if value="{{x.plain}}" hint-placeholder-val="{{true}}"><span class="i-help">As the watch recorded it.</span></sc-if>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <div class="i-row" style="gap: 8px 12px;">
+        <sc-if value="{{b.confirm}}" hint-placeholder-val="{{true}}"><button type="submit" name="action" value="confirm" class="i-btn i-btn--primary" disabled="{{off}}" aria-describedby="why">Confirm as Shown</button></sc-if>
+        <button type="submit" name="action" value="save" class="i-btn i-btn--secondary" disabled="{{off}}" aria-describedby="why">Save Corrections</button>
+        <sc-if value="{{b.revert}}" hint-placeholder-val="{{false}}"><button type="submit" name="action" value="revert" class="i-btn i-btn--quiet" disabled="{{off}}">↩ Revert to Watch Times</button></sc-if>
+        <sc-if value="{{b.unreview}}" hint-placeholder-val="{{false}}"><button type="submit" name="action" value="unreview" class="i-btn i-btn--quiet" disabled="{{off}}">Mark Not Reviewed</button></sc-if>
+        <span id="why" role="status">
+          <sc-if value="{{done}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok" style="font-size: 13px;">✓ {{done}}</span></sc-if>
+          <sc-if value="{{off}}" hint-placeholder-val="{{false}}"><span class="i-reason">⚑ LAB: writes disabled</span></sc-if>
+        </span>
+      </div>
+    </form>
+
+    <section class="i-stack" aria-labelledby="dc">
+      <h2 id="dc" class="t-label" style="padding: 8px 0 4px;">Day context</h2>
+      <form class="i-block i-choiceform" aria-label="Day context for {{date}}" style="padding: 8px 16px;">
+        <div class="grp" role="radiogroup" aria-labelledby="dt"><span id="dt" class="i-label">Day type</span>
+          <label class="i-choice"><input type="radio" name="day" value="work" checked="" disabled="{{off}}"><span>Work</span></label>
+          <label class="i-choice"><input type="radio" name="day" value="free" disabled="{{off}}"><span>Free</span></label>
+        </div>
+        <div class="grp" role="radiogroup" aria-labelledby="al"><span id="al" class="i-label">Alarm</span>
+          <label class="i-choice"><input type="radio" name="alarm" value="yes" checked="" disabled="{{off}}"><span>Yes</span></label>
+          <label class="i-choice"><input type="radio" name="alarm" value="no" disabled="{{off}}"><span>No</span></label>
+        </div>
+        <span class="out"><button type="submit" class="i-btn i-btn--primary i-btn--sm" disabled="{{off}}">Save</button><sc-if value="{{off}}" hint-placeholder-val="{{false}}"><span class="i-reason">⚑ LAB: writes disabled</span></sc-if></span>
+      </form>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{missing}}" hint-placeholder-val="{{false}}">
+    <div class="i-block" role="status" style="padding: 32px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+      <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: var(--inst-text-2);">—</span>
+      <span style="font-size: 14px; font-weight: 700;">No night for 2026-10-04.</span>
+      <span class="t-caption t-2">The watch sent nothing for that date.</span>
+      <a href="#" class="i-btn i-btn--secondary i-btn--sm">↩ All Nights</a>
+    </div>
+  </sc-if>
+</main>
+<footer class="i-footer" style="width: 100%; align-items: center;">
+  <span>Corrections change this night only. The watch's own times are kept.</span>
+  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <span class="i-seg" role="radiogroup" aria-label="Theme"><sc-for list="{{themeSeg}}" as="t" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></span>
+    <span class="t-mono">{{version}}</span>
+  </span>
+</footer>
+<nav class="i-bottombar i-bottombar--auto" aria-label="Main">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}"><span class="i-ico" aria-hidden="true">{{t.ico}}</span>{{t.label}}</a></sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme": {"editor": "enum", "options": ["light", "dark", "system"], "default": "light", "section": "Shell"}, "channel": {"editor": "enum", "options": ["live", "lab"], "default": "live", "section": "Shell"}, "who": {"editor": "enum", "options": ["andrew", "sam"], "default": "andrew", "section": "Shell"}, "viewing": {"editor": "boolean", "default": false, "section": "Shell"}, "expiring": {"editor": "boolean", "default": false, "section": "Shell"}, "state": {"editor": "enum", "options": ["clean", "corrected", "error-order", "error-tib", "error-missing", "confirmed", "saved", "reverted", "unreviewed", "missing"], "default": "clean", "section": "Night"}, "$preview": {"width": 1280, "height": 1400}}'>
+class Component extends DCLogic {
+  shell(cur) {
+    const p = this.props, st = this.state || {};
+    const theme = st.theme ?? p.theme ?? 'light';
+    const lab = (p.channel ?? 'live') === 'lab';
+    const admin = (p.who ?? 'andrew') === 'andrew';
+    const viewing = admin && (p.viewing ?? false);
+    const all = [['today', 'Today', '🌙'], ['trends', 'Trends', '📈'], ['nights', 'Nights', '📋'], ['context', 'Context', '📝'], ['people', 'People', '👥']];
+    const tabs = all.filter((t) => admin || t[0] !== 'people').map((t) => ({ label: t[1], ico: t[2], cur: t[0] === cur ? 'page' : 'false' }));
+    const themeSeg = [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map((t) => ({ label: t[1], on: theme === t[0] ? 'true' : 'false', pick: () => this.setState({ theme: t[0] }) }));
+    return {
+      theme, lab, admin, viewing, tabs, themeSeg,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewerName: admin ? 'Andrew' : 'Sam',
+      viewerInitial: admin ? 'A' : 'S',
+      selMe: !viewing, selSam: viewing,
+      expiring: p.expiring ?? false,
+      writesOff: lab
+    };
+  }
+  renderVals() {
+    const s = this.shell('nights');
+    const st = this.props.state ?? 'clean';
+    const CH = {
+      todo: { cls: '', dot: true, label: 'To review', kind: 'todo' },
+      todoC: { cls: '', dot: true, label: 'Corrected, not confirmed', kind: 'todo' },
+      ok: { cls: 'i-chip--done', dot: false, label: '✓ Confirmed', kind: 'ok' }
+    };
+    const corrected = st === 'corrected' || st === 'saved';
+    const F = (label, value, sub, was) => ({ label, value, sub, was: was || '' });
+    const facts = [
+      F('Into bed', '23:05', 'Sun 11 Oct · CDT', corrected ? '23:40' : ''),
+      F('Fell asleep', '23:20', 'Sun 11 Oct · CDT'),
+      F('Woke up', '06:35', 'Mon 12 Oct · CDT'),
+      F('Out of bed', '06:50', 'Mon 12 Oct · CDT'),
+      F('Total sleep time', '7h 05m', '23:20 – 06:35'),
+      F('Time in bed', '7h 45m', '23:05 – 06:50', corrected ? '7h 10m' : ''),
+      F('Efficiency', '91.4%', 'sleep ÷ in bed', corrected ? '98.8%' : '')
+    ];
+    const v = { tib_onset: '2026-10-11T23:05', sleep_onset: '2026-10-11T23:20', sleep_offset: '2026-10-12T06:35', tib_offset: '2026-10-12T06:50' };
+    const bad = {}, ferr = {};
+    let formErr = '';
+    if (st === 'error-order') { v.sleep_onset = '2026-10-11T22:50'; bad.tib_onset = bad.sleep_onset = true; formErr = 'Times must run in order: into bed, fell asleep, woke up, out of bed.'; }
+    if (st === 'error-tib') { v.tib_offset = '2026-10-12T02:00'; v.sleep_offset = '2026-10-12T01:50'; bad.tib_onset = bad.tib_offset = true; formErr = 'Time in bed must be between 3 and 16 hours.'; }
+    if (st === 'error-missing') { v.sleep_offset = ''; bad.sleep_offset = true; ferr.sleep_offset = 'Woke up is missing.'; formErr = 'Woke up is missing.'; }
+    const L = { tib_onset: 'Into bed', sleep_onset: 'Fell asleep', sleep_offset: 'Woke up', tib_offset: 'Out of bed' };
+    const fields = Object.keys(L).map((k) => {
+      const was = corrected && k === 'tib_onset' ? 'Sun 11 Oct 23:40' : '';
+      return { id: k, label: L[k], value: v[k], bad: bad[k] ? 'true' : 'false', err: ferr[k] || '', was, plain: !was && !ferr[k] };
+    });
+    const chip = st === 'confirmed' ? CH.ok : (corrected ? CH.todoC : CH.todo);
+    const reviewed = st === 'confirmed';
+    const done = { confirmed: 'Confirmed.', saved: 'Saved.', reverted: "Back to the watch's times.", unreviewed: 'Marked as not reviewed.' }[st] || '';
+    const isErr = st.indexOf('error') === 0;
+    return Object.assign(s, {
+      found: st !== 'missing', missing: st === 'missing', date: 'Mon 12 Oct', chip, facts, fields, formErr, done,
+      formCls: done ? 'is-saved' : '',
+      off: s.writesOff,
+      b: { confirm: !reviewed, revert: corrected, unreview: reviewed }
+    });
+  }
+}
+</script>
+</body>
+</html>

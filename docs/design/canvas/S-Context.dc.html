@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: Context</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="display: flex; flex-direction: column; min-height: 1000px;">
+<header class="i-header">
+  <div class="i-header-in">
+    <div class="i-brand">
+      <button type="button" class="i-switcher" aria-label="Switch app" aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+      <a href="#" class="i-wordmark">Sleep Dashboard</a>
+      <span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span>
+    </div>
+    <nav class="i-nav i-nav--wide" aria-label="Main">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}">{{t.label}}</a></sc-for>
+    </nav>
+    <div class="i-user" style="margin-left: auto;">
+      <div class="i-wide-only">
+        <sc-if value="{{admin}}" hint-placeholder-val="{{true}}">
+          <form method="get" action="#" style="display: flex; align-items: center; gap: 6px;">
+            <label for="person">Person</label>
+            <span class="i-select" style="width: 136px;"><select id="person" name="u" class="i-input" style="height: 32px; font-size: 13px;"><option value="" selected="{{selMe}}">Me</option><option value="sam" selected="{{selSam}}">Sam Jackson</option></select></span>
+            <button type="submit" class="i-btn i-btn--secondary i-btn--sm">View</button>
+          </form>
+        </sc-if>
+        <span>{{viewerName}}</span>
+        <a href="#" class="i-btn i-btn--quiet i-btn--sm">Sign out</a>
+      </div>
+      <button type="button" class="i-narrow-only i-btn i-btn--quiet i-btn--sm" aria-haspopup="true" aria-label="{{viewerName}}, account menu">{{viewerInitial}} ▾</button>
+    </div>
+  </div>
+</header>
+<main class="i-page" style="flex: 1; width: 100%;">
+  <div class="i-stack">
+    <sc-if value="{{viewing}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--viewing" role="note"><b>Viewing Sam Jackson (sam).</b><a href="#">Back to your own</a></div></sc-if>
+    <sc-if value="{{lab}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="note"><b>⚑ LAB</b><span>Writes are disabled in this copy.</span><a href="#" class="i-banner-act" style="font-size: 12px;">Open LIVE ▶</a></div></sc-if>
+    <sc-if value="{{expiring}}" hint-placeholder-val="{{false}}"><div class="i-banner i-banner--warning" role="status"><b>⚑ Signing out at 22:14</b><span>Your 12-hour session ends in 9 minutes.</span><a href="#" class="i-btn i-btn--secondary i-btn--sm i-banner-act">Stay Signed In</a></div></sc-if>
+
+  </div>
+  <div class="i-stack" style="gap: 2px;">
+    <h1 class="t-title">Context</h1>
+    <p class="t-caption t-2">Work or free, and whether an alarm woke you. This is the only context the dashboard asks for.</p>
+  </div>
+
+  <section class="i-stack" aria-labelledby="tt">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; padding-bottom: 4px;">
+      <h2 id="tt" class="t-label">Nights to tag</h2>
+      <span class="t-meta t-2">{{count}}</span>
+    </div>
+    <sc-if value="{{off}}" hint-placeholder-val="{{false}}"><p class="i-reason" style="padding-bottom: 4px;">⚑ LAB: writes disabled</p></sc-if>
+    <sc-if value="{{hasRows}}" hint-placeholder-val="{{true}}">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+        <form class="i-block i-choiceform {{r.cls}}" aria-label="Day context for {{r.date}}" style="padding: 8px 16px;">
+          <span class="i-stack" style="width: 120px; gap: 0;"><a href="#" style="font-weight: 600; font-size: 13px;">{{r.date}}</a><span class="t-meta t-2">{{r.missing}}</span></span>
+          <div class="grp" role="radiogroup" aria-labelledby="d-{{r.k}}" aria-invalid="{{r.badDay}}"><span id="d-{{r.k}}" class="i-label">Day type</span>
+            <label class="i-choice"><input type="radio" name="d-{{r.k}}" checked="{{r.work}}" disabled="{{off}}" onChange="{{r.setWork}}"><span>Work</span></label>
+            <label class="i-choice"><input type="radio" name="d-{{r.k}}" checked="{{r.free}}" disabled="{{off}}" onChange="{{r.setFree}}"><span>Free</span></label>
+          </div>
+          <div class="grp" role="radiogroup" aria-labelledby="a-{{r.k}}" aria-invalid="{{r.badAlarm}}"><span id="a-{{r.k}}" class="i-label">Alarm</span>
+            <label class="i-choice"><input type="radio" name="a-{{r.k}}" checked="{{r.yes}}" disabled="{{off}}" onChange="{{r.setYes}}"><span>Yes</span></label>
+            <label class="i-choice"><input type="radio" name="a-{{r.k}}" checked="{{r.no}}" disabled="{{off}}" onChange="{{r.setNo}}"><span>No</span></label>
+          </div>
+          <span class="out">
+            <button type="button" class="i-btn i-btn--primary i-btn--sm" disabled="{{off}}" onClick="{{r.save}}">Save</button>
+            <span role="status"><sc-if value="{{r.ok}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok">✓ Saved</span></sc-if><sc-if value="{{r.err}}" hint-placeholder-val="{{false}}"><span class="i-msg-error">✕ {{r.err}}</span></sc-if></span>
+          </span>
+        </form>
+      </sc-for>
+    </sc-if>
+    <sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+      <div class="i-block" role="status" style="padding: 32px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;">
+        <span aria-hidden="true" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--inst-surface-2); font-size: 14px; font-weight: 700; color: var(--inst-success);">✓</span>
+        <span style="font-size: 14px; font-weight: 700;">All nights in the last 60 days are tagged.</span>
+        <span class="t-caption t-2">New nights show up here when they need an answer.</span>
+      </div>
+    </sc-if>
+    <p class="i-help" style="padding-top: 4px;">Saved rows stay on this list until you reload, so you can change an answer.</p>
+  </section>
+</main>
+<footer class="i-footer" style="width: 100%; align-items: center;">
+  <span>Context is yours to set. Nothing is guessed without saying so.</span>
+  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <span class="i-seg" role="radiogroup" aria-label="Theme"><sc-for list="{{themeSeg}}" as="t" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></span>
+    <span class="t-mono">{{version}}</span>
+  </span>
+</footer>
+<nav class="i-bottombar i-bottombar--auto" aria-label="Main">
+  <sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><a href="#" aria-current="{{t.cur}}"><span class="i-ico" aria-hidden="true">{{t.ico}}</span>{{t.label}}</a></sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme": {"editor": "enum", "options": ["light", "dark", "system"], "default": "light", "section": "Shell"}, "channel": {"editor": "enum", "options": ["live", "lab"], "default": "live", "section": "Shell"}, "who": {"editor": "enum", "options": ["andrew", "sam"], "default": "andrew", "section": "Shell"}, "viewing": {"editor": "boolean", "default": false, "section": "Shell"}, "expiring": {"editor": "boolean", "default": false, "section": "Shell"}, "empty": {"editor": "boolean", "default": false, "section": "Context"}, "$preview": {"width": 1280, "height": 1000}}'>
+class Component extends DCLogic {
+  shell(cur) {
+    const p = this.props, st = this.state || {};
+    const theme = st.theme ?? p.theme ?? 'light';
+    const lab = (p.channel ?? 'live') === 'lab';
+    const admin = (p.who ?? 'andrew') === 'andrew';
+    const viewing = admin && (p.viewing ?? false);
+    const all = [['today', 'Today', '🌙'], ['trends', 'Trends', '📈'], ['nights', 'Nights', '📋'], ['context', 'Context', '📝'], ['people', 'People', '👥']];
+    const tabs = all.filter((t) => admin || t[0] !== 'people').map((t) => ({ label: t[1], ico: t[2], cur: t[0] === cur ? 'page' : 'false' }));
+    const themeSeg = [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']].map((t) => ({ label: t[1], on: theme === t[0] ? 'true' : 'false', pick: () => this.setState({ theme: t[0] }) }));
+    return {
+      theme, lab, admin, viewing, tabs, themeSeg,
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live',
+      chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2',
+      viewerName: admin ? 'Andrew' : 'Sam',
+      viewerInitial: admin ? 'A' : 'S',
+      selMe: !viewing, selSam: viewing,
+      expiring: p.expiring ?? false,
+      writesOff: lab
+    };
+  }
+  renderVals() {
+    const s = this.shell('context');
+    const st = this.state || {};
+    const ans = st.ans || { a: { alarm: true } }, saved = st.saved || { a: true }, errs = st.errs || {};
+    const base = [
+      ['a', 'Fri 9 Oct', 'work', null], ['b', 'Thu 8 Oct', null, null], ['c', 'Sat 3 Oct', 'free', null], ['d', 'Sun 27 Sep', null, null],
+      ['e', 'Wed 23 Sep', null, true], ['f', 'Sat 12 Sep', null, null], ['g', 'Tue 1 Sep', 'work', null], ['h', 'Sat 22 Aug', null, false]
+    ];
+    const rows = base.map(([k, date, day0, alarm0], i) => {
+      const a = ans[k] || {};
+      const day = a.day !== undefined ? a.day : day0;
+      const alarm = a.alarm !== undefined ? a.alarm : alarm0;
+      const set = (patch) => this.setState({ touched: true, ans: Object.assign({}, ans, { [k]: Object.assign({}, a, patch) }) });
+      const showSaved = saved[k];
+      const err = errs[k] || '';
+      return {
+        k, date, cls: showSaved ? 'is-saved' : (err ? 'is-error' : ''),
+        missing: [day ? '' : 'day type', alarm === null || alarm === undefined ? 'alarm' : ''].filter(Boolean).join(' and ') ? 'Needs ' + [day ? '' : 'day type', alarm === null || alarm === undefined ? 'alarm' : ''].filter(Boolean).join(' and ') : 'Answered',
+        work: day === 'work', free: day === 'free', yes: alarm === true, no: alarm === false,
+        badDay: err && !day ? 'true' : 'false', badAlarm: err && (alarm === null || alarm === undefined) ? 'true' : 'false',
+        ok: !!showSaved, err,
+        setWork: () => set({ day: 'work' }), setFree: () => set({ day: 'free' }), setYes: () => set({ alarm: true }), setNo: () => set({ alarm: false }),
+        save: () => {
+          const okNow = day && alarm !== null && alarm !== undefined;
+          this.setState({ touched: true, saved: Object.assign({}, saved, { [k]: !!okNow }), errs: Object.assign({}, errs, { [k]: okNow ? '' : 'Choose work or free, and whether an alarm was used.' }) });
+        }
+      };
+    });
+    const empty = this.props.empty ?? false;
+    return Object.assign(s, {
+      rows, hasRows: !empty, empty, off: s.writesOff,
+      count: empty ? 'Last 60 days' : rows.length + ' nights · last 60 days'
+    });
+  }
+}
+</script>
+</body>
+</html>

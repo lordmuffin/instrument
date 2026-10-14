@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep Dashboard: sign-in pages</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="inst" data-theme="{{theme}}" style="min-height: 720px; display: flex; align-items: center; justify-content: center; padding: 48px 16px;">
+  <main role="{{role}}" style="width: 100%; max-width: 440px; background: var(--inst-surface); box-shadow: inset 0 0 0 1px var(--inst-line); padding: 32px 24px 16px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; align-items: center; gap: 8px;"><span class="t-display">Sleep Dashboard</span><span class="i-badge {{chCls}}" title="{{chTitle}}">{{chName}}</span></div>
+    <div class="i-stack" style="gap: 6px;">
+      <span class="t-tag" style="color: {{color}};">{{tag}}</span>
+      <h1 style="font-size: 16px; font-weight: 700; line-height: 1.4;">{{title}}</h1>
+      <p class="t-caption t-2">{{line}}</p>
+    </div>
+    <div class="i-row" style="gap: 8px;">
+      <a href="#" class="{{btnCls}}">{{act}}</a>
+      <sc-if value="{{alt}}" hint-placeholder-val="{{false}}"><a href="#" class="i-btn i-btn--quiet">{{alt}}</a></sc-if>
+    </div>
+    <span class="t-mono t-micro t-2" style="margin-top: 16px;">{{version}} · Private. Self-hosted.</span>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"page":{"editor":"enum","options":["signed-out","expired","not-allowed","unreachable","denied-own","denied-missing","no-account"],"default":"signed-out"},"theme":{"editor":"enum","options":["light","dark","system"],"default":"light"},"channel":{"editor":"enum","options":["live","lab"],"default":"live"},"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const lab = (p.channel ?? 'live') === 'lab';
+    const T2 = 'var(--inst-text-2)', W = 'var(--inst-warning)', E = 'var(--inst-error)';
+    const P = (tag, color, title, line, act, btnCls, alt, role) => ({ tag, color, title, line, act, btnCls, alt, role });
+    const pri = 'i-btn i-btn--primary', sec = 'i-btn i-btn--secondary';
+    const pages = {
+      'signed-out': P('Signed out', T2, 'You are signed out of the sleep dashboard.', 'Your data stays where it is. Sign in with Pocket ID to see it again.', 'Sign In Again', pri, '', 'main'),
+      expired: P('Not signed in', W, 'Not signed in: this sign-in has expired; sign in again.', 'Sign-ins last 12 hours. Signing in again takes a few seconds.', 'Sign In Again', pri, '', 'main'),
+      'not-allowed': P('Not signed in', E, 'Not signed in: sam@home.example is not allowed to use this dashboard.', 'Pocket ID knows you, but this dashboard does not. Ask an admin to add that address.', 'Sign In with Another Account', sec, 'Go to Home', 'alert'),
+      unreachable: P('Not signed in', E, 'Not signed in: the sign-in provider is unreachable.', 'Pocket ID is not answering. Your data is safe. Try again in a minute.', '↩ Try Again', pri, 'Go to Home', 'alert'),
+      'denied-own': P('Not shown', E, 'Not shown: you can only see your own sleep data.', 'That page belongs to someone else.', 'Go to Your Today ▶', pri, '', 'alert'),
+      'denied-missing': P('Not shown', E, 'Not shown: there is no sleep account called x.', 'Check the address, or pick a person from the switcher.', 'Go to Your Today ▶', pri, '', 'alert'),
+      'no-account': P('No data yet', W, 'There is no sleep data for sam@home.example yet.', 'Ask an admin to connect your watch. Your nights appear here after its first sync.', 'Sign Out', sec, 'Go to Home', 'main')
+    };
+    const pg = pages[p.page ?? 'signed-out'] || pages['signed-out'];
+    return Object.assign({}, pg, {
+      theme: p.theme ?? 'light',
+      chCls: lab ? 'i-badge--lab' : 'i-badge--live', chName: lab ? 'Lab' : 'Live',
+      chTitle: lab ? 'Lab: the latest commit on main' : 'Live: the latest release',
+      version: lab ? 'main · 7be19f4' : 'v0.6.0 · a41c0d2'
+    });
+  }
+}
+</script>
+</body>
+</html>

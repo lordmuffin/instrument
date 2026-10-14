@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fact grid and inline choice form</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div style="width: 1440px; min-height: 3000px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: #F6F8FA;">
+<sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+  <div class="inst" data-theme="{{th.id}}" style="padding: 40px 32px 48px; display: flex; flex-direction: column; gap: 28px; min-height: 3000px;">
+    <div class="i-stack" style="gap: 4px;">
+      <span class="t-label">Sleep Dashboard · 3 · Components · {{th.name}}</span>
+      <h1 class="t-title">Fact grid and day context</h1>
+    </div>
+
+    <section class="i-stack" aria-labelledby="fg-{{th.id}}">
+      <h2 id="fg-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Fact grid · one record's named readings</h2>
+      <sc-for list="{{th.grids}}" as="g" hint-placeholder-count="5">
+        <div class="i-stack" style="gap: 4px; padding-bottom: 12px;">
+          <div class="i-row" style="gap: 8px; padding: 4px 0;">
+            <span class="t-caption" style="font-weight: 600;">{{g.title}}</span>
+            <sc-if value="{{g.chip}}" hint-placeholder-val="{{false}}"><span class="i-chip {{g.chipCls}}"><sc-if value="{{g.dot}}" hint-placeholder-val="{{true}}"><span class="i-dot i-dot--hollow"></span></sc-if>{{g.chip}}</span></sc-if>
+            <sc-if value="{{g.dst}}" hint-placeholder-val="{{false}}"><span class="i-chip i-chip--progress">⚑ DST transition night</span></sc-if>
+            <span class="t-meta t-2" style="margin-left: auto;">{{g.note}}</span>
+          </div>
+          <dl class="i-facts" aria-busy="{{g.busy}}">
+            <sc-for list="{{g.facts}}" as="f" hint-placeholder-count="6">
+              <div class="i-fact {{f.cls}}">
+                <dt>{{f.label}}</dt>
+                <dd>
+                  <sc-if value="{{f.loading}}" hint-placeholder-val="{{false}}"><span class="i-skel" style="width: 72px; height: 22px;"></span><span class="i-skel" style="width: 96px;"></span></sc-if>
+                  <sc-if value="{{f.plain}}" hint-placeholder-val="{{true}}">
+                    <span class="v">{{f.value}}<sc-if value="{{f.was}}" hint-placeholder-val="{{false}}"><span class="i-was">watch: {{f.was}}</span></sc-if></span>
+                    <span class="s">{{f.sub}}</span>
+                  </sc-if>
+                  <sc-if value="{{f.notes}}" hint-placeholder-val="{{false}}">
+                    <ul class="notes">
+                      <sc-for list="{{f.notes}}" as="q" hint-placeholder-count="2"><li class="{{q.cls}}" title="{{q.code}}">{{q.label}}</li></sc-for>
+                    </ul>
+                  </sc-if>
+                </dd>
+              </div>
+            </sc-for>
+          </dl>
+        </div>
+      </sc-for>
+
+      <div style="display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 16px; align-items: start;">
+        <div style="width: 360px; background: var(--inst-bg); padding: 16px; box-shadow: 0 0 0 1px var(--inst-line); display: flex; flex-direction: column; gap: 4px;">
+          <span class="t-caption" style="font-weight: 600; padding-bottom: 4px;">Narrow · 360 · two columns</span>
+          <dl class="i-facts" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+            <div class="i-fact"><dt>Bed</dt><dd><span class="v">23:05</span><span class="s">Sun 11 Oct · CDT</span></dd></div>
+            <div class="i-fact"><dt>Wake</dt><dd><span class="v">06:35</span><span class="s">Mon 12 Oct · CDT</span></dd></div>
+            <div class="i-fact"><dt>Total sleep</dt><dd><span class="v">7h 05m</span><span class="s">23:20 – 06:35</span></dd></div>
+            <div class="i-fact"><dt>Time in bed</dt><dd><span class="v">7h 45m</span><span class="s">23:05 – 06:50</span></dd></div>
+            <div class="i-fact"><dt>Efficiency</dt><dd><span class="v">91.4%</span><span class="s">sleep ÷ in bed</span></dd></div>
+            <div class="i-fact"><dt>Quality flags</dt><dd><span class="v">—</span><span class="s">None</span></dd></div>
+          </dl>
+        </div>
+        <div class="i-stack">
+          <span class="t-caption" style="font-weight: 600; padding-bottom: 4px;">Quality flags · codes to words</span>
+          <div class="i-table-wrap">
+            <table class="i-table" style="font-size: 12px;">
+              <thead><tr><th scope="col">Code</th><th scope="col">Shown as</th><th scope="col">Means</th></tr></thead>
+              <tbody>
+                <sc-for list="{{th.flagRows}}" as="q" hint-placeholder-count="5">
+                  <tr><td class="t-mono" style="font-size: 11px;">{{q.code}}</td><td style="white-space: normal;"><span class="{{q.cls}}">{{q.label}}</span></td><td class="t-2" style="white-space: normal;">{{q.means}}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <span class="t-micro t-2">The raw code stays in the tooltip for whoever debugs the pipeline. A flag never changes a number, a score or a colour elsewhere.</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;">
+        <div class="i-block t-caption"><b>Markup.</b> <span class="t-mono">&lt;dl class="i-facts"&gt;</span> with one <span class="t-mono">&lt;div class="i-fact"&gt;&lt;dt&gt;&lt;dd&gt;</span> per reading. The value is mono; the sub line names the day and zone. A corrected value is followed by <span class="i-was">watch: 23:40</span>, which a screen reader reads as "watch: 23:40".</div>
+        <div class="i-block t-caption"><b>Never in this grid:</b> sleep-onset latency, wake after sleep onset, awakenings, or light, deep or REM minutes. No score is made from them, and nothing else in the app shows them.</div>
+      </div>
+    </section>
+
+    <section class="i-stack" aria-labelledby="cf-{{th.id}}">
+      <h2 id="cf-{{th.id}}" class="t-label" style="padding-bottom: 4px;">Inline choice form · day context, every state</h2>
+      <sc-for list="{{th.forms}}" as="s" hint-placeholder-count="10">
+        <div class="i-stack" style="gap: 4px; padding-bottom: 8px;">
+          <span class="t-micro t-2">{{s.title}}</span>
+          <form class="i-block i-choiceform {{s.cls}}" aria-busy="{{s.busy}}" aria-label="Day context for Mon 12 Oct" style="padding: 8px 16px;">
+            <div class="grp" role="radiogroup" aria-labelledby="dl-{{th.id}}-{{s.k}}" aria-invalid="{{s.badDay}}">
+              <span id="dl-{{th.id}}-{{s.k}}" class="i-label">Day type</span>
+              <label class="i-choice"><input type="radio" name="d-{{th.id}}-{{s.k}}" value="work" checked="{{s.work}}" disabled="{{s.dis}}"><span>Work</span></label>
+              <label class="i-choice"><input type="radio" name="d-{{th.id}}-{{s.k}}" value="free" checked="{{s.free}}" disabled="{{s.dis}}"><span>Free</span></label>
+            </div>
+            <div class="grp" role="radiogroup" aria-labelledby="al-{{th.id}}-{{s.k}}" aria-invalid="{{s.badAlarm}}">
+              <span id="al-{{th.id}}-{{s.k}}" class="i-label">Alarm</span>
+              <label class="i-choice"><input type="radio" name="a-{{th.id}}-{{s.k}}" value="yes" checked="{{s.yes}}" disabled="{{s.dis}}"><span>Yes</span></label>
+              <label class="i-choice"><input type="radio" name="a-{{th.id}}-{{s.k}}" value="no" checked="{{s.no}}" disabled="{{s.dis}}"><span>No</span></label>
+            </div>
+            <span class="out">
+              <sc-if value="{{s.saveBtn}}" hint-placeholder-val="{{true}}"><button type="submit" class="i-btn i-btn--primary i-btn--sm" disabled="{{s.dis}}" aria-describedby="m-{{th.id}}-{{s.k}}">Save</button></sc-if>
+              <sc-if value="{{s.spin}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--inst-text-2);"><span class="i-spin"></span>Saving</span></sc-if>
+              <span id="m-{{th.id}}-{{s.k}}" role="status">
+                <sc-if value="{{s.ok}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok">✓ Saved</span></sc-if>
+                <sc-if value="{{s.err}}" hint-placeholder-val="{{false}}"><span class="i-msg-error">✕ {{s.err}}</span></sc-if>
+                <sc-if value="{{s.reason}}" hint-placeholder-val="{{false}}"><span class="i-reason">⚑ {{s.reason}}</span></sc-if>
+              </span>
+              <sc-if value="{{s.reload}}" hint-placeholder-val="{{false}}"><a href="#" class="i-btn i-btn--secondary i-btn--sm">↩ Reload</a></sc-if>
+            </span>
+          </form>
+        </div>
+      </sc-for>
+
+      <span class="t-caption" style="font-weight: 600; padding: 12px 0 4px;">On the Context page · one row per night, rows stay after saving</span>
+      <div class="i-stack">
+        <sc-for list="{{th.ctxRows}}" as="c" hint-placeholder-count="3">
+          <form class="i-block i-choiceform {{c.cls}}" aria-label="Day context for {{c.date}}" style="padding: 8px 16px;">
+            <a href="#" style="width: 96px; font-weight: 600; font-size: 13px;">{{c.date}}</a>
+            <div class="grp" role="radiogroup" aria-label="Day type"><label class="i-choice"><input type="radio" name="cd-{{th.id}}-{{c.k}}" checked="{{c.work}}"><span>Work</span></label><label class="i-choice"><input type="radio" name="cd-{{th.id}}-{{c.k}}" checked="{{c.free}}"><span>Free</span></label></div>
+            <div class="grp" role="radiogroup" aria-label="Alarm"><span class="i-label" aria-hidden="true">Alarm</span><label class="i-choice"><input type="radio" name="ca-{{th.id}}-{{c.k}}" checked="{{c.yes}}"><span>Yes</span></label><label class="i-choice"><input type="radio" name="ca-{{th.id}}-{{c.k}}" checked="{{c.no}}"><span>No</span></label></div>
+            <span class="out"><button type="submit" class="i-btn i-btn--primary i-btn--sm">Save</button><sc-if value="{{c.ok}}" hint-placeholder-val="{{false}}"><span class="i-msg-ok" role="status">✓ Saved</span></sc-if></span>
+          </form>
+        </sc-for>
+      </div>
+      <span class="t-micro t-2">On the Context page, the "Day type" label is shown once, in the page's column header. Each row's radio groups keep their aria-label.</span>
+
+      <div style="display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 16px; align-items: start; padding-top: 12px;">
+        <div style="width: 360px; background: var(--inst-bg); padding: 16px; box-shadow: 0 0 0 1px var(--inst-line); display: flex; flex-direction: column; gap: 4px;">
+          <span class="t-caption" style="font-weight: 600; padding-bottom: 4px;">Narrow · 360</span>
+          <form class="i-block i-choiceform" aria-label="Day context for Mon 12 Oct" style="padding: 8px 12px; gap: 4px 24px;">
+            <div class="grp" role="radiogroup" aria-labelledby="nd-{{th.id}}"><span id="nd-{{th.id}}" class="i-label">Day type</span><label class="i-choice"><input type="radio" name="nd-{{th.id}}" checked=""><span>Work</span></label><label class="i-choice"><input type="radio" name="nd-{{th.id}}"><span>Free</span></label></div>
+            <div class="grp" role="radiogroup" aria-labelledby="na-{{th.id}}"><span id="na-{{th.id}}" class="i-label">Alarm</span><label class="i-choice"><input type="radio" name="na-{{th.id}}" checked=""><span>Yes</span></label><label class="i-choice"><input type="radio" name="na-{{th.id}}"><span>No</span></label></div>
+            <span class="out"><button type="submit" class="i-btn i-btn--primary i-btn--sm">Save</button><span class="i-msg-ok" role="status">✓ Saved</span></span>
+          </form>
+        </div>
+        <div class="i-stack">
+          <div class="i-block t-caption"><b>The swap.</b> The form is its own target: <span class="t-mono">hx-post … hx-target="this" hx-swap="outerHTML"</span>. While the request runs, the groups dim and Save becomes a spinner and "Saving". The server returns the form with its message. Saved holds accent-tint for 2 s, then the message stays on plain surface.</div>
+          <div class="i-block t-caption"><b>Disabled.</b> The radios keep showing the saved answer, and Save gets the dashed disabled style. The reason sits where the result would go. It always names why, and LAB says LAB.</div>
+          <div class="i-block t-caption"><b>Errors</b> are inline, never a toast. A missing answer marks the group that is missing. "Out of date" offers ↩ Reload. A failed request keeps Save, so you can try again.</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const F = (label, value, sub, was) => ({ label, value, sub, was: was || '', plain: true, loading: false, notes: false, cls: '' });
+    const none = { label: 'Quality flags', value: '—', sub: 'None', was: '', plain: true, loading: false, notes: false, cls: '' };
+    const FL = {
+      no_stages: { code: 'no_stages', label: 'ⓘ No sleep detail from the watch', cls: '', means: 'Only bed and wake times came through.' },
+      tst_is_tib: { code: 'tst_is_tib', label: 'ⓘ All time in bed counted as sleep', cls: '', means: 'So total sleep time and efficiency read high.' },
+      no_asleep_stages: { code: 'no_asleep_stages', label: '⚑ Watch recorded no sleep', cls: 'warn', means: 'Total sleep time is 0. The watch may not have been worn.' },
+      unrecognized_stage_code: { code: 'unrecognized_stage_code', label: 'ⓘ Some watch data not understood', cls: '', means: 'Part of the night used a code this version does not know.' },
+      session_start_stage_mismatch: { code: 'session_start_stage_mismatch', label: 'ⓘ Watch start times disagree', cls: '', means: 'The watch’s detail starts at a different time from its bed time.' }
+    };
+    const flagged = (keys) => ({ label: 'Quality flags', plain: false, loading: false, notes: keys.map((k) => FL[k]), cls: 'i-fact--wide' });
+    const sk = (label) => ({ label, plain: false, loading: true, notes: false, cls: 'is-loading' });
+    const grids = [
+      { title: 'Today · last night, Mon 12 Oct', chip: 'To review', chipCls: '', dot: true, dst: false, note: 'Times in America/Chicago.', busy: 'false', facts: [
+        F('Bed', '23:05', 'Sun 11 Oct · CDT'), F('Wake', '06:35', 'Mon 12 Oct · CDT'), F('Total sleep time', '7h 05m', '23:20 – 06:35'),
+        F('Time in bed', '7h 45m', '23:05 – 06:50'), F('Efficiency', '91.4%', 'sleep ÷ in bed'), none ] },
+      { title: 'Night review · clean', chip: 'Confirmed', chipCls: 'i-chip--done', dot: false, dst: false, note: 'Times in America/Chicago.', busy: 'false', facts: [
+        F('Into bed', '23:05', 'Sun 11 Oct · CDT'), F('Fell asleep', '23:20', 'Sun 11 Oct · CDT'), F('Woke up', '06:35', 'Mon 12 Oct · CDT'), F('Out of bed', '06:50', 'Mon 12 Oct · CDT'),
+        F('Total sleep time', '7h 05m', '23:20 – 06:35'), F('Time in bed', '7h 45m', '23:05 – 06:50'), F('Efficiency', '91.4%', 'sleep ÷ in bed'), none ] },
+      { title: 'Night review · corrected', chip: 'Corrected, not confirmed', chipCls: '', dot: true, dst: false, note: 'Amber shows the watch’s value.', busy: 'false', facts: [
+        F('Into bed', '23:05', 'Sun 11 Oct · CDT', '23:40'), F('Fell asleep', '23:20', 'Sun 11 Oct · CDT'), F('Woke up', '06:35', 'Mon 12 Oct · CDT'), F('Out of bed', '06:50', 'Mon 12 Oct · CDT'),
+        F('Total sleep time', '7h 05m', '23:20 – 06:35'), F('Time in bed', '7h 45m', '23:05 – 06:50', '7h 10m'), F('Efficiency', '91.4%', 'sleep ÷ in bed', '98.8%'), none ] },
+      { title: 'Night review · DST, Sun 2 Nov', chip: 'To review', chipCls: '', dot: true, dst: true, note: 'Each time in its own zone.', busy: 'false', facts: [
+        F('Into bed', '23:30', 'Sat 1 Nov · CDT'), F('Fell asleep', '23:45', 'Sat 1 Nov · CDT'), F('Woke up', '06:55', 'Sun 2 Nov · CST'), F('Out of bed', '07:10', 'Sun 2 Nov · CST'),
+        F('Total sleep time', '8h 10m', 'clock shows 7h 10m'), F('Time in bed', '8h 40m', 'clock shows 7h 40m'), F('Efficiency', '94.2%', 'sleep ÷ in bed'), none ] },
+      { title: 'Flagged night · watch sent bed times only', chip: 'To review', chipCls: '', dot: true, dst: false, note: 'Flag tile spans two columns.', busy: 'false', facts: [
+        F('Bed', '23:05', 'Sun 11 Oct · CDT'), F('Wake', '06:50', 'Mon 12 Oct · CDT'), F('Total sleep time', '7h 45m', '23:05 – 06:50'),
+        F('Time in bed', '7h 45m', '23:05 – 06:50'), F('Efficiency', '100.0%', 'sleep ÷ in bed'), flagged(['no_stages', 'tst_is_tib']) ] },
+      { title: 'Missing values and loading', chip: '', chipCls: '', dot: false, dst: false, note: 'Skeleton while the HTMX swap runs.', busy: 'true', facts: [
+        F('Bed', '—', 'Not recorded'), F('Efficiency', '—', 'Needs time in bed'), sk('Total sleep time'), sk('Time in bed') ] }
+    ];
+    const S = (k, title, o) => Object.assign({ k, title, cls: '', busy: 'false', work: false, free: false, yes: false, no: false, dis: false, badDay: 'false', badAlarm: 'false', saveBtn: true, spin: false, ok: false, err: '', reason: '', reload: false }, o);
+    const ans = { work: true, yes: true };
+    const forms = [
+      S('blank', 'Not tagged · nothing chosen', {}),
+      S('ans', 'Tagged · Work, alarm', ans),
+      S('miss', 'Error · an answer is missing', { work: true, badAlarm: 'true', cls: 'is-error', err: 'Choose work or free, and whether an alarm was used.' }),
+      S('save', 'Saving · HTMX request running', Object.assign({ cls: 'is-saving', busy: 'true', saveBtn: false, spin: true }, ans)),
+      S('ok', 'Saved · swap returned, accent-tint for 2 s', Object.assign({ cls: 'is-saved', ok: true }, ans)),
+      S('stale', 'Error · page out of date', Object.assign({ cls: 'is-error', err: 'Not saved: the page is out of date. Reload it.', reload: true, saveBtn: false }, ans)),
+      S('api', 'Error · query API failed', Object.assign({ cls: 'is-error', err: 'Not saved: query API timed out.' }, ans)),
+      S('lab', 'Disabled · LAB', Object.assign({ dis: true, reason: 'LAB: writes disabled' }, ans)),
+      S('off', 'Disabled · writes turned off on LIVE', Object.assign({ dis: true, reason: 'Writes disabled' }, ans)),
+      S('tok', 'Disabled · no context token', { free: true, no: true, dis: true, reason: 'Context token not configured' })
+    ];
+    const ctxRows = [
+      { k: 'a', date: 'Mon 12 Oct', work: true, free: false, yes: true, no: false, ok: true, cls: 'is-saved' },
+      { k: 'b', date: 'Fri 9 Oct', work: false, free: false, yes: false, no: false, ok: false, cls: '' },
+      { k: 'c', date: 'Sat 3 Oct', work: false, free: true, yes: false, no: false, ok: false, cls: '' }
+    ];
+    const flagRows = Object.keys(FL).map((k) => FL[k]);
+    const shared = { grids, forms, ctxRows, flagRows };
+    return { themes: [Object.assign({ id: 'dark', name: 'Dark' }, shared), Object.assign({ id: 'light', name: 'Light' }, shared)] };
+  }
+}
+</script>
+</body>
+</html>

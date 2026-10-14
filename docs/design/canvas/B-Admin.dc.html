@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>B Capsule: Admin table</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+.fl{--bg:#F6F8FA;--sf:#FFFFFF;--sf2:#EAEEF2;--tx:#1F2328;--tx2:#57606A;--ac:#00796B;--act:#E0F2EF;--onac:#FFFFFF;--ok:#1A7F37;--okt:#DAFBE1;--warn:#9A6700;--wart:#FFF1C2;--err:#CF222E;--errt:#FFEBE9;--line:#D8DEE4;--ctl:#8C959F;--sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;--mono:ui-monospace,"SF Mono","Roboto Mono",Menlo,Consolas,monospace;font-family:var(--sans);color:var(--tx);background:var(--bg);font-variant-numeric:tabular-nums}
+.fl *{box-sizing:border-box}
+.fl a{color:var(--ac)}
+.fl a:hover{color:var(--tx)}
+.fl button,.fl input{font:inherit;color:inherit}
+.fl input::placeholder{color:var(--tx2)}
+.fl :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.fl th,.fl td{padding:0 16px;height:48px;text-align:left;white-space:nowrap}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .8s linear infinite}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+@media (max-width:600px){.fl .hide-sm{display:none}}
+</style>
+</helmet>
+<div class="fl" style="position: relative; min-height: 1000px; display: flex; flex-direction: column;">
+
+<header style="width: 100%; max-width: 1280px; margin: 0 auto; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;">
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">[App name]</span>
+    <span style="display: inline-flex; align-items: center; height: 20px; padding: 0 9px; border-radius: 24px; background: #8B949E; color: #0D1117; font-size: 10px; font-weight: 700; letter-spacing: 0.1em;">DEV</span>
+  </div>
+  <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 2px; padding: 4px; border-radius: 24px; background: var(--sf2); margin: 0 auto;">
+    <a href="#" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 20px; font-size: 14px; color: var(--tx2); text-decoration: none;">Overview</a>
+    <a href="#" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 20px; font-size: 14px; color: var(--tx2); text-decoration: none;">Items</a>
+    <a href="#" aria-current="page" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 16px; border-radius: 20px; background: var(--sf); box-shadow: 0 1px 2px rgba(31,35,40,.12), inset 0 0 0 1px var(--line); font-size: 14px; font-weight: 600; color: var(--tx); text-decoration: none;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--ac);"></span>People</a>
+  </nav>
+  <div style="display: flex; align-items: center; gap: 10px; font-size: 13px;">
+    <span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 50%; background: var(--sf2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">A</span>
+    <span>Andrew</span>
+    <button type="button" style="height: 32px; padding: 0 10px; border-radius: 24px; background: none; border: 0; color: var(--tx2); font-size: 13px; cursor: pointer;">Sign out</button>
+  </div>
+</header>
+
+<main style="flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 4px 20px 20px; display: flex; flex-direction: column; gap: 16px;">
+
+  <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 16px; padding: 4px 4px 0;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.01em;">People</h1>
+      <span style="font-size: 14px; color: var(--tx2);">8 people · 2 invited</span>
+    </div>
+    <button type="button" style="height: 44px; padding: 0 22px; border-radius: 24px; background: var(--ac); color: var(--onac); border: 0; font-size: 15px; font-weight: 700; cursor: pointer;">Add Person</button>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;">
+    <div role="radiogroup" aria-label="Filter" style="display: inline-flex; padding: 4px; gap: 2px; border-radius: 24px; background: var(--sf2);">
+      <button type="button" role="radio" aria-checked="true" style="height: 32px; padding: 0 14px; border-radius: 20px; border: 0; background: var(--sf); box-shadow: 0 1px 2px rgba(31,35,40,.12), inset 0 0 0 1px var(--line); font-size: 13px; font-weight: 600; cursor: pointer;">All 8</button>
+      <button type="button" role="radio" aria-checked="false" style="height: 32px; padding: 0 14px; border-radius: 20px; border: 0; background: none; font-size: 13px; color: var(--tx2); cursor: pointer;">Admins 2</button>
+      <button type="button" role="radio" aria-checked="false" style="height: 32px; padding: 0 14px; border-radius: 20px; border: 0; background: none; font-size: 13px; color: var(--tx2); cursor: pointer;">Members 4</button>
+      <button type="button" role="radio" aria-checked="false" style="height: 32px; padding: 0 14px; border-radius: 20px; border: 0; background: none; font-size: 13px; color: var(--tx2); cursor: pointer;">Invited 2</button>
+    </div>
+    <label style="flex: 1 1 240px; max-width: 360px; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 24px; background: var(--sf); box-shadow: inset 0 0 0 1px var(--ctl);">
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search people</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="#57606A" stroke-width="1.5"><circle cx="7" cy="7" r="5"></circle><line x1="11" y1="11" x2="14.5" y2="14.5"></line></svg>
+      <input type="search" placeholder="Name or email" style="flex: 1; min-width: 0; height: 36px; border: 0; background: none; font-size: 14px;">
+    </label>
+  </div>
+
+  <div style="background: var(--sf); border-radius: 16px; overflow: hidden;">
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead>
+          <tr>
+            <th scope="col" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px;">Name</th>
+            <th scope="col" class="hide-sm" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px;">Email</th>
+            <th scope="col" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px;">Role</th>
+            <th scope="col" class="hide-sm" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px;">Last sign-in</th>
+            <th scope="col" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px;">Status</th>
+            <th scope="col" style="font-size: 12px; font-weight: 600; color: var(--tx2); height: 40px; text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+          <tbody>
+            <tr>
+              <th scope="colgroup" colspan="6" style="height: 32px; background: var(--bg); font-size: 13px; font-weight: 700;">{{g.month}}</th>
+            </tr>
+            <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="3">
+              <tr aria-busy="{{r.busyAttr}}" style="border-top: 1px solid var(--line); background: {{r.bg}}; opacity: {{r.op}};">
+                <td>
+                  <span style="display: inline-flex; align-items: center; gap: 10px;">
+                    <span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 50%; background: var(--sf2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">{{r.ini}}</span>
+                    <span style="font-weight: 600;">{{r.name}}</span>
+                    <sc-if value="{{r.you}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: var(--tx2);">(you)</span></sc-if>
+                  </span>
+                </td>
+                <td class="hide-sm" style="color: var(--tx2);">{{r.email}}</td>
+                <td>{{r.role}}</td>
+                <td class="hide-sm">{{r.seen}}</td>
+                <td>
+                  <sc-if value="{{r.active}}" hint-placeholder-val="{{true}}"><span style="display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 24px; background: var(--okt); color: var(--ok); font-size: 12px; font-weight: 600;">✓ Active</span></sc-if>
+                  <sc-if value="{{r.invited}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 24px; background: var(--wart); color: var(--warn); font-size: 12px; font-weight: 600;"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--warn);"></span>Invited</span></sc-if>
+                  <sc-if value="{{r.expired}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 24px; background: var(--errt); color: var(--err); font-size: 12px; font-weight: 600;">✕ Expired</span></sc-if>
+                </td>
+                <td style="text-align: right;">
+                  <sc-if value="{{r.idle}}" hint-placeholder-val="{{true}}">
+                    <span style="display: inline-flex; gap: 6px; justify-content: flex-end;">
+                      <sc-if value="{{r.expired}}" hint-placeholder-val="{{false}}"><button type="button" style="height: 32px; padding: 0 14px; border-radius: 24px; background: var(--sf2); border: 0; font-size: 13px; font-weight: 600; cursor: pointer;">Resend</button></sc-if>
+                      <button type="button" style="height: 32px; padding: 0 14px; border-radius: 24px; background: none; border: 1px solid var(--ctl); font-size: 13px; cursor: pointer;">Edit</button>
+                      <button type="button" aria-label="Remove {{r.name}}" style="height: 32px; width: 32px; border-radius: 50%; background: none; border: 0; color: var(--err); font-size: 13px; cursor: pointer;">✕</button>
+                    </span>
+                  </sc-if>
+                  <sc-if value="{{r.busy}}" hint-placeholder-val="{{false}}">
+                    <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--tx2);"><span class="spin" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--sf2); border-top-color: var(--ac);"></span>Saving</span>
+                  </sc-if>
+                  <sc-if value="{{r.saved}}" hint-placeholder-val="{{false}}">
+                    <span style="font-size: 13px; font-weight: 600; color: var(--ac);">✓ Saved</span>
+                  </sc-if>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </sc-for>
+      </table>
+    </div>
+  </div>
+  <span style="font-size: 12px; color: var(--tx2); padding-left: 4px;">People sign in with Pocket ID. Removing someone signs them out everywhere.</span>
+</main>
+
+<div role="status" style="position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; background: var(--tx); color: var(--sf); padding: 0 20px; height: 44px; border-radius: 24px; font-size: 14px; box-shadow: 0 6px 20px rgba(31,35,40,.18);">
+  <span style="color: #5EEAD4; font-weight: 700;">✓</span>Saved
+</div>
+
+<footer style="width: 100%; max-width: 1280px; margin: 0 auto; padding: 8px 20px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--tx2);">
+  <span>Private. Self-hosted. Open source.</span>
+  <span>app dev · <span style="font-family: var(--mono);">0c7e19b</span></span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = (name, email, role, seen, status, rowState, you) => ({
+      name, email, role, seen, you: !!you, ini: name.charAt(0),
+      active: status === 'active', invited: status === 'invited', expired: status === 'expired',
+      idle: rowState === 'idle', busy: rowState === 'busy', saved: rowState === 'saved',
+      busyAttr: rowState === 'busy' ? 'true' : 'false',
+      bg: rowState === 'saved' ? 'var(--act)' : 'transparent',
+      op: rowState === 'busy' ? '0.6' : '1'
+    });
+    return {
+      groups: [
+        { month: 'Joined October 2026', rows: [
+          P('Riley', 'riley@home.example', 'Member', '—', 'invited', 'idle'),
+          P('Jordan', 'jordan@home.example', 'Member', '—', 'expired', 'idle')
+        ] },
+        { month: 'Joined September 2026', rows: [
+          P('Sam', 'sam@home.example', 'Admin', 'Today 08:12', 'active', 'saved'),
+          P('Casey', 'casey@home.example', 'Member', '11 Oct 21:40', 'active', 'busy')
+        ] },
+        { month: 'Joined August 2026', rows: [
+          P('Andrew', 'andrew@home.example', 'Admin', 'Now', 'active', 'idle', true),
+          P('Alex', 'alex@home.example', 'Member', '13 Oct 19:05', 'active', 'idle'),
+          P('Morgan', 'morgan@home.example', 'Member', '02 Oct 07:30', 'active', 'idle'),
+          P('Taylor', 'taylor@home.example', 'Member', '28 Sep 22:16', 'active', 'idle')
+        ] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

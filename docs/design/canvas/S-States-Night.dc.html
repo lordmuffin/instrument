@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Night review states</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="instrument.css">
+<link rel="stylesheet" href="instrument-proposed.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#F6F8FA}
+</style>
+</helmet>
+<div class="inst" data-theme="light" style="width: 2704px; min-height: 6152px; padding: 48px; display: flex; flex-direction: column; gap: 24px;">
+  <div class="i-stack" style="gap: 6px;">
+    <span class="t-label">Sleep Dashboard · 4 · Screens · Night review</span>
+    <h1 class="t-title">Night review states</h1>
+    <p class="t-caption t-2" style="max-width: 900px;">The Night review screen with its state tweak set. Clean is the screen itself. Each frame is the real screen, so a change there shows here.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, 1280px); gap: 48px; align-items: start;">
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Corrected, not confirmed · light</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="corrected" theme="light" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Validation: times out of order · dark</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="error-order" theme="dark" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Validation: time in bed under 3 hours · dark</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="error-tib" theme="dark" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Validation: a time is missing · light</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="error-missing" theme="light" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Saved · light</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="saved" theme="light" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">Confirmed · dark</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="confirmed" theme="dark" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">LAB: writes disabled · light</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="clean" channel="lab" theme="light" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+      <figcaption class="t-caption" style="font-weight: 600;">No night for that date · dark</figcaption>
+      <div style="width: 1280px; height: 1400px; overflow: hidden; box-shadow: 0 0 0 1px var(--inst-line);"><dc-import name="S-Night" state="missing" theme="dark" hint-size="1280px,1400px"></dc-import></div>
+    </figure>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":2704,"height":6152}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
