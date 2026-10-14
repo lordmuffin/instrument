@@ -1,0 +1,86 @@
+{
+  "$comment": "Apps that vendor Instrument. On every release, .github/workflows/release.yml opens (or updates) a PR in each enabled repo that syncs these targets to the new version. Paths are relative to the app repo root. Each target gets <dest>/INSTRUMENT_VERSION and <dest>/.instrument-manifest; the app wires the files into its build once (see README, 'Using Instrument in an app'). 'design' maps a folder under the app's docs/design/instrument/ to artboard globs from docs/design/canvas/; those copies are managed and refreshed on every sync.",
+  "consumers": [
+    {
+      "repo": "lordmuffin/sleep-dashboard",
+      "enabled": true,
+      "targets": [
+        {
+          "dest": "src/sleep_dashboard/static/instrument",
+          "platforms": [
+            "web",
+            "echarts"
+          ]
+        }
+      ],
+      "design": {
+        ".": [
+          "S-*.dc.html",
+          "Sleep-*.dc.html",
+          "Nav-Family.dc.html",
+          "Home.dc.html",
+          "Comp-*.dc.html",
+          "Sheet-*.dc.html",
+          "Recipe.dc.html"
+        ]
+      }
+    },
+    {
+      "repo": "lordmuffin/jarvis-voice",
+      "enabled": true,
+      "targets": [
+        {
+          "dest": "web/src/instrument",
+          "platforms": [
+            "web"
+          ]
+        },
+        {
+          "dest": "macos/JarvisVoiceMac/Sources/Instrument",
+          "platforms": [
+            "swift"
+          ]
+        },
+        {
+          "dest": "android/app/src/instrument",
+          "platforms": [
+            "android"
+          ]
+        },
+        {
+          "dest": "android/wear/src/instrument",
+          "platforms": [
+            "android"
+          ]
+        }
+      ],
+      "design": {
+        "web": [
+          "Jarvis-Web-*.dc.html",
+          "Jarvis-Comp-*.dc.html",
+          "Jarvis-DirB-Web.dc.html",
+          "Jarvis-Glance.dc.html",
+          "Main.dc.html"
+        ],
+        "mac": [
+          "Jarvis-Mac-*.dc.html",
+          "Jarvis-DirB-Mac.dc.html"
+        ],
+        "android": [
+          "Jarvis-And-*.dc.html"
+        ],
+        "wear": [
+          "Jarvis-Wear-Auto.dc.html"
+        ],
+        "system": [
+          "Jarvis-Sys-Additions.dc.html",
+          "Nav-Family.dc.html",
+          "Home.dc.html",
+          "Comp-*.dc.html",
+          "Sheet-*.dc.html",
+          "Recipe.dc.html"
+        ]
+      }
+    }
+  ]
+}

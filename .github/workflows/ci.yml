@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build is current, tests, contrast, sync script
+        run: make check
+
+      - name: Shellcheck
+        run: shellcheck scripts/sync-instrument.sh
+
+      - name: Version bump when the release output changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if ! git ls-tree -d --name-only "$BASE" dist >/dev/null 2>&1 || [ -z "$(git ls-tree -d --name-only "$BASE" dist)" ]; then
+            echo "Base has no dist/ yet: first release, no bump needed."; exit 0
+          fi
+          if git diff --quiet "$BASE" HEAD -- dist/; then echo "dist/ unchanged: no bump needed."; exit 0; fi
+          old=$(git show "$BASE:tokens/instrument.tokens.json" | jq -r .version)
+          new=$(jq -r .version tokens/instrument.tokens.json)
+          if [ "$old" = "$new" ]; then
+            echo "::error file=tokens/instrument.tokens.json::dist/ changed but version is still $new. Bump \"version\" (patch: fixes, minor: additions, major: renames/removals) and rebuild."
+            exit 1
+          fi
+          if ! grep -q "^## $new" CHANGELOG.md; then
+            echo "::error file=CHANGELOG.md::Add a '## $new' section describing what changed for apps."
+            exit 1
+          fi
+          echo "Version $old -> $new with changelog entry."

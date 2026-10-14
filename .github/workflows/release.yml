@@ -1,0 +1,106 @@
+name: Release
+
+# Every push to main whose tokens version has no tag yet becomes a GitHub release
+# (instrument-dist.tar.gz + sha256), then each enabled app in consumers.json gets a sync PR.
+# Re-run propagation for the current version with "Run workflow".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      created: ${{ steps.v.outputs.created }}
+      consumers: ${{ steps.c.outputs.consumers }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: make check
+
+      - id: v
+        name: Version
+        run: |
+          v=$(tr -d '[:space:]' < dist/VERSION)
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$v" >/dev/null; then
+            echo "created=false" >> "$GITHUB_OUTPUT"; echo "v$v already released."
+          else
+            echo "created=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish release
+        if: steps.v.outputs.created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V: ${{ steps.v.outputs.version }}
+        run: |
+          tar -czf instrument-dist.tar.gz -C dist .
+          sha256sum instrument-dist.tar.gz > instrument-dist.tar.gz.sha256
+          awk -v v="## $V" 'index($0, v)==1 {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "Instrument v$V" > notes.md
+          gh release create "v$V" instrument-dist.tar.gz instrument-dist.tar.gz.sha256 \
+            --title "Instrument v$V" --notes-file notes.md --target "$GITHUB_SHA"
+
+      - id: c
+        name: Consumers
+        run: echo "consumers=$(jq -c '[.consumers[] | select(.enabled)]' consumers.json)" >> "$GITHUB_OUTPUT"
+
+  propagate:
+    needs: release
+    if: needs.release.outputs.created == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        consumer: ${{ fromJSON(needs.release.outputs.consumers) }}
+    env:
+      V: ${{ needs.release.outputs.version }}
+      REPO: ${{ matrix.consumer.repo }}
+      TARGETS: ${{ toJSON(matrix.consumer.targets) }}
+      DESIGN: ${{ toJSON(matrix.consumer.design) }}
+    steps:
+      - id: tok
+        name: Token present
+        env:
+          T: ${{ secrets.INSTRUMENT_BOT_TOKEN }}
+        run: |
+          if [ -z "$T" ]; then
+            echo "::warning::INSTRUMENT_BOT_TOKEN is not set, so no sync PR for $REPO. See README, 'One-time setup'."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.tok.outputs.ok == 'true'
+        uses: actions/checkout@v4
+        with:
+          path: instrument
+
+      - if: steps.tok.outputs.ok == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.consumer.repo }}
+          token: ${{ secrets.INSTRUMENT_BOT_TOKEN }}
+          path: app
+          fetch-depth: 0
+
+      - if: steps.tok.outputs.ok == 'true'
+        name: Sync, then open or update the PR
+        env:
+          GH_TOKEN: ${{ secrets.INSTRUMENT_BOT_TOKEN }}
+        run: instrument/scripts/propagate.sh
